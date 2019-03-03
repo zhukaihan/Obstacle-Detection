@@ -13,6 +13,7 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     
     let captureSession = AVCaptureSession()
     let imageView = UIImageView()
+    let previewView = UIImageView()
     let dataOutputQueue = DispatchQueue(label: "DepthQueue", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     let depthOutput = AVCaptureDepthDataOutput()
     let videoOutput = AVCaptureVideoDataOutput()
@@ -41,8 +42,9 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         }
         
         
-        self.imageView.frame = self.view.bounds
         self.view.addSubview(self.imageView)
+        
+        self.view.addSubview(self.previewView)
         
     }
     
@@ -56,7 +58,7 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         let videoDevice = AVCaptureDevice.default(.builtInDualCamera,
                                                   for: .video, position: .unspecified)
         try? videoDevice?.lockForConfiguration()
-        videoDevice?.focusMode = .locked
+        videoDevice?.focusMode = .continuousAutoFocus
         
         // Add dual camera input to session.
         guard
@@ -95,12 +97,18 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
                 height: CVPixelBufferGetHeight(depthData.depthDataMap)
             )
         ) else {return}
-        let image = UIImage(cgImage: videoImage)
+        let image = UIImage(cgImage: videoImage, scale: 1.0, orientation: .right)
         self.imageView.image = image
         self.imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
+        self.previewView.frame = CGRect(origin: CGPoint(x: 0, y: self.view.bounds.height / 2), size: image.size)
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        let ciImage = CIImage(cvPixelBuffer: imageBuffer)
+        guard let videoImage = CIContext().createCGImage(ciImage, from: ciImage.extent) else { return }
+        
+        self.previewView.image = UIImage(cgImage: videoImage, scale: 1.0, orientation: .right)
         
     }
 
