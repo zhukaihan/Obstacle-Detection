@@ -146,7 +146,6 @@
 				61881F68976D3AE7778CE79E /* Pods-Obstacle-Detection.debug.xcconfig */,
 				6D0555DE44F37BBC15D12B76 /* Pods-Obstacle-Detection.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -219,6 +218,7 @@
 				TargetAttributes = {
 					6040C2D1222B2327004CB29A = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 					6040C2E5222B232B004CB29A = {
 						CreatedOnToolsVersion = 10.1;
@@ -484,8 +484,13 @@
 			baseConfigurationReference = 61881F68976D3AE7778CE79E /* Pods-Obstacle-Detection.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MH6L73893P;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Obstacle-Detection/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -493,6 +498,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zhukaihan.Obstacle-Detection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -503,8 +509,13 @@
 			baseConfigurationReference = 6D0555DE44F37BBC15D12B76 /* Pods-Obstacle-Detection.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MH6L73893P;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Obstacle-Detection/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -75,10 +75,16 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         self.depthOutput.setDelegate(self, callbackQueue: DispatchQueue.main)
         guard self.captureSession.canAddOutput(self.depthOutput) else { return }
         self.captureSession.addOutput(self.depthOutput)
+        if let connection = self.depthOutput.connections.first {
+            connection.videoOrientation = .landscapeRight
+        }
         
         self.videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
         guard self.captureSession.canAddOutput(self.videoOutput) else {return}
         self.captureSession.addOutput(self.videoOutput)
+        if let connection = self.videoOutput.connections.first {
+            connection.videoOrientation = .landscapeRight
+        }
         
         self.captureSync = AVCaptureDataOutputSynchronizer(dataOutputs: [videoOutput, depthOutput])
         
@@ -104,7 +110,6 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         let image = UIImage(cgImage: videoImage, scale: 1.0, orientation: .right)
         self.depthView.image = image
         self.depthView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
-        self.previewView.frame = CGRect(origin: CGPoint(x: 0, y: self.view.bounds.height / 2), size: image.size)
     }
     
     
@@ -113,8 +118,16 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         let ciImage = CIImage(cvPixelBuffer: imageBuffer)
         guard let videoImage = CIContext().createCGImage(ciImage, from: ciImage.extent) else { return }
         
-        self.previewView.image = UIImage(cgImage: videoImage, scale: 1.0, orientation: .right)
-        
+        // Resize image to the same size as depth map.
+        if let depthImg = self.depthView.image?.cgImage {
+            let context = CGContext(data: nil, width: depthImg.width, height: depthImg.height, bitsPerComponent: depthImg.bitsPerComponent, bytesPerRow: depthImg.bytesPerRow, space: depthImg.colorSpace!, bitmapInfo: depthImg.bitmapInfo.rawValue)
+            context!.interpolationQuality = .high
+            context!.draw(videoImage, in: CGRect(x: 0, y: 0, width: depthImg.width, height: depthImg.height))
+            let scaled = context?.makeImage()
+            
+            self.previewView.image = UIImage(cgImage: scaled!, scale: 1.0, orientation: .right)
+            self.previewView.frame = CGRect(origin: CGPoint(x: 0, y: self.depthView.frame.maxY), size: (self.previewView.image?.size)!)
+        }
     }
     
     
