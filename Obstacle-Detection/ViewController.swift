@@ -8,11 +8,15 @@
 
 import UIKit
 import AVFoundation
+import Zip
+
 
 class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    let PHOTO_FOLDER_NAME = "Obstacle-Detection-imgs"
+    
     let captureSession = AVCaptureSession()
-    let imageView = UIImageView()
+    let depthView = UIImageView()
     let previewView = UIImageView()
     let dataOutputQueue = DispatchQueue(label: "DepthQueue", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     let depthOutput = AVCaptureDepthDataOutput()
@@ -42,7 +46,7 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         }
         
         
-        self.view.addSubview(self.imageView)
+        self.view.addSubview(self.depthView)
         
         self.view.addSubview(self.previewView)
         
@@ -98,10 +102,11 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
             )
         ) else {return}
         let image = UIImage(cgImage: videoImage, scale: 1.0, orientation: .right)
-        self.imageView.image = image
-        self.imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
+        self.depthView.image = image
+        self.depthView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
         self.previewView.frame = CGRect(origin: CGPoint(x: 0, y: self.view.bounds.height / 2), size: image.size)
     }
+    
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
@@ -111,7 +116,76 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         self.previewView.image = UIImage(cgImage: videoImage, scale: 1.0, orientation: .right)
         
     }
-
+    
+    
+    @IBAction func toggleDepthMode(_ sender: UISwitch) {
+        self.depthOutput.isFilteringEnabled = sender.isOn
+    }
+    
+    
+    func curTimeStamp() -> String {
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        return formatter.string(from: now)
+    }
+    
+    
+    @IBAction func takePhoto(_ sender: UIButton) {
+        do {
+            let photoFolder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(PHOTO_FOLDER_NAME)
+            try FileManager.default.createDirectory(at: photoFolder, withIntermediateDirectories: true, attributes: nil)
+            
+            let imgName = curTimeStamp()
+            
+            if let realImg = self.previewView.image {
+                if let data = realImg.pngData() {
+                    do {
+                        try data.write(to: photoFolder.appendingPathComponent(imgName + "_realImg.png"))
+                    } catch {
+                        print("shit happened when saving realImg" + error.localizedDescription)
+                    }
+                }
+            }
+            if let depthImg = self.depthView.image {
+                if let data = depthImg.pngData() {
+                    do {
+                        try data.write(to: photoFolder.appendingPathComponent(imgName + "_depthImg.png"))
+                    } catch {
+                        print("shit happened when saving depthImg" + error.localizedDescription)
+                    }
+                }
+            }
+        } catch {
+            print("error in creating dir" + error.localizedDescription)
+        }
+    }
+    
+    
+    @IBAction func exportPhotos(_ sender: UIButton) {
+        
+        do {
+            let folderUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            
+            let photoFolder = folderUrl.appendingPathComponent(PHOTO_FOLDER_NAME, isDirectory: true)
+            let zipPath = folderUrl.appendingPathComponent("archive.zip")
+            
+            try Zip.zipFiles(paths: [photoFolder], zipFilePath: zipPath, password: nil, progress: nil)
+            
+            let vc = UIActivityViewController(activityItems: [zipPath], applicationActivities: [])
+            self.present(vc, animated: true, completion: nil)
+        } catch {
+            print("shit happened when zipping" + error.localizedDescription)
+        }
+    }
+    
+    
+    @IBAction func clearAllPhotos(_ sender: UIButton) {
+        let folderUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let photoFolder = folderUrl.appendingPathComponent(PHOTO_FOLDER_NAME, isDirectory: true)
+        try? FileManager.default.removeItem(at: photoFolder)
+    }
 
 }
 

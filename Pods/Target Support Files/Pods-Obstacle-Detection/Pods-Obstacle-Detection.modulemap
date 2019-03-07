@@ -1,0 +1,6 @@
+module Pods_Obstacle_Detection {
+  umbrella header "Pods-Obstacle-Detection-umbrella.h"
+
+  export *
+  module * { export * }
+}
