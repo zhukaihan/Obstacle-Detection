@@ -11,7 +11,9 @@ import AVFoundation
 import Zip
 
 
-class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
+class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureDataOutputSynchronizerDelegate {
+    
+    
     
     let PHOTO_FOLDER_NAME = "Obstacle-Detection-imgs"
     
@@ -72,14 +74,12 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         self.captureSession.addInput(videoDeviceInput)
         
         // Add depth data output to session.
-        self.depthOutput.setDelegate(self, callbackQueue: DispatchQueue.main)
         guard self.captureSession.canAddOutput(self.depthOutput) else { return }
         self.captureSession.addOutput(self.depthOutput)
         if let connection = self.depthOutput.connections.first {
             connection.videoOrientation = .landscapeRight
         }
         
-        self.videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
         guard self.captureSession.canAddOutput(self.videoOutput) else {return}
         self.captureSession.addOutput(self.videoOutput)
         if let connection = self.videoOutput.connections.first {
@@ -87,6 +87,7 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         }
         
         self.captureSync = AVCaptureDataOutputSynchronizer(dataOutputs: [videoOutput, depthOutput])
+        self.captureSync?.setDelegate(self, queue: dataOutputQueue)
         
         self.captureSession.commitConfiguration()
         self.captureSession.startRunning()
@@ -94,42 +95,59 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         
     }
     
-    
-    func depthDataOutput(_ output: AVCaptureDepthDataOutput, didOutput depthData: AVDepthData, timestamp: CMTime, connection: AVCaptureConnection) {
-        let rawimage = CIImage(cvPixelBuffer: depthData.depthDataMap)
+    func dataOutputSynchronizer(_ synchronizer: AVCaptureDataOutputSynchronizer, didOutput synchronizedDataCollection: AVCaptureSynchronizedDataCollection) {
+        guard let depthData = synchronizedDataCollection[self.depthOutput] as? AVCaptureSynchronizedDepthData else {return}
+        guard let imgData = synchronizedDataCollection[self.videoOutput] as? AVCaptureSynchronizedSampleBufferData else {return}
         
+        let depthDatMap = depthData.depthData.depthDataMap
+        let rawimage = CIImage(cvPixelBuffer: depthDatMap)
+        
+        // Convert depth data to an image to show.
         let temporaryContext = CIContext()
-        guard let videoImage = temporaryContext.createCGImage(
+        guard let depthImg = temporaryContext.createCGImage(
             rawimage,
             from: CGRect(
                 x: 0, y: 0,
-                width: CVPixelBufferGetWidth(depthData.depthDataMap),
-                height: CVPixelBufferGetHeight(depthData.depthDataMap)
+                width: CVPixelBufferGetWidth(depthDatMap),
+                height: CVPixelBufferGetHeight(depthDatMap)
             )
         ) else {return}
-        let image = UIImage(cgImage: videoImage, scale: 1.0, orientation: .right)
-        self.depthView.image = image
-        self.depthView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
-    }
-    
-    
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        
+        // Convert image buffer data to image to show.
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(imgData.sampleBuffer) else { return }
         let ciImage = CIImage(cvPixelBuffer: imageBuffer)
         guard let videoImage = CIContext().createCGImage(ciImage, from: ciImage.extent) else { return }
         
         // Resize image to the same size as depth map.
-        if let depthImg = self.depthView.image?.cgImage {
-            let context = CGContext(data: nil, width: depthImg.width, height: depthImg.height, bitsPerComponent: depthImg.bitsPerComponent, bytesPerRow: depthImg.bytesPerRow, space: depthImg.colorSpace!, bitmapInfo: depthImg.bitmapInfo.rawValue)
-            context!.interpolationQuality = .high
-            context!.draw(videoImage, in: CGRect(x: 0, y: 0, width: depthImg.width, height: depthImg.height))
-            let scaled = context?.makeImage()
-            
-            self.previewView.image = UIImage(cgImage: scaled!, scale: 1.0, orientation: .right)
-            self.previewView.frame = CGRect(origin: CGPoint(x: 0, y: self.depthView.frame.maxY), size: (self.previewView.image?.size)!)
+        let context = CGContext(
+            data: nil,
+            width: depthImg.width, height: depthImg.height,
+            bitsPerComponent: depthImg.bitsPerComponent, bytesPerRow: depthImg.bytesPerRow,
+            space: depthImg.colorSpace!, bitmapInfo: depthImg.bitmapInfo.rawValue
+        )
+        context!.interpolationQuality = .high
+        context!.draw(videoImage, in: CGRect(x: 0, y: 0, width: depthImg.width, height: depthImg.height))
+        let scaled = context?.makeImage()
+        
+        // Show imgs.
+        self.showDepthImg(depthImg)
+        self.showVideoImg(scaled!)
+    }
+    
+    func showDepthImg(_ videoImage: CGImage) {
+        DispatchQueue.main.async {
+            let image = UIImage(cgImage: videoImage, scale: 1.0, orientation: .right)
+            self.depthView.image = image
+            self.depthView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
         }
     }
     
+    func showVideoImg(_ videoImage: CGImage) {
+        DispatchQueue.main.async {
+            self.previewView.image = UIImage(cgImage: videoImage, scale: 1.0, orientation: .right)
+            self.previewView.frame = CGRect(origin: CGPoint(x: 0, y: self.depthView.frame.maxY), size: (self.previewView.image?.size)!)
+        }
+    }
     
     @IBAction func toggleDepthMode(_ sender: UISwitch) {
         self.depthOutput.isFilteringEnabled = sender.isOn
