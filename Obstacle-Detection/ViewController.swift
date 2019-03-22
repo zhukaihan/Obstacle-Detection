@@ -119,15 +119,15 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         guard let videoImage = CIContext().createCGImage(ciImage, from: ciImage.extent) else { return }
         
         // Resize image to the same size as depth map.
-        if let depthImg = self.depthView.image?.cgImage {
-            let context = CGContext(data: nil, width: depthImg.width, height: depthImg.height, bitsPerComponent: depthImg.bitsPerComponent, bytesPerRow: depthImg.bytesPerRow, space: depthImg.colorSpace!, bitmapInfo: depthImg.bitmapInfo.rawValue)
-            context!.interpolationQuality = .high
-            context!.draw(videoImage, in: CGRect(x: 0, y: 0, width: depthImg.width, height: depthImg.height))
-            let scaled = context?.makeImage()
-            
-            self.previewView.image = UIImage(cgImage: scaled!, scale: 1.0, orientation: .right)
-            self.previewView.frame = CGRect(origin: CGPoint(x: 0, y: self.depthView.frame.maxY), size: (self.previewView.image?.size)!)
-        }
+        guard let depthImg = self.depthView.image?.cgImage else { return }
+        
+        let context = CGContext(data: nil, width: depthImg.width, height: depthImg.height, bitsPerComponent: depthImg.bitsPerComponent, bytesPerRow: depthImg.bytesPerRow, space: depthImg.colorSpace!, bitmapInfo: depthImg.bitmapInfo.rawValue)
+        context!.interpolationQuality = .high
+        context!.draw(videoImage, in: CGRect(x: 0, y: 0, width: depthImg.width, height: depthImg.height))
+        let scaled = context?.makeImage()
+        
+        self.previewView.image = UIImage(cgImage: scaled!, scale: 1.0, orientation: .right)
+        self.previewView.frame = CGRect(origin: CGPoint(x: 0, y: self.depthView.frame.maxY), size: (self.previewView.image?.size)!)
     }
     
     
@@ -152,24 +152,45 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
             
             let imgName = curTimeStamp()
             
-            if let realImg = self.previewView.image {
-                if let data = realImg.pngData() {
-                    do {
-                        try data.write(to: photoFolder.appendingPathComponent(imgName + "_realImg.png"))
-                    } catch {
-                        print("shit happened when saving realImg" + error.localizedDescription)
-                    }
+            guard let realImg = self.previewView.image?.cgImage else { return }
+            //guard let realData = realImg.pngData() else { return }
+            guard let depthImg = self.depthView.image?.cgImage else { return }
+            //guard let depthData = depthImg.pngData() else { return }
+            
+            let width = depthImg.width;
+            let height = depthImg.height;
+            
+            let bytesPerPixel = 4;
+            let bytesPerRow = bytesPerPixel * width;
+            let bitsPerComponent = 8;
+            
+            let realContext = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
+            realContext?.draw(realImg, in: CGRect(x: 0, y: 0, width: width, height: height))
+            
+            let depthContext = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue)
+            depthContext?.draw(depthImg, in: CGRect(x: 0, y: 0, width: width, height: height))
+            
+            guard let realData = realContext?.data?.bindMemory(to: UInt8.self, capacity: width * height) else { return }
+            guard let depthData = depthContext?.data?.bindMemory(to: UInt8.self, capacity: width * height) else { return }
+            
+            var base, offset:Int
+            
+            for y in 0..<height {
+                base = y * height * 4
+                for x in 0..<width {
+                    offset = base + x * 4
+                    realData[offset] = (depthData[offset] + depthData[offset + 1] + depthData[offset + 2]) / 3
                 }
             }
-            if let depthImg = self.depthView.image {
-                if let data = depthImg.pngData() {
-                    do {
-                        try data.write(to: photoFolder.appendingPathComponent(imgName + "_depthImg.png"))
-                    } catch {
-                        print("shit happened when saving depthImg" + error.localizedDescription)
-                    }
-                }
+            
+            
+            do {
+                try realData.write(to: photoFolder.appendingPathComponent(imgName + "_realImg.png"))
+                try depthData.write(to: photoFolder.appendingPathComponent(imgName + "_depthImg.png"))
+            } catch {
+                print("shit happened when saving img" + error.localizedDescription)
             }
+            
         } catch {
             print("error in creating dir" + error.localizedDescription)
         }
