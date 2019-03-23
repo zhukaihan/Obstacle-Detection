@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Obstacle_Detection" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2A0-iU-Eyc">
-                                <rect key="frame" x="326" y="636" width="49" height="31"/>
+                                <rect key="frame" x="44" y="323" width="49" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="TDt-iU-l0I"/>
                                     <constraint firstAttribute="width" constant="47" id="XhS-u4-8P7"/>
@@ -29,46 +29,66 @@
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vmr-Za-v4k">
-                                <rect key="frame" x="149" y="637" width="76" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="76" id="YNr-gT-NUy"/>
-                                </constraints>
+                                <rect key="frame" x="692" y="162" width="76" height="30"/>
                                 <state key="normal" title="Take Photo"/>
                                 <connections>
                                     <action selector="takePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S82-On-hke"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t59-ca-4wG">
-                                <rect key="frame" x="0.0" y="637" width="97" height="30"/>
-                                <state key="normal" title="Export Photos"/>
-                                <connections>
-                                    <action selector="exportPhotos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zDQ-hq-La8"/>
-                                </connections>
-                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nGf-ZO-EpB">
+                                <rect key="frame" x="44" y="57" width="320" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="gZ2-Ef-RnY"/>
+                                    <constraint firstAttribute="width" constant="320" id="yW3-6d-DU2"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ilh-rD-d9o">
+                                <rect key="frame" x="364" y="57" width="320" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="6ES-OG-XHU"/>
+                                    <constraint firstAttribute="height" constant="240" id="k9R-eh-9fT"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ZQ-wr-SZo">
-                                <rect key="frame" x="237" y="20" width="138" height="30"/>
+                                <rect key="frame" x="630" y="0.0" width="138" height="30"/>
                                 <state key="normal" title="Clear Stored Photos"/>
                                 <connections>
                                     <action selector="clearAllPhotos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rRY-pi-E7b"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t59-ca-4wG">
+                                <rect key="frame" x="671" y="324" width="97" height="30"/>
+                                <state key="normal" title="Export Photos"/>
+                                <connections>
+                                    <action selector="exportPhotos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zDQ-hq-La8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="t59-ca-4wG" secondAttribute="bottom" id="5qP-o2-3PA"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2ZQ-wr-SZo" secondAttribute="trailing" id="GEm-Jz-PaN"/>
-                            <constraint firstItem="vmr-Za-v4k" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="149" id="bBy-sl-HPE"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vmr-Za-v4k" secondAttribute="bottom" id="gMl-zr-F5a"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2A0-iU-Eyc" secondAttribute="bottom" id="lQt-7h-yXd"/>
-                            <constraint firstItem="t59-ca-4wG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="obU-kg-Wfo"/>
-                            <constraint firstItem="2ZQ-wr-SZo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ruS-Vi-Ltp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2A0-iU-Eyc" secondAttribute="trailing" constant="2" id="wg3-G5-ezG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t59-ca-4wG" secondAttribute="trailing" id="2mU-gZ-WgI"/>
+                            <constraint firstItem="vmr-Za-v4k" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="6qn-mX-cGD"/>
+                            <constraint firstItem="ilh-rD-d9o" firstAttribute="leading" secondItem="nGf-ZO-EpB" secondAttribute="trailing" id="7d6-iP-wwH"/>
+                            <constraint firstItem="nGf-ZO-EpB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Do7-Fj-KDt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vmr-Za-v4k" secondAttribute="trailing" id="LK8-Fi-5FY"/>
+                            <constraint firstItem="2ZQ-wr-SZo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="N8h-8J-4LR"/>
+                            <constraint firstItem="nGf-ZO-EpB" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="SZU-Mw-kOQ"/>
+                            <constraint firstItem="ilh-rD-d9o" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="h49-qP-V4B"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2A0-iU-Eyc" secondAttribute="bottom" id="hK9-T0-J2z"/>
+                            <constraint firstItem="t59-ca-4wG" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="ktA-Gk-WtU"/>
+                            <constraint firstItem="2A0-iU-Eyc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="kvA-HJ-To9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2ZQ-wr-SZo" secondAttribute="trailing" id="tnP-y6-SPn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="depthView" destination="ilh-rD-d9o" id="f1o-gi-w4K"/>
+                        <outlet property="previewView" destination="nGf-ZO-EpB" id="aV4-gF-8xk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="56.896551724137936" y="26.399999999999999"/>
         </scene>
     </scenes>
 </document>
