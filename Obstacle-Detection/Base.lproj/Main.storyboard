@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2A0-iU-Eyc">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2A0-iU-Eyc">
                                 <rect key="frame" x="44" y="323" width="49" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="TDt-iU-l0I"/>
@@ -63,12 +63,19 @@
                                     <action selector="exportPhotos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zDQ-hq-La8"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Obstacle Not Detected. " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylf-6w-ch7">
+                                <rect key="frame" x="44" y="0.0" width="320" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t59-ca-4wG" secondAttribute="trailing" id="2mU-gZ-WgI"/>
                             <constraint firstItem="vmr-Za-v4k" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="6qn-mX-cGD"/>
                             <constraint firstItem="ilh-rD-d9o" firstAttribute="leading" secondItem="nGf-ZO-EpB" secondAttribute="trailing" id="7d6-iP-wwH"/>
+                            <constraint firstItem="ylf-6w-ch7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="A59-2k-3L2"/>
                             <constraint firstItem="nGf-ZO-EpB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Do7-Fj-KDt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vmr-Za-v4k" secondAttribute="trailing" id="LK8-Fi-5FY"/>
                             <constraint firstItem="2ZQ-wr-SZo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="N8h-8J-4LR"/>
@@ -77,12 +84,15 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2A0-iU-Eyc" secondAttribute="bottom" id="hK9-T0-J2z"/>
                             <constraint firstItem="t59-ca-4wG" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="ktA-Gk-WtU"/>
                             <constraint firstItem="2A0-iU-Eyc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="kvA-HJ-To9"/>
+                            <constraint firstItem="ylf-6w-ch7" firstAttribute="width" secondItem="nGf-ZO-EpB" secondAttribute="width" id="lPn-cj-yZO"/>
+                            <constraint firstItem="ylf-6w-ch7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mMM-hf-60i"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2ZQ-wr-SZo" secondAttribute="trailing" id="tnP-y6-SPn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="depthView" destination="ilh-rD-d9o" id="f1o-gi-w4K"/>
+                        <outlet property="detectionInfoLabel" destination="ylf-6w-ch7" id="RrE-bJ-pvo"/>
                         <outlet property="previewView" destination="nGf-ZO-EpB" id="aV4-gF-8xk"/>
                     </connections>
                 </viewController>
