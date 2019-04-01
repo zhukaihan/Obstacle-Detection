@@ -53,9 +53,7 @@ class ObstacleDetector {
                 if (depth == 0 || nextDepth == 0) {
                     continue
                 }
-                //print("depth: \(depth); nextDepth: \(nextDepth)")
                 if (nextDepth - depth > ObstacleDetector.OBSTACLE_DIFF_THRESHOLD) {
-                    print(nextDepth - depth)
                     isObstacle = true
                     break
                 }

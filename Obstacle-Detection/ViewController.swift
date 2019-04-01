@@ -15,12 +15,16 @@ import Zip
 class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureDataOutputSynchronizerDelegate, ObstacleDetectorDelegate {
     
     
-    
-    
-    
-    
     let PHOTO_FOLDER_NAME = "Obstacle-Detection-imgs"
-    let FPS: Double = 15
+    let DESIRED_MIN_FPS: CMTimeScale = 10 // Must be less than 30.
+    let BG_DEFAULT_COLOR = UIColor.black
+    let PHOTO_CAPTURE_BG_COLOR = UIColor.white
+    let PHOTO_DELETE_BG_COLOR = UIColor.green
+    let ALERT_TEXT_DEFAULT_COLOR = UIColor.white
+    let ALERT_TEXT_DEFAULT_TEXT = "Obstacle Not Detected. "
+    let ALERT_TEXT_ALERT_COLOR = UIColor.red
+    let ALERT_TEXT_ALERT_TEXT = "Obstacle Detected! "
+    
     
     let captureSession = AVCaptureSession()
     @IBOutlet var depthView: UIImageView!
@@ -34,7 +38,8 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     
     var storeImg: ODImage?
     @IBOutlet var detectionInfoLabel: UILabel!
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -80,30 +85,6 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         // Focus is automatic.
         videoDevice.focusMode = .continuousAutoFocus
         
-        // Set frame rate.
-        /*var lowestFormat: AVCaptureDevice.Format?
-        var lowestFrameRateRange: AVFrameRateRange?
-        
-        for format in videoDevice.formats {
-            for range in format.videoSupportedFrameRateRanges {
-                if lowestFrameRateRange == nil || range.minFrameRate < (lowestFrameRateRange?.minFrameRate)! {
-                    lowestFormat = format;
-                    lowestFrameRateRange = range;
-                    print(range.minFrameRate)
-                    print(range.maxFrameRate)
-                }
-            }
-        }
-        if lowestFormat != nil && lowestFrameRateRange != nil {
-            videoDevice.activeFormat = lowestFormat!;
-            videoDevice.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 4)// lowestFrameRateRange!.maxFrameDuration
-            videoDevice.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: 4)// lowestFrameRateRange!.maxFrameDuration
-            //videoDevice.activeDepthDataFormat = lowestFormat!;
-            //videoDevice.activeDepthDataMinFrameDuration = lowestFrameRateRange!.maxFrameDuration
-            print(lowestFrameRateRange?.minFrameDuration)
-            print(lowestFrameRateRange?.maxFrameDuration)
-        }*/
-        
         // Add dual camera input to session.
         guard
             let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice),
@@ -126,10 +107,36 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         self.captureSync = AVCaptureDataOutputSynchronizer(dataOutputs: [videoOutput, depthOutput])
         self.captureSync?.setDelegate(self, queue: dataOutputQueue)
         
-        self.captureSession.commitConfiguration()
-        self.captureSession.startRunning()
+        // Set frame rate.
+        // Discover maximum frame duration.
+        var maxFrameDuration = videoDevice.activeDepthDataMinFrameDuration
+        for range in (videoDevice.activeDepthDataFormat?.videoSupportedFrameRateRanges)! {
+            if range.maxFrameDuration > maxFrameDuration {
+                maxFrameDuration = range.maxFrameDuration
+            }
+        }
+        
+        // Set frame rate.
+        let DESIRED_FRAME_DUR: CMTime = CMTime(value: 1, timescale: DESIRED_MIN_FPS)
+        if (maxFrameDuration > DESIRED_FRAME_DUR) {
+            maxFrameDuration = DESIRED_FRAME_DUR
+        }
+        videoDevice.activeVideoMinFrameDuration = maxFrameDuration
+        videoDevice.activeVideoMaxFrameDuration = maxFrameDuration
+        videoDevice.activeDepthDataMinFrameDuration = maxFrameDuration
+        
         videoDevice.unlockForConfiguration()
         
+        self.captureSession.commitConfiguration()
+        self.captureSession.startRunning()
+        
+    }
+    
+    
+    func restoreBgColor() {
+        UIView.animate(withDuration: 1.0, animations: {
+            self.view.backgroundColor = self.BG_DEFAULT_COLOR
+        })
     }
     
     
@@ -191,6 +198,8 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
             CGImageDestinationAddImage(dest, imageToStore, nil)
             CGImageDestinationFinalize(dest)
             
+            self.view.backgroundColor = self.PHOTO_CAPTURE_BG_COLOR
+            self.restoreBgColor()
         } catch {
             print("error in creating dir" + error.localizedDescription)
         }
@@ -219,16 +228,20 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         let folderUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let photoFolder = folderUrl.appendingPathComponent(PHOTO_FOLDER_NAME, isDirectory: true)
         try? FileManager.default.removeItem(at: photoFolder)
+        
+        self.view.backgroundColor = self.PHOTO_DELETE_BG_COLOR
+        self.restoreBgColor()
     }
+    
     
     func obstacleReport(byDetector detector: ObstacleDetector, doesExistObstacle isObstacle: Bool) {
         DispatchQueue.main.async {
             if (isObstacle) {
-                self.detectionInfoLabel.text = "Obstacle Detected! "
-                self.detectionInfoLabel.textColor = UIColor.red
+                self.detectionInfoLabel.text = self.ALERT_TEXT_ALERT_TEXT
+                self.detectionInfoLabel.textColor = self.ALERT_TEXT_ALERT_COLOR
             } else {
-                self.detectionInfoLabel.text = "Obstacle Not Detected. "
-                self.detectionInfoLabel.textColor = UIColor.black
+                self.detectionInfoLabel.text = self.ALERT_TEXT_DEFAULT_TEXT
+                self.detectionInfoLabel.textColor = self.ALERT_TEXT_DEFAULT_COLOR
             }
         }
     }
