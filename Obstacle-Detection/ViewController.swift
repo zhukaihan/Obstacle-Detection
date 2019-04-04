@@ -15,7 +15,8 @@ import Zip
 class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureDataOutputSynchronizerDelegate, ObstacleDetectorDelegate {
     
     
-    let PHOTO_FOLDER_NAME = "Obstacle-Detection-imgs"
+    let PHOTO_FOLDER_NAME = "original"
+    let PHOTO_WITH_DEPTH_FOLDER_NAME = "withdepth"
     let DESIRED_MIN_FPS: CMTimeScale = 10 // Must be less than 30.
     let BG_DEFAULT_COLOR = UIColor.black
     let PHOTO_CAPTURE_BG_COLOR = UIColor.white
@@ -38,6 +39,9 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     
     var storeImg: ODImage?
     @IBOutlet var detectionInfoLabel: UILabel!
+    
+    var depthImg: ODImage?
+    var realImg: ODImage?
     
     
     override func viewDidLoad() {
@@ -145,21 +149,24 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         guard let imgData = synchronizedDataCollection[self.videoOutput] as? AVCaptureSynchronizedSampleBufferData else {return}
         
         // Convert depth data to an image to show.
-        guard let depthImg = ODImage(withCVPixelBuffer: depthData.depthData.depthDataMap) else { return }
+        guard let candidateDepthImg = ODImage(withCVPixelBuffer: depthData.depthData.depthDataMap) else { return }
+        candidateDepthImg.filter()
+        self.depthImg = candidateDepthImg
         
         // Convert image buffer data to image to show.
         // And resize image to the same size as depth map.
         guard let scaledImg = ODImage(withCMSampleBuffer: imgData.sampleBuffer) else { return }
+        self.realImg = scaledImg
         
         // Show imgs.
-        guard let scaledCGImg = scaledImg.toCGImg() else { return }
-        guard let depthCGImg = depthImg.toCGImg() else { return }
+        guard let scaledCGImg = self.realImg!.toCGImg() else { return }
+        guard let depthCGImg = self.depthImg!.toCGImg() else { return }
         DispatchQueue.main.async {
             self.previewView.image = UIImage(cgImage: scaledCGImg)
             self.depthView.image = UIImage(cgImage: depthCGImg)
         }
         
-        guard let storeImgCandidate = scaledImg.addToAlpha(withImg: depthImg) else { return }
+        guard let storeImgCandidate = ODImage(withODImage: scaledImg)!.addToAlpha(withImg: self.depthImg) else { return }
         self.storeImg = storeImgCandidate
         
         obstacleDetector.detectObstacle(withImg: self.storeImg!)
@@ -180,44 +187,88 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     }
     
     
-    @IBAction func takePhoto(_ sender: UIButton) {
+    func getDocumentFolder() -> URL {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }
+    
+    
+    func createFolder(withName name: String) -> URL? {
+        let folder = getDocumentFolder().appendingPathComponent(name)
         do {
-            if (self.storeImg == nil) {
-                return
-            }
-            guard let imageToStore = self.storeImg!.toCGImg() else { return }
-            
-            // Store img to file.
-            let photoFolder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(PHOTO_FOLDER_NAME)
-            try FileManager.default.createDirectory(at: photoFolder, withIntermediateDirectories: true, attributes: nil)
-            
-            let imgName = curTimeStamp()
-            
-            let imgPath = photoFolder.appendingPathComponent(imgName + ".png")
-            guard let dest = CGImageDestinationCreateWithURL(imgPath as CFURL, kUTTypePNG, 1, nil) else { return }
-            CGImageDestinationAddImage(dest, imageToStore, nil)
-            CGImageDestinationFinalize(dest)
-            
+            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            return nil
+        }
+        return folder
+    }
+    
+    
+    func deleteFolder(withName name: String) -> Bool {
+        let folder = getDocumentFolder().appendingPathComponent(name, isDirectory: true)
+        do {
+            try FileManager.default.removeItem(at: folder)
+        } catch {
+            return false
+        }
+        return true
+    }
+    
+    
+    func shareItems(items: [Any]) {
+        let vc = UIActivityViewController(activityItems: items, applicationActivities: [])
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func takePhoto(_ sender: UIButton) {
+        if (self.storeImg == nil) {
+            return
+        }
+        
+        // Store img to file.
+        guard let photoFolder = createFolder(withName: PHOTO_FOLDER_NAME) else { return }
+        guard let photoWithDepthFolder = createFolder(withName: PHOTO_WITH_DEPTH_FOLDER_NAME) else { return }
+        
+        let imgName = curTimeStamp()
+        let photoPath = photoFolder.appendingPathComponent(imgName + ".png")
+        let photoWithDepthPath = photoWithDepthFolder.appendingPathComponent(imgName + ".png")
+        
+        if (
+            (self.realImg?.writeTo(url: photoPath, withName: imgName))! &&
+            (self.storeImg?.writeTo(url: photoWithDepthPath, withName: imgName))!
+        ) {
             self.view.backgroundColor = self.PHOTO_CAPTURE_BG_COLOR
             self.restoreBgColor()
-        } catch {
-            print("error in creating dir" + error.localizedDescription)
         }
     }
     
     
-    @IBAction func exportPhotos(_ sender: UIButton) {
-        
+    @IBAction func exportOriginalPhotos(_ sender: UIButton) {
         do {
-            let folderUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let folderUrl = getDocumentFolder()
             
             let photoFolder = folderUrl.appendingPathComponent(PHOTO_FOLDER_NAME, isDirectory: true)
-            let zipPath = folderUrl.appendingPathComponent("archive.zip")
+            let zipPath = folderUrl.appendingPathComponent("OriginalPhotos.zip")
             
             try Zip.zipFiles(paths: [photoFolder], zipFilePath: zipPath, password: nil, progress: nil)
             
-            let vc = UIActivityViewController(activityItems: [zipPath], applicationActivities: [])
-            self.present(vc, animated: true, completion: nil)
+            shareItems(items: [zipPath])
+        } catch {
+            print("shit happened when zipping" + error.localizedDescription)
+        }
+    }
+    
+    
+    @IBAction func exportPhotosWithDepth(_ sender: UIButton) {
+        do {
+            let folderUrl = getDocumentFolder()
+            
+            let photoFolder = folderUrl.appendingPathComponent(PHOTO_WITH_DEPTH_FOLDER_NAME, isDirectory: true)
+            let zipPath = folderUrl.appendingPathComponent("PhotosWithDepth.zip")
+            
+            try Zip.zipFiles(paths: [photoFolder], zipFilePath: zipPath, password: nil, progress: nil)
+            
+            shareItems(items: [zipPath])
         } catch {
             print("shit happened when zipping" + error.localizedDescription)
         }
@@ -225,12 +276,13 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     
     
     @IBAction func clearAllPhotos(_ sender: UIButton) {
-        let folderUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let photoFolder = folderUrl.appendingPathComponent(PHOTO_FOLDER_NAME, isDirectory: true)
-        try? FileManager.default.removeItem(at: photoFolder)
-        
-        self.view.backgroundColor = self.PHOTO_DELETE_BG_COLOR
-        self.restoreBgColor()
+        if (
+            deleteFolder(withName: PHOTO_FOLDER_NAME) &&
+            deleteFolder(withName: PHOTO_WITH_DEPTH_FOLDER_NAME)
+        ) {
+            self.view.backgroundColor = self.PHOTO_DELETE_BG_COLOR
+            self.restoreBgColor()
+        }
     }
     
     

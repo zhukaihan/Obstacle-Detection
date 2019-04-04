@@ -57,10 +57,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t59-ca-4wG">
-                                <rect key="frame" x="671" y="324" width="97" height="30"/>
-                                <state key="normal" title="Export Photos"/>
+                                <rect key="frame" x="589" y="324" width="179" height="30"/>
+                                <state key="normal" title="Export Photos With Depth"/>
                                 <connections>
-                                    <action selector="exportPhotos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zDQ-hq-La8"/>
+                                    <action selector="exportPhotosWithDepth:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9zC-6V-lwy"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylf-6w-ch7">
@@ -72,12 +72,20 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIk-lS-TyZ">
+                                <rect key="frame" x="427" y="324" width="154" height="30"/>
+                                <state key="normal" title="Export Original Photos"/>
+                                <connections>
+                                    <action selector="exportOriginalPhotos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="39W-Ue-tNo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t59-ca-4wG" secondAttribute="trailing" id="2mU-gZ-WgI"/>
                             <constraint firstItem="vmr-Za-v4k" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="6qn-mX-cGD"/>
                             <constraint firstItem="ilh-rD-d9o" firstAttribute="leading" secondItem="nGf-ZO-EpB" secondAttribute="trailing" id="7d6-iP-wwH"/>
                             <constraint firstItem="ylf-6w-ch7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="A59-2k-3L2"/>
+                            <constraint firstItem="t59-ca-4wG" firstAttribute="leading" secondItem="MIk-lS-TyZ" secondAttribute="trailing" constant="8" id="Bqu-Go-XFE"/>
                             <constraint firstItem="nGf-ZO-EpB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Do7-Fj-KDt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vmr-Za-v4k" secondAttribute="trailing" id="LK8-Fi-5FY"/>
                             <constraint firstItem="2ZQ-wr-SZo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="N8h-8J-4LR"/>
@@ -89,6 +97,7 @@
                             <constraint firstItem="ylf-6w-ch7" firstAttribute="width" secondItem="nGf-ZO-EpB" secondAttribute="width" id="lPn-cj-yZO"/>
                             <constraint firstItem="ylf-6w-ch7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mMM-hf-60i"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2ZQ-wr-SZo" secondAttribute="trailing" id="tnP-y6-SPn"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="MIk-lS-TyZ" secondAttribute="bottom" id="zpG-hF-7CL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

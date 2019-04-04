@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import AVFoundation
+import MobileCoreServices
 
 /**
  The size of an ODImage will always be 320px*240px.
@@ -82,24 +83,104 @@ class ODImage {
         return self.context.makeImage()
     }
     
-    func addToAlpha(withImg img: ODImage) -> ODImage? {
+    func addToAlpha(withImg img: ODImage?) -> ODImage? {
+        if (img == nil) {
+            return nil
+        }
         // Settings for CGContext.
-        let width = ODImage.WIDTH;
-        let height = ODImage.HEIGHT;
+        let width = ODImage.WIDTH
+        let height = ODImage.HEIGHT
         
         // Set up pointer for
         guard let realData = self.context.data?.bindMemory(to: UInt8.self, capacity: width * height) else { return nil }
-        guard let depthData = img.context.data?.bindMemory(to: UInt8.self, capacity: width * height) else { return nil }
+        guard let depthData = img!.context.data?.bindMemory(to: UInt8.self, capacity: width * height) else { return nil }
         
         // Traverse image data to set alpha for realData.
         var offset = 0
         for _ in 0..<ODImage.HEIGHT {
             for _ in 0..<ODImage.WIDTH {
                 realData[offset + 3] = UInt8((Int(depthData[offset]) + Int(depthData[offset + 1]) + Int(depthData[offset + 2])) / 3)
+                if (realData[offset + 3] == 0) {
+                    // To avoid having alpha value of 0. If alpha value is 0, rgb value will be ignored by Core Graphics.
+                    realData[offset + 3] = 1
+                }
                 offset += 4
             }
         }
         
         return self
+    }
+    
+    func filter() {
+        // Settings for CGContext.
+        let width = ODImage.WIDTH
+        let height = ODImage.HEIGHT
+        
+        // Set up pointer for
+        guard let data = self.context.data?.bindMemory(to: UInt8.self, capacity: width * height) else { return }
+        
+        
+        
+        let HOLE_THRESHOLD: UInt8 = 50
+        
+        data[0] = HOLE_THRESHOLD
+        data[1] = HOLE_THRESHOLD
+        data[2] = HOLE_THRESHOLD
+        
+        // Traverse image data to set alpha for realData.
+        var offset = 0
+        for _ in 0..<ODImage.HEIGHT {
+            for widthI in 0..<ODImage.WIDTH {
+                if (data[offset] < HOLE_THRESHOLD || data[offset + 1] < HOLE_THRESHOLD || data[offset + 2] < HOLE_THRESHOLD) {
+                    // Sees a hole. Fill this hole.
+                    // Find right side of the hole.
+                    var leftOffset = offset - 4
+                    let leftWidthI = widthI - 1
+                    var rightOffset = offset
+                    var rightWidthI = widthI
+                    while (rightWidthI < ODImage.WIDTH - 1) && (data[rightOffset] < HOLE_THRESHOLD) {
+                        rightOffset += 4
+                        rightWidthI += 1
+                    }
+                    // If right side is the edge of image, check its value.
+                    if data[rightOffset] < HOLE_THRESHOLD {
+                        data[rightOffset] = HOLE_THRESHOLD
+                        data[rightOffset + 1] = HOLE_THRESHOLD
+                        data[rightOffset + 2] = HOLE_THRESHOLD
+                    }
+                    
+                    var leftVal: Double = Double(data[leftOffset])
+                    let rightVal: Double = Double(data[rightOffset])
+                    
+                    // Fill the hole with a linear function.
+                    let incStep: Double = (rightVal - leftVal) / Double(rightWidthI - leftWidthI)
+                    
+                    while (leftOffset < rightOffset) {
+                        leftVal += incStep
+                        leftOffset += 4
+                        
+                        // Consider the upper pixel for the new value.
+                        var upperVal = leftVal
+                        if (leftOffset - ODImage.WIDTH * 4 >= 0) {
+                            upperVal = Double(data[leftOffset - ODImage.WIDTH * 4])
+                        }
+                        let newVal = UInt8((leftVal + upperVal) / 2)
+                        data[leftOffset] = newVal
+                        data[leftOffset + 1] = newVal
+                        data[leftOffset + 2] = newVal
+                    }
+                }
+                
+                offset += 4
+            }
+        }
+    }
+    
+    func writeTo(url: URL, withName name: String) -> Bool {
+        guard let imgToStore = self.toCGImg() else { return false }
+        guard let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypePNG, 1, nil) else { return false }
+        CGImageDestinationAddImage(dest, imgToStore, nil)
+        CGImageDestinationFinalize(dest)
+        return true
     }
 }
