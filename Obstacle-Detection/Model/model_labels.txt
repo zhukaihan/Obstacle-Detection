@@ -1,0 +1,4 @@
+Obstacle
+Pothole
+Edge
+Uplift

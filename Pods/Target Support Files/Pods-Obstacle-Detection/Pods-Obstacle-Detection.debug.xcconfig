@@ -1,9 +1,10 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/TensorFlowLiteGpuExperimental/Frameworks"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Zip"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Zip" '${SRCROOT}/Pods/TensorFlowLiteGpuExperimental/Frameworks/tensorflow_lite_gpu.framework/Headers'
 LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Zip"
 OTHER_CFLAGS = $(inherited) -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Zip/Zip.modulemap"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"Zip" -l"z"
+OTHER_LDFLAGS = $(inherited) -L ${SRCROOT}/Pods/TensorFlowLiteGpuExperimental/Frameworks/tensorflow_lite_gpu.framework -ObjC -l"Zip" -l"c++" -l"metal_delegate" -l"z" -framework "Accelerate" -framework "tensorflow_lite_gpu" -force_load ${SRCROOT}/Pods/TensorFlowLiteGpuExperimental/Frameworks/tensorflow_lite_gpu.framework/tensorflow_lite_gpu
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Zip/Zip.modulemap"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

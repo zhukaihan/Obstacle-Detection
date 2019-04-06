@@ -6,72 +6,93 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		2C83826ABC7615D7773DBA93AFBF3B14 /* TensorFlowLiteGpuExperimental */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 642D410A9AB78A1ED631A4205E0A197F /* Build configuration list for PBXAggregateTarget "TensorFlowLiteGpuExperimental" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = TensorFlowLiteGpuExperimental;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
-		0C29ED696D95A1A428F54A200162004F /* Zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 8285361B297F4639ED81EAA3605C9A18 /* Zip.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		1BD88B31BC4096377EE47A2B30B1D92F /* ZipUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235BBB972B543B722BFEB7F977315B3D /* ZipUtilities.swift */; };
-		21BB672FE427C0A424AED5EF64AA95CE /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A8408CC12EB13CCD653BF865419BA0 /* ioapi.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		21FAFB7FB0C5258151AD9FE0B67E63E7 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 2430B0B973B333076E669B1BF1B12BB2 /* ioapi.c */; };
-		31E4A6FD3C27837796139D3340FF9640 /* Zip-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A932FBE24A890CC48D5D1AC2C2536D /* Zip-dummy.m */; };
-		36E6B6EB6C7D5C053D244211090008A9 /* zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 613B5234253A7964A81CBCB8B9741AA2 /* zip.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		49771BC28DC6D34C54749EC1A6866055 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A0D6543092DBACDA50A3AA710FEF436 /* unzip.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		4F307723B9165AA7A05BBC08F0A2A080 /* Pods-Obstacle-Detection-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 417870E7AD8E51BBE3F6BAB9B036E943 /* Pods-Obstacle-Detection-dummy.m */; };
-		8621E271537BC5FA52A84754B11CCA1D /* Zip-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EAB54DC74A83B7BBB6EBBB264DE563D6 /* Zip-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		A342CAC1637FA1CAD4B18D90FF8A79C0 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = FA80A078281122D2292848B7FC066774 /* unzip.c */; };
-		AB11DB6D13DD6652B61750E4BD5880F7 /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634CDD5310D220BDD0EF23DFC233D2A8 /* Zip.swift */; };
-		B0FC4E539BEB3ED3974C347D81C0D4C0 /* QuickZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C78D582DC0E616A2483417BD8CAD93 /* QuickZip.swift */; };
-		B15D8F70E25C1DBFE06E6100B35AC2EB /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 414F32B67B9CDE9C33E0C92C4FB77D13 /* zip.c */; };
-		C54D8AE9BF1091A0DBB4B763F61D4C4D /* Pods-Obstacle-Detection-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1DB5112E6A7978D0093EECF009E611 /* Pods-Obstacle-Detection-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		EABF56C5B7E3C43690419CF705BB316D /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B91F2252B3EF2E7E54BBF0A5A8CCB23 /* crypt.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		034140EADA56E90528351981222733FE /* ZipUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDA8A7CE830586D41222DC4376590D2 /* ZipUtilities.swift */; };
+		076A8608B7AD0035A0C23D3632374182 /* Zip-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 39B4CB4B4A55B6E126BAEE5918E69DF3 /* Zip-dummy.m */; };
+		12A4476A75E1DAEB690388CB90E37515 /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 0226872AC42B8D2CE54EA7D10719F297 /* crypt.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		1A13D78C8E5A82B3F3557B8876C0DBC5 /* zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57005FC5FBA90EB2A8A5FE3B8A10A9 /* zip.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		2BBFAA27CB3894DCC6A6161D3FB24604 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FBFB928EDC09092C00548088518301F /* zip.c */; };
+		46CBBF99482EFF0BE40A2E4DB2F044CE /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 5043E1F9E54E0AF46C0516BE441A0015 /* ioapi.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		4E2305EEDF3855F63FE3FAEA806B7F8C /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B19AAAE1D1AB840B12B5B36DB53C3B3 /* unzip.c */; };
+		5983F814F275B36D00E064558A4AEFA8 /* Zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 109A17BBE8F19986820339DC2D207C99 /* Zip.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		70F14D156FF6E3E458645B82CC56C68D /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = 21F3CF6929344C37AA86FBE29A5372FC /* unzip.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		846EF544E3E59C6D098EB3D1B99215CB /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CE83A52C7B9D39880DCADF052D3E4E64 /* ioapi.c */; };
+		8BE02DE374F7876BDA7DB054C3DAA1B3 /* Pods-Obstacle-Detection-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1DB5112E6A7978D0093EECF009E611 /* Pods-Obstacle-Detection-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		9F8C1B67DA8E23DC0D949FEC816FC894 /* QuickZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEE3D138FB3B858006486655B8C9DD6 /* QuickZip.swift */; };
+		D351FECA55E20C00A5D79B8112FF67AC /* Zip-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F45D0ACAD904FAF874B5BA8B042CC21C /* Zip-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		D37EEBF8B1C60BA003C98F669FFB26D8 /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A90218002988BC4CB1F32C4793C0E68 /* Zip.swift */; };
+		E31C1958D897F55043BF2B6841392385 /* Pods-Obstacle-Detection-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 417870E7AD8E51BBE3F6BAB9B036E943 /* Pods-Obstacle-Detection-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2AAB1953A0ECFCBDF9699CEB2D8682A8 /* PBXContainerItemProxy */ = {
+		07B5AB181900E9D9EFE3837E87180868 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E7BF349A2C878DAC1C330448A0D5852F;
+			remoteGlobalIDString = 2C83826ABC7615D7773DBA93AFBF3B14;
+			remoteInfo = TensorFlowLiteGpuExperimental;
+		};
+		6C008A9B0A46C58E2B16EF3FA8D1CA17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8DC1B9C00DB77F6B19628A03D3FDAB3;
 			remoteInfo = Zip;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		00DC73626B060A392B6A60236D523073 /* Pods-Obstacle-Detection.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Obstacle-Detection.modulemap"; sourceTree = "<group>"; };
-		18D4EA5D49E8E61FBD5A5D4F9350F9CD /* Zip-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Zip-prefix.pch"; sourceTree = "<group>"; };
-		21A932FBE24A890CC48D5D1AC2C2536D /* Zip-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Zip-dummy.m"; sourceTree = "<group>"; };
-		235BBB972B543B722BFEB7F977315B3D /* ZipUtilities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZipUtilities.swift; path = Zip/ZipUtilities.swift; sourceTree = "<group>"; };
-		2430B0B973B333076E669B1BF1B12BB2 /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi.c; path = Zip/minizip/ioapi.c; sourceTree = "<group>"; };
-		2B91F2252B3EF2E7E54BBF0A5A8CCB23 /* crypt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = Zip/minizip/crypt.h; sourceTree = "<group>"; };
+		0226872AC42B8D2CE54EA7D10719F297 /* crypt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = Zip/minizip/crypt.h; sourceTree = "<group>"; };
+		109A17BBE8F19986820339DC2D207C99 /* Zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Zip.h; path = Zip/Zip.h; sourceTree = "<group>"; };
+		1A57005FC5FBA90EB2A8A5FE3B8A10A9 /* zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = zip.h; path = Zip/minizip/zip.h; sourceTree = "<group>"; };
+		21F3CF6929344C37AA86FBE29A5372FC /* unzip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = Zip/minizip/unzip.h; sourceTree = "<group>"; };
+		2A60A00A5A50B5EA475721C66F9CC153 /* Zip.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Zip.modulemap; sourceTree = "<group>"; };
+		39B4CB4B4A55B6E126BAEE5918E69DF3 /* Zip-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Zip-dummy.m"; sourceTree = "<group>"; };
 		40B2BB85B25152C01844200BBE8405B9 /* libZip.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libZip.a; path = libZip.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		414F32B67B9CDE9C33E0C92C4FB77D13 /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = zip.c; path = Zip/minizip/zip.c; sourceTree = "<group>"; };
 		417870E7AD8E51BBE3F6BAB9B036E943 /* Pods-Obstacle-Detection-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Obstacle-Detection-dummy.m"; sourceTree = "<group>"; };
-		44A8408CC12EB13CCD653BF865419BA0 /* ioapi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = Zip/minizip/ioapi.h; sourceTree = "<group>"; };
+		4B19AAAE1D1AB840B12B5B36DB53C3B3 /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = unzip.c; path = Zip/minizip/unzip.c; sourceTree = "<group>"; };
+		5043E1F9E54E0AF46C0516BE441A0015 /* ioapi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = Zip/minizip/ioapi.h; sourceTree = "<group>"; };
 		51485A39D508F7BF1AE2BCA552AEC798 /* libPods-Obstacle-Detection.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Obstacle-Detection.a"; path = "libPods-Obstacle-Detection.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A0D6543092DBACDA50A3AA710FEF436 /* unzip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = Zip/minizip/unzip.h; sourceTree = "<group>"; };
 		5D1DB5112E6A7978D0093EECF009E611 /* Pods-Obstacle-Detection-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Obstacle-Detection-umbrella.h"; sourceTree = "<group>"; };
-		613B5234253A7964A81CBCB8B9741AA2 /* zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = zip.h; path = Zip/minizip/zip.h; sourceTree = "<group>"; };
-		634CDD5310D220BDD0EF23DFC233D2A8 /* Zip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Zip.swift; path = Zip/Zip.swift; sourceTree = "<group>"; };
+		5EDA8A7CE830586D41222DC4376590D2 /* ZipUtilities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZipUtilities.swift; path = Zip/ZipUtilities.swift; sourceTree = "<group>"; };
 		6AC725080C027CECDB660571B71BF887 /* Pods-Obstacle-Detection-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Obstacle-Detection-acknowledgements.markdown"; sourceTree = "<group>"; };
+		6BD97921BCCD55D81355421045692A7B /* Zip.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Zip.xcconfig; sourceTree = "<group>"; };
 		702430ADE98EA1B0CB5A2077BC98CC63 /* Pods-Obstacle-Detection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Obstacle-Detection.release.xcconfig"; sourceTree = "<group>"; };
-		8285361B297F4639ED81EAA3605C9A18 /* Zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Zip.h; path = Zip/Zip.h; sourceTree = "<group>"; };
+		7A90218002988BC4CB1F32C4793C0E68 /* Zip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Zip.swift; path = Zip/Zip.swift; sourceTree = "<group>"; };
+		9BEE3D138FB3B858006486655B8C9DD6 /* QuickZip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickZip.swift; path = Zip/QuickZip.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A1C78D582DC0E616A2483417BD8CAD93 /* QuickZip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickZip.swift; path = Zip/QuickZip.swift; sourceTree = "<group>"; };
-		CE3AACF7FEFF89075887DC0E57F7060D /* Zip.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Zip.xcconfig; sourceTree = "<group>"; };
+		9FBFB928EDC09092C00548088518301F /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = zip.c; path = Zip/minizip/zip.c; sourceTree = "<group>"; };
+		A144179952E7F971CEABEA74B5C591EE /* TensorFlowLiteGpuExperimental.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TensorFlowLiteGpuExperimental.xcconfig; sourceTree = "<group>"; };
+		CE83A52C7B9D39880DCADF052D3E4E64 /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi.c; path = Zip/minizip/ioapi.c; sourceTree = "<group>"; };
+		D5A2378C17179FDEC09F875927917C8B /* Zip-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Zip-prefix.pch"; sourceTree = "<group>"; };
 		DB7D2BB833590138F149162EFA0ABD3C /* Pods-Obstacle-Detection-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Obstacle-Detection-acknowledgements.plist"; sourceTree = "<group>"; };
+		E77BA1AA8D1EA6E79E312CCE4942E9F0 /* tensorflow_lite_gpu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = tensorflow_lite_gpu.framework; path = Frameworks/tensorflow_lite_gpu.framework; sourceTree = "<group>"; };
 		E922A1CA99A12E343D52EAF56AA763F5 /* Pods-Obstacle-Detection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Obstacle-Detection.debug.xcconfig"; sourceTree = "<group>"; };
-		EAB54DC74A83B7BBB6EBBB264DE563D6 /* Zip-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Zip-umbrella.h"; sourceTree = "<group>"; };
-		F74B75307EBD4366C2EC44012860D123 /* Zip.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Zip.modulemap; sourceTree = "<group>"; };
-		FA80A078281122D2292848B7FC066774 /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = unzip.c; path = Zip/minizip/unzip.c; sourceTree = "<group>"; };
+		F45D0ACAD904FAF874B5BA8B042CC21C /* Zip-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Zip-umbrella.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		57FF315563005A9E4E9EB16AD60CD372 /* Frameworks */ = {
+		539B04F1397BDC6067C8E310D9D705FD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A401149F4F99F9A7BDA8E436A1B0D873 /* Frameworks */ = {
+		B70CE41BA3F5211FFDD9169A01D49A41 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -81,6 +102,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		36A9E7194D55DFBC669BC863978CBA90 /* Zip */ = {
+			isa = PBXGroup;
+			children = (
+				0226872AC42B8D2CE54EA7D10719F297 /* crypt.h */,
+				CE83A52C7B9D39880DCADF052D3E4E64 /* ioapi.c */,
+				5043E1F9E54E0AF46C0516BE441A0015 /* ioapi.h */,
+				9BEE3D138FB3B858006486655B8C9DD6 /* QuickZip.swift */,
+				4B19AAAE1D1AB840B12B5B36DB53C3B3 /* unzip.c */,
+				21F3CF6929344C37AA86FBE29A5372FC /* unzip.h */,
+				9FBFB928EDC09092C00548088518301F /* zip.c */,
+				1A57005FC5FBA90EB2A8A5FE3B8A10A9 /* zip.h */,
+				109A17BBE8F19986820339DC2D207C99 /* Zip.h */,
+				7A90218002988BC4CB1F32C4793C0E68 /* Zip.swift */,
+				5EDA8A7CE830586D41222DC4376590D2 /* ZipUtilities.swift */,
+				EC642890811BD409E3DF8151D12945B9 /* Support Files */,
+			);
+			name = Zip;
+			path = Zip;
+			sourceTree = "<group>";
+		};
 		38E4430426E04BD2DF65EAA3FB5E6A38 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,24 +131,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		87149609A75789F8B136EFE1DEACD3E0 /* Zip */ = {
+		86AE0B9C8F366ECA81887D817DB3FCE8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2B91F2252B3EF2E7E54BBF0A5A8CCB23 /* crypt.h */,
-				2430B0B973B333076E669B1BF1B12BB2 /* ioapi.c */,
-				44A8408CC12EB13CCD653BF865419BA0 /* ioapi.h */,
-				A1C78D582DC0E616A2483417BD8CAD93 /* QuickZip.swift */,
-				FA80A078281122D2292848B7FC066774 /* unzip.c */,
-				5A0D6543092DBACDA50A3AA710FEF436 /* unzip.h */,
-				414F32B67B9CDE9C33E0C92C4FB77D13 /* zip.c */,
-				613B5234253A7964A81CBCB8B9741AA2 /* zip.h */,
-				8285361B297F4639ED81EAA3605C9A18 /* Zip.h */,
-				634CDD5310D220BDD0EF23DFC233D2A8 /* Zip.swift */,
-				235BBB972B543B722BFEB7F977315B3D /* ZipUtilities.swift */,
-				EE31B50B21220F22243BDB2768CD3341 /* Support Files */,
+				FD1E48D9358ED291B60B84C13B554B4E /* TensorFlowLiteGpuExperimental */,
+				36A9E7194D55DFBC669BC863978CBA90 /* Zip */,
 			);
-			name = Zip;
-			path = Zip;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		9A6552477534BAEB69EA39BB57AD1145 /* Targets Support Files */ = {
@@ -118,20 +148,12 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		A4F2E94E30BBA74A40EA91CEF3091A3A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				87149609A75789F8B136EFE1DEACD3E0 /* Zip */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
-				A4F2E94E30BBA74A40EA91CEF3091A3A /* Pods */,
+				86AE0B9C8F366ECA81887D817DB3FCE8 /* Pods */,
 				38E4430426E04BD2DF65EAA3FB5E6A38 /* Products */,
 				9A6552477534BAEB69EA39BB57AD1145 /* Targets Support Files */,
 			);
@@ -142,6 +164,27 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E40315ED6895B1E926B6B10FD33CA1DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E77BA1AA8D1EA6E79E312CCE4942E9F0 /* tensorflow_lite_gpu.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EC642890811BD409E3DF8151D12945B9 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2A60A00A5A50B5EA475721C66F9CC153 /* Zip.modulemap */,
+				6BD97921BCCD55D81355421045692A7B /* Zip.xcconfig */,
+				39B4CB4B4A55B6E126BAEE5918E69DF3 /* Zip-dummy.m */,
+				D5A2378C17179FDEC09F875927917C8B /* Zip-prefix.pch */,
+				F45D0ACAD904FAF874B5BA8B042CC21C /* Zip-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Zip";
 			sourceTree = "<group>";
 		};
 		ED90506447E01D506A101C05C7E282A8 /* Pods-Obstacle-Detection */ = {
@@ -159,72 +202,79 @@
 			path = "Target Support Files/Pods-Obstacle-Detection";
 			sourceTree = "<group>";
 		};
-		EE31B50B21220F22243BDB2768CD3341 /* Support Files */ = {
+		EEB2793D0DB51EC742DF01C42D5E9C74 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				F74B75307EBD4366C2EC44012860D123 /* Zip.modulemap */,
-				CE3AACF7FEFF89075887DC0E57F7060D /* Zip.xcconfig */,
-				21A932FBE24A890CC48D5D1AC2C2536D /* Zip-dummy.m */,
-				18D4EA5D49E8E61FBD5A5D4F9350F9CD /* Zip-prefix.pch */,
-				EAB54DC74A83B7BBB6EBBB264DE563D6 /* Zip-umbrella.h */,
+				A144179952E7F971CEABEA74B5C591EE /* TensorFlowLiteGpuExperimental.xcconfig */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/Zip";
+			path = "../Target Support Files/TensorFlowLiteGpuExperimental";
+			sourceTree = "<group>";
+		};
+		FD1E48D9358ED291B60B84C13B554B4E /* TensorFlowLiteGpuExperimental */ = {
+			isa = PBXGroup;
+			children = (
+				E40315ED6895B1E926B6B10FD33CA1DA /* Frameworks */,
+				EEB2793D0DB51EC742DF01C42D5E9C74 /* Support Files */,
+			);
+			name = TensorFlowLiteGpuExperimental;
+			path = TensorFlowLiteGpuExperimental;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		0F1D9D99C4F289E13DF398295F536AF6 /* Headers */ = {
+		5BA306354A1E26C6A000AE3E78E6B2DF /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EABF56C5B7E3C43690419CF705BB316D /* crypt.h in Headers */,
-				21BB672FE427C0A424AED5EF64AA95CE /* ioapi.h in Headers */,
-				49771BC28DC6D34C54749EC1A6866055 /* unzip.h in Headers */,
-				8621E271537BC5FA52A84754B11CCA1D /* Zip-umbrella.h in Headers */,
-				0C29ED696D95A1A428F54A200162004F /* Zip.h in Headers */,
-				36E6B6EB6C7D5C053D244211090008A9 /* zip.h in Headers */,
+				12A4476A75E1DAEB690388CB90E37515 /* crypt.h in Headers */,
+				46CBBF99482EFF0BE40A2E4DB2F044CE /* ioapi.h in Headers */,
+				70F14D156FF6E3E458645B82CC56C68D /* unzip.h in Headers */,
+				D351FECA55E20C00A5D79B8112FF67AC /* Zip-umbrella.h in Headers */,
+				5983F814F275B36D00E064558A4AEFA8 /* Zip.h in Headers */,
+				1A13D78C8E5A82B3F3557B8876C0DBC5 /* zip.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8C23E1DAC02BD8CB33BA8048B08C9C56 /* Headers */ = {
+		750E2F3A2044FC4F4C2AB750F7DA6E68 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C54D8AE9BF1091A0DBB4B763F61D4C4D /* Pods-Obstacle-Detection-umbrella.h in Headers */,
+				8BE02DE374F7876BDA7DB054C3DAA1B3 /* Pods-Obstacle-Detection-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		334A693F8B241595CD2CF847F22AB500 /* Pods-Obstacle-Detection */ = {
+		748A77CB4FCE9FEB88D7C05FF6B48882 /* Pods-Obstacle-Detection */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 680F60E331F5CB3A13DE1AE0C9E09DC8 /* Build configuration list for PBXNativeTarget "Pods-Obstacle-Detection" */;
+			buildConfigurationList = D3F517238A83E9746C69746DA2E8356A /* Build configuration list for PBXNativeTarget "Pods-Obstacle-Detection" */;
 			buildPhases = (
-				8C23E1DAC02BD8CB33BA8048B08C9C56 /* Headers */,
-				F6984A7447B3A406BCEC70EE3DD94067 /* Sources */,
-				57FF315563005A9E4E9EB16AD60CD372 /* Frameworks */,
+				750E2F3A2044FC4F4C2AB750F7DA6E68 /* Headers */,
+				8BF9389A82446B6A6527D1B1154B403D /* Sources */,
+				539B04F1397BDC6067C8E310D9D705FD /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AB20C0AF07089927EB9D54475B5EE0AB /* PBXTargetDependency */,
+				591ED094F218C27A581357D3F4521C1E /* PBXTargetDependency */,
+				645DB202F42BEBECC7DA784410AE3794 /* PBXTargetDependency */,
 			);
 			name = "Pods-Obstacle-Detection";
 			productName = "Pods-Obstacle-Detection";
 			productReference = 51485A39D508F7BF1AE2BCA552AEC798 /* libPods-Obstacle-Detection.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		E7BF349A2C878DAC1C330448A0D5852F /* Zip */ = {
+		C8DC1B9C00DB77F6B19628A03D3FDAB3 /* Zip */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EAF5BD33030F80395204E6596123FCF1 /* Build configuration list for PBXNativeTarget "Zip" */;
+			buildConfigurationList = 4DC9D8416EE0ED0F07276C07457D5E3A /* Build configuration list for PBXNativeTarget "Zip" */;
 			buildPhases = (
-				0F1D9D99C4F289E13DF398295F536AF6 /* Headers */,
-				31409703BAC40FBD15A4A5163FFB3592 /* Sources */,
-				A401149F4F99F9A7BDA8E436A1B0D873 /* Frameworks */,
-				541DAF312A567BA98316D87639EC4ED2 /* Copy generated compatibility header */,
+				5BA306354A1E26C6A000AE3E78E6B2DF /* Headers */,
+				790EE329F9368392A2CEFC0D3A364998 /* Sources */,
+				B70CE41BA3F5211FFDD9169A01D49A41 /* Frameworks */,
+				19DD277B19E8A130F3B98584D7EC306D /* Copy generated compatibility header */,
 			);
 			buildRules = (
 			);
@@ -245,7 +295,7 @@
 				LastUpgradeCheck = 0930;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -256,14 +306,15 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				334A693F8B241595CD2CF847F22AB500 /* Pods-Obstacle-Detection */,
-				E7BF349A2C878DAC1C330448A0D5852F /* Zip */,
+				748A77CB4FCE9FEB88D7C05FF6B48882 /* Pods-Obstacle-Detection */,
+				2C83826ABC7615D7773DBA93AFBF3B14 /* TensorFlowLiteGpuExperimental */,
+				C8DC1B9C00DB77F6B19628A03D3FDAB3 /* Zip */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		541DAF312A567BA98316D87639EC4ED2 /* Copy generated compatibility header */ = {
+		19DD277B19E8A130F3B98584D7EC306D /* Copy generated compatibility header */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -290,41 +341,47 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		31409703BAC40FBD15A4A5163FFB3592 /* Sources */ = {
+		790EE329F9368392A2CEFC0D3A364998 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21FAFB7FB0C5258151AD9FE0B67E63E7 /* ioapi.c in Sources */,
-				B0FC4E539BEB3ED3974C347D81C0D4C0 /* QuickZip.swift in Sources */,
-				A342CAC1637FA1CAD4B18D90FF8A79C0 /* unzip.c in Sources */,
-				31E4A6FD3C27837796139D3340FF9640 /* Zip-dummy.m in Sources */,
-				B15D8F70E25C1DBFE06E6100B35AC2EB /* zip.c in Sources */,
-				AB11DB6D13DD6652B61750E4BD5880F7 /* Zip.swift in Sources */,
-				1BD88B31BC4096377EE47A2B30B1D92F /* ZipUtilities.swift in Sources */,
+				846EF544E3E59C6D098EB3D1B99215CB /* ioapi.c in Sources */,
+				9F8C1B67DA8E23DC0D949FEC816FC894 /* QuickZip.swift in Sources */,
+				4E2305EEDF3855F63FE3FAEA806B7F8C /* unzip.c in Sources */,
+				076A8608B7AD0035A0C23D3632374182 /* Zip-dummy.m in Sources */,
+				2BBFAA27CB3894DCC6A6161D3FB24604 /* zip.c in Sources */,
+				D37EEBF8B1C60BA003C98F669FFB26D8 /* Zip.swift in Sources */,
+				034140EADA56E90528351981222733FE /* ZipUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F6984A7447B3A406BCEC70EE3DD94067 /* Sources */ = {
+		8BF9389A82446B6A6527D1B1154B403D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F307723B9165AA7A05BBC08F0A2A080 /* Pods-Obstacle-Detection-dummy.m in Sources */,
+				E31C1958D897F55043BF2B6841392385 /* Pods-Obstacle-Detection-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AB20C0AF07089927EB9D54475B5EE0AB /* PBXTargetDependency */ = {
+		591ED094F218C27A581357D3F4521C1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TensorFlowLiteGpuExperimental;
+			target = 2C83826ABC7615D7773DBA93AFBF3B14 /* TensorFlowLiteGpuExperimental */;
+			targetProxy = 07B5AB181900E9D9EFE3837E87180868 /* PBXContainerItemProxy */;
+		};
+		645DB202F42BEBECC7DA784410AE3794 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Zip;
-			target = E7BF349A2C878DAC1C330448A0D5852F /* Zip */;
-			targetProxy = 2AAB1953A0ECFCBDF9699CEB2D8682A8 /* PBXContainerItemProxy */;
+			target = C8DC1B9C00DB77F6B19628A03D3FDAB3 /* Zip */;
+			targetProxy = 6C008A9B0A46C58E2B16EF3FA8D1CA17 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		2E01F7102C55DE7693513C1795DDAAEB /* Debug */ = {
+		1396F6FEF1342865BE1C47A20EA1D9D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E922A1CA99A12E343D52EAF56AA763F5 /* Pods-Obstacle-Detection.debug.xcconfig */;
 			buildSettings = {
@@ -347,9 +404,26 @@
 			};
 			name = Debug;
 		};
-		38BF3EE7ADD4BA4C45498314FAFD54CA /* Debug */ = {
+		524B375E2B3AC132C9127D8FF0E8D6D1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE3AACF7FEFF89075887DC0E57F7060D /* Zip.xcconfig */;
+			baseConfigurationReference = A144179952E7F971CEABEA74B5C591EE /* TensorFlowLiteGpuExperimental.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9D9887F669B6839198E556A50AB24E5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6BD97921BCCD55D81355421045692A7B /* Zip.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -371,56 +445,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
-		};
-		4206AA1D2A0571B53B5D704668015849 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE3AACF7FEFF89075887DC0E57F7060D /* Zip.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/Zip/Zip-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MODULEMAP_FILE = Headers/Public/Zip/Zip.modulemap;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = Zip;
-				PRODUCT_NAME = Zip;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		5AA7554DA06CDF962E1C09E6B3376FB0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 702430ADE98EA1B0CB5A2077BC98CC63 /* Pods-Obstacle-Detection.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Obstacle-Detection/Pods-Obstacle-Detection.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
 		};
 		A105C1752A0A49B30ED621B71E226CDB /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -479,6 +503,32 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		BFA68F8C442065781F0F124CA732DAA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6BD97921BCCD55D81355421045692A7B /* Zip.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/Zip/Zip-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MODULEMAP_FILE = Headers/Public/Zip/Zip.modulemap;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = Zip;
+				PRODUCT_NAME = Zip;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -546,6 +596,46 @@
 			};
 			name = Debug;
 		};
+		D42780FEFC7D58C2AADF7A5E5B7B1484 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 702430ADE98EA1B0CB5A2077BC98CC63 /* Pods-Obstacle-Detection.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Obstacle-Detection/Pods-Obstacle-Detection.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DC228CECE10A01D78D9F5D0F60858854 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A144179952E7F971CEABEA74B5C591EE /* TensorFlowLiteGpuExperimental.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -558,20 +648,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		680F60E331F5CB3A13DE1AE0C9E09DC8 /* Build configuration list for PBXNativeTarget "Pods-Obstacle-Detection" */ = {
+		4DC9D8416EE0ED0F07276C07457D5E3A /* Build configuration list for PBXNativeTarget "Zip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2E01F7102C55DE7693513C1795DDAAEB /* Debug */,
-				5AA7554DA06CDF962E1C09E6B3376FB0 /* Release */,
+				9D9887F669B6839198E556A50AB24E5E /* Debug */,
+				BFA68F8C442065781F0F124CA732DAA1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EAF5BD33030F80395204E6596123FCF1 /* Build configuration list for PBXNativeTarget "Zip" */ = {
+		642D410A9AB78A1ED631A4205E0A197F /* Build configuration list for PBXAggregateTarget "TensorFlowLiteGpuExperimental" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				38BF3EE7ADD4BA4C45498314FAFD54CA /* Debug */,
-				4206AA1D2A0571B53B5D704668015849 /* Release */,
+				DC228CECE10A01D78D9F5D0F60858854 /* Debug */,
+				524B375E2B3AC132C9127D8FF0E8D6D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D3F517238A83E9746C69746DA2E8356A /* Build configuration list for PBXNativeTarget "Pods-Obstacle-Detection" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1396F6FEF1342865BE1C47A20EA1D9D0 /* Debug */,
+				D42780FEFC7D58C2AADF7A5E5B7B1484 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

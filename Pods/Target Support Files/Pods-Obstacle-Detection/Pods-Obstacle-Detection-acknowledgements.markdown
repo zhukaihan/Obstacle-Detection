@@ -1,6 +1,10 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
+## TensorFlowLiteGpuExperimental
+
+Apache 2
+
 ## Zip
 
 The MIT License (MIT)

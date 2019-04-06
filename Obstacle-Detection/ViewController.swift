@@ -103,10 +103,14 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         connection.videoOrientation = .landscapeRight
         self.depthOutput.isFilteringEnabled = false
         
+        //let setting = NSDictionary()
+        //setting.setValue(NSNumber(value: kCMPixelFormat_32ARGB), forKey: kCVPixelBufferPixelFormatTypeKey)
+        //self.videoOutput.setValue(kCMPixelFormat_32ARGB, forKey: kCVPixelBufferPixelFormatTypeKey as String)
         guard self.captureSession.canAddOutput(self.videoOutput) else {return}
         self.captureSession.addOutput(self.videoOutput)
         guard let videoConn = self.videoOutput.connections.first else { return }
         videoConn.videoOrientation = .landscapeRight
+        self.videoOutput.videoSettings![kCVPixelBufferPixelFormatTypeKey as String] = kCMPixelFormat_32BGRA
         
         self.captureSync = AVCaptureDataOutputSynchronizer(dataOutputs: [videoOutput, depthOutput])
         self.captureSync?.setDelegate(self, queue: dataOutputQueue)
@@ -169,7 +173,8 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         guard let storeImgCandidate = ODImage(withODImage: scaledImg)!.addToAlpha(withImg: self.depthImg) else { return }
         self.storeImg = storeImgCandidate
         
-        obstacleDetector.detectObstacle(withImg: self.storeImg!)
+        //obstacleDetector.detectObstacle(withImg: self.storeImg!)
+        obstacleDetector.runModelOn(withBuffer: imgData.sampleBuffer)
     }
     
     
@@ -295,6 +300,14 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
                 self.detectionInfoLabel.text = self.ALERT_TEXT_DEFAULT_TEXT
                 self.detectionInfoLabel.textColor = self.ALERT_TEXT_DEFAULT_COLOR
             }
+        }
+    }
+    
+    
+    func obstacleReport(byDetector detector: ObstacleDetector, message msg: String) {
+        DispatchQueue.main.async {
+            self.detectionInfoLabel.text = msg
+            self.detectionInfoLabel.textColor = self.ALERT_TEXT_DEFAULT_COLOR
         }
     }
 

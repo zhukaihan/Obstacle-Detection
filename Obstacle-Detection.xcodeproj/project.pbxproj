@@ -16,6 +16,10 @@
 		6040C2F6222B232B004CB29A /* Obstacle_DetectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6040C2F5222B232B004CB29A /* Obstacle_DetectionUITests.swift */; };
 		832BBB322246F95C00923473 /* ObstacleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB312246F95C00923473 /* ObstacleDetector.swift */; };
 		832BBB3622479B6300923473 /* ODImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB3522479B6300923473 /* ODImage.swift */; };
+		83B2ADBD2258BB9600298309 /* ModelEvaluator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B2ADBC2258BB9600298309 /* ModelEvaluator.mm */; };
+		83B2ADD62258D89B00298309 /* model_labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83B2ADD32258D89B00298309 /* model_labels.txt */; };
+		83B2ADD72258D89B00298309 /* model2.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 83B2ADD42258D89B00298309 /* model2.tflite */; };
+		83B2ADD82258D89B00298309 /* ssd.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 83B2ADD52258D89B00298309 /* ssd.tflite */; };
 		C10E94D44B4F84070ED417A9 /* libPods-Obstacle-Detection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01750E3F6B734EAAD70FBF9E /* libPods-Obstacle-Detection.a */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +59,12 @@
 		6D0555DE44F37BBC15D12B76 /* Pods-Obstacle-Detection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Obstacle-Detection.release.xcconfig"; path = "Target Support Files/Pods-Obstacle-Detection/Pods-Obstacle-Detection.release.xcconfig"; sourceTree = "<group>"; };
 		832BBB312246F95C00923473 /* ObstacleDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleDetector.swift; sourceTree = "<group>"; };
 		832BBB3522479B6300923473 /* ODImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODImage.swift; sourceTree = "<group>"; };
+		83B2ADBA2258BB9500298309 /* Obstacle-Detection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Obstacle-Detection-Bridging-Header.h"; sourceTree = "<group>"; };
+		83B2ADBB2258BB9600298309 /* ModelEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelEvaluator.h; sourceTree = "<group>"; };
+		83B2ADBC2258BB9600298309 /* ModelEvaluator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ModelEvaluator.mm; sourceTree = "<group>"; };
+		83B2ADD32258D89B00298309 /* model_labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_labels.txt; sourceTree = "<group>"; };
+		83B2ADD42258D89B00298309 /* model2.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = model2.tflite; sourceTree = "<group>"; };
+		83B2ADD52258D89B00298309 /* ssd.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ssd.tflite; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +118,9 @@
 		6040C2D4222B2327004CB29A /* Obstacle-Detection */ = {
 			isa = PBXGroup;
 			children = (
+				83B2ADD22258D86300298309 /* Model */,
+				83B2ADBB2258BB9600298309 /* ModelEvaluator.h */,
+				83B2ADBC2258BB9600298309 /* ModelEvaluator.mm */,
 				6040C2D5222B2327004CB29A /* AppDelegate.swift */,
 				6040C2D7222B2327004CB29A /* ViewController.swift */,
 				832BBB3522479B6300923473 /* ODImage.swift */,
@@ -116,6 +129,7 @@
 				6040C2DC222B232A004CB29A /* Assets.xcassets */,
 				6040C2DE222B232A004CB29A /* LaunchScreen.storyboard */,
 				6040C2E1222B232A004CB29A /* Info.plist */,
+				83B2ADBA2258BB9500298309 /* Obstacle-Detection-Bridging-Header.h */,
 			);
 			path = "Obstacle-Detection";
 			sourceTree = "<group>";
@@ -136,6 +150,16 @@
 				6040C2F7222B232B004CB29A /* Info.plist */,
 			);
 			path = "Obstacle-DetectionUITests";
+			sourceTree = "<group>";
+		};
+		83B2ADD22258D86300298309 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83B2ADD32258D89B00298309 /* model_labels.txt */,
+				83B2ADD42258D89B00298309 /* model2.tflite */,
+				83B2ADD52258D89B00298309 /* ssd.tflite */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		9FBDA638A6C22C2A21B7A82D /* Frameworks */ = {
@@ -224,7 +248,7 @@
 				TargetAttributes = {
 					6040C2D1222B2327004CB29A = {
 						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 					};
 					6040C2E5222B232B004CB29A = {
 						CreatedOnToolsVersion = 10.1;
@@ -262,6 +286,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6040C2E0222B232A004CB29A /* LaunchScreen.storyboard in Resources */,
+				83B2ADD72258D89B00298309 /* model2.tflite in Resources */,
+				83B2ADD82258D89B00298309 /* ssd.tflite in Resources */,
+				83B2ADD62258D89B00298309 /* model_labels.txt in Resources */,
 				6040C2DD222B232A004CB29A /* Assets.xcassets in Resources */,
 				6040C2DB222B2327004CB29A /* Main.storyboard in Resources */,
 			);
@@ -316,6 +343,7 @@
 				6040C2D8222B2327004CB29A /* ViewController.swift in Sources */,
 				832BBB3622479B6300923473 /* ODImage.swift in Sources */,
 				832BBB322246F95C00923473 /* ObstacleDetector.swift in Sources */,
+				83B2ADBD2258BB9600298309 /* ModelEvaluator.mm in Sources */,
 				6040C2D6222B2327004CB29A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +438,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -470,6 +499,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -492,6 +522,9 @@
 			baseConfigurationReference = 61881F68976D3AE7778CE79E /* Pods-Obstacle-Detection.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MH6L73893P;
@@ -499,14 +532,31 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Zip\"",
+					"'${SRCROOT}/Pods/TensorFlowLiteGpuExperimental/Frameworks/tensorflow_lite_gpu.framework/Headers'",
+					/usr/local/include,
+				);
 				INFOPLIST_FILE = "Obstacle-Detection/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Zip\"",
+					/usr/local/lib,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zhukaihan.Obstacle-Detection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Obstacle-Detection/Obstacle-Detection-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -517,6 +567,9 @@
 			baseConfigurationReference = 6D0555DE44F37BBC15D12B76 /* Pods-Obstacle-Detection.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MH6L73893P;
@@ -524,13 +577,31 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Zip\"",
+					"'${SRCROOT}/Pods/TensorFlowLiteGpuExperimental/Frameworks/tensorflow_lite_gpu.framework/Headers'",
+					/usr/local/include,
+				);
 				INFOPLIST_FILE = "Obstacle-Detection/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Zip\"",
+					/usr/local/lib,
+				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zhukaihan.Obstacle-Detection";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Obstacle-Detection/Obstacle-Detection-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -11,6 +11,8 @@ import UIKit
 
 protocol ObstacleDetectorDelegate {
     func obstacleReport(byDetector detector: ObstacleDetector, doesExistObstacle isObstacle: Bool)
+    func obstacleReport(byDetector detector: ObstacleDetector, message msg: String)
+    
 }
 
 class ObstacleDetector {
@@ -20,16 +22,44 @@ class ObstacleDetector {
     static let DEPTH_OFFSET: Int = 3
     static let PIXEL_BYTES: Int = 4
     
+    let eval = ModelEvaluator()
+    
     init() {
+        eval.loadModel()
         
     }
     
     deinit {
+        eval.freeModel()
         
     }
     
     func setDelegate(_ delegate: ObstacleDetectorDelegate) {
         self.delegate = delegate
+    }
+    
+    func runModelOn(withBuffer buf: CMSampleBuffer) {
+        guard let sortedLabels = eval.evaluate(on: buf) else { return }
+        
+        
+        var labelCount = 0;
+        var displayText = "";
+        for entry in sortedLabels {
+            let dict = entry as! NSDictionary
+            let label = dict["label"] as! NSString?
+            let valueObject = dict["value"] as! NSNumber?
+            let value = valueObject?.floatValue
+            let valuePercentage = Int(roundf(value! * 100.0))
+            
+            displayText += String(label!) + " " + String(valuePercentage) + "; "
+            
+            labelCount += 1
+            if (labelCount > 4) {
+                break;
+            }
+        }
+        
+        self.delegate?.obstacleReport(byDetector: self, message: displayText)
     }
     
     func detectObstacle(withImg img: ODImage) {
