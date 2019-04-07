@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>如何拍照：</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h1 id="%E5%A6%82%E4%BD%95%E6%8B%8D%E7%85%A7">如何拍照：</h1>
+<ul>
+<li>拍照的时候需要站在地上（不是草上不是桌子上）</li>
+<li>障碍物必须是在地上的（不是桌子上的，他们不在桌上走路）</li>
+<li>由于我们的model是一个Fully Convolutional Neural Network,照片可以是任何大小，但是用app拍的时候必须是横过来，</li>
+</ul>
+<h1 id="%E5%A6%82%E4%BD%95label">如何label：</h1>
+<ul>
+<li>障碍物的框需要紧紧的包裹住这个障碍物 (The box should tightly bounding the obstacle) 。也就是说，box的四条边每一条都与object接触（非常非常重要，大型的dataset都是以pixel为精度的，我们只需要tight就行了）</li>
+<li>需要标出7米以内的所有的障碍物。如果在室外，远处明显有障碍物的也可进行标记。</li>
+<li>定义一下不同的label
+<ul>
+<li>Obstacle - 顾名思义
+<ul>
+<li>需要照各式各样的Obstacle，大的小的。例如桌子，不同的桌子，不同颜色的桌子，半张桌子一整张桌子。</li>
+<li>墙也算obstacle啊。</li>
+</ul>
+</li>
+<li>Edge - 人行道的边缘，就是从人行道走到机动车道的那个边缘&quot;台阶&quot;
+<ul>
+<li>一条edge用一个box框。如果edge是直的，这条edge应该是这个box的对角线。</li>
+<li>不要一条edge用10个box。用一个，即使这一个大得撑满了照片。</li>
+</ul>
+</li>
+<li>Pothole - 坑，通常是被砸出来的，或者井盖没盖好之类的
+<ul>
+<li>La Jolla的路太好了，这种情况超级少</li>
+</ul>
+</li>
+<li>Uplift - 人行道是一块一块concrete的，刚铺的时候concrete与concrete之间的缝隙是在一个平面上的，但是随着岁月的累积，一块会比另一块高，这个高出的一段叫做uplift，其看似平坦的路却可能被绊倒。</li>
+</ul>
+</li>
+</ul>
+<h1 id="%E5%BC%BA%E8%B0%83%E4%B8%80%E4%B8%8Blabel%E5%BE%88%E9%87%8D%E8%A6%81">强调一下label很重要：</h1>
+<p>目前的三百多张照片，在修正label之前，train出来的model什么都识别不了，loss只converge了一点点。Label的精准度很重要。</p>
+<p>大家看一下已经修正好label的图片，get an idea of what I am talking about。</p>
+<p>我们现在有三百多张照片。训练出来的model还不错。但是data里没有的obstacle就识别不出来。To obtain better accuracy, we need data.</p>
+
+    </body>
+    </html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>Make Good Choices:</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <link rel="stylesheet" href="https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/github-markdown.css">
+<h1 id="make-good-choices">Make Good Choices:</h1>
+<p>We want to detect obstacles, that's why we called it obstacle detector.</p>
+<h2 id="candidate-framework">Candidate Framework:</h2>
+<ul>
+<li>Tensorflow
+<ul>
+<li>Pros:
+<ul>
+<li>It is what I am familiar with, and is one of the most powerful and most used.</li>
+<li>Tensorflow Lite is available on iOS with decent optimization.</li>
+<li>Large Model Zoo.</li>
+<li>Well supported, or best supported.</li>
+</ul>
+</li>
+<li>Cons:
+<ul>
+<li>Kind of hard to use the API as it is not what I used to.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CoreML or TuriCreate
+<ul>
+<li>Pros:
+<ul>
+<li>It is supported by Apple, and is best supported on iOS.</li>
+<li>Super easy to use.</li>
+</ul>
+</li>
+<li>Cons:
+<ul>
+<li>Limited model choices. It has only YOLO v2, but v3 is better.</li>
+<li>Only available on macOS or Linux, but I uses Windows.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Caffe:
+<ul>
+<li>No no no.</li>
+</ul>
+</li>
+</ul>
+<p>Tensorflow wins because of its large community and is available on Windows. It is a big deal because one teammmate has his RTX 2080Ti on a Windows system.</p>
+<h2 id="candidate-model">Candidate Model:</h2>
+<ul>
+<li>Mask R-CNN
+<ul>
+<li>Pros:
+<ul>
+<li>It is a scematic segmentation model as it produces masks.</li>
+<li>It is a two-step model, which is more accurate than one-shot ones.</li>
+</ul>
+</li>
+<li>Cons:
+<ul>
+<li>Damn slow. 1000+ ms for inference on Titan X. Imagine it is runned on iPhone.</li>
+<li>Use masks, which is a pain in the ass to create training data.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>YOLO (You Only Look Once)
+<ul>
+<li>Pros:
+<ul>
+<li>You only look once!!!</li>
+<li>Fast inference with decent accuracy.</li>
+</ul>
+</li>
+<li>Cons:
+<ul>
+<li>One-shot object detection network, not the best accuracy.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SSD (Single Shot Detector)
+<ul>
+<li>Pros:
+<ul>
+<li>One-shot object detection network, fast inference with decent accuracy.</li>
+<li>Pre-trained model already existed with lots of backbone to choose from in Tensorflow Model Zoo.</li>
+</ul>
+</li>
+<li>Cons:
+<ul>
+<li>Not the best accuracy.</li>
+<li>Bad accuracy to detect small objects.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>SSD has more tensorflow implementation than YOLO and pretrained weights as well. However, I will pick YOLO v3 over SSD.</p>
+<p>We used SSD because it is supported by Tensorflow Object Detection API and its fastness. It is a big deal because the API really shortens the development time. We used an SSD with MobileNet V2 as backbone (from the Model Zoo).</p>
+<h1 id="therefore-the-trial-and-error-process-is-following">Therefore, the trial-and-error process is following:</h1>
+<ol>
+<li>(DONE) I will work with SSD on Tensorflow on Windows first and see if it works.
+<ol>
+<li>It works pretty well... Not the best result, but still manages.</li>
+</ol>
+</li>
+<li>(PASS) Then, I will work with modifying model's first layer to consume disparity map as the fourth channel with models in 1.</li>
+<li>(CONSIDERABLE) Then, I will work with image segmentation with Mask-RCNN in Tensorflow Object Detection API with pretrained weights to classify each pixel as road or non-road. Idea from <a href="https://stackoverflow.com/questions/6007822/finding-path-obstacles-in-a-2d-image">https://stackoverflow.com/questions/6007822/finding-path-obstacles-in-a-2d-image</a></li>
+<li>(PASS) Then, I will work with modifying model's first layer to consume disparity map as the fourth channel with models in 3.</li>
+<li>(PASS) Then, I will work on back-up plan.</li>
+</ol>
+<h1 id="links">Links:</h1>
+<p>Tensorflow Object Detection API: <a href="https://github.com/tensorflow/models/tree/master/research/object_detection">https://github.com/tensorflow/models/tree/master/research/object_detection</a></p>
+<p>Model Zoo: <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md">https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md</a></p>
+<p>Data labeling software: <a href="http://dataturks.com">dataturks.com</a></p>
+<p>Step by Step Tensorflow Object Detection API Tutorial (step by step my ass): <a href="https://medium.com/@WuStangDan/step-by-step-tensorflow-object-detection-api-tutorial-part-1-selecting-a-model-a02b6aabe39e">https://medium.com/@WuStangDan/step-by-step-tensorflow-object-detection-api-tutorial-part-1-selecting-a-model-a02b6aabe39e</a></p>
+<p>Image Segmentation Idea Source: <a href="https://stackoverflow.com/questions/6007822/finding-path-obstacles-in-a-2d-image">https://stackoverflow.com/questions/6007822/finding-path-obstacles-in-a-2d-image</a></p>
+<h1 id="todos">TODOs:</h1>
+<h2 id="todos-1">TODOS:</h2>
+<ul class="contains-task-list">
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> Mark some image on Dataturks and download them and convert to Pascal VOC. (Upload image, mark image, download img use script and convert to Pascal VOC use script. Should have existing scirpts)</p>
+<ul>
+<li>Script: <a href="https://dataturks.com/help/ibbx_dataturks_to_pascal_voc_format.php">https://dataturks.com/help/ibbx_dataturks_to_pascal_voc_format.php</a></li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> Install Tensorflow Object Detection API and convert Pascal VOC to TFRecord. (complicate installation and dataset prep and training and testing and exporting)</p>
+<ul>
+<li>Script: <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/dataset_tools/create_pascal_tf_record.py">https://github.com/tensorflow/models/blob/master/research/object_detection/dataset_tools/create_pascal_tf_record.py</a></li>
+<li>Script Explanation: <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/preparing_inputs.md">https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/preparing_inputs.md</a></li>
+<li>Tutorial: Shit tutorial. Tells you that there is script and done. Existing script works for official Pascal VOC but not our structure of folders.</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> Use existing SSD Tensorflow implementation with Tensorflow Object Detection API. (Finished dataset prep, tried to train a model)</p>
+<ul>
+<li>Training pipeline: <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md">https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md</a></li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox"> Use Tensorflow Lite and the trained SSD model on iPhone.</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="" type="checkbox"> Build a UI.</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="" type="checkbox"> Train another model at 500 images.</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="" type="checkbox"> Train another model at 750 images.</p>
+</li>
+<li class="task-list-item">
+<p><input class="task-list-item-checkbox" disabled="" type="checkbox"> Train another model at 1000 images.</p>
+</li>
+</ul>
+<h2 id="postponed">Postponed:</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> As an overachiever, use sematic segmentation, with Mask-RCNN or DeepLab, with Tensorflow Object Detection API, with pretrained weights, with mask data.</li>
+</ul>
+<h2 id="postponed-indefinitely">Postponed Indefinitely:</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> Add 4th layer to input layer of SSD.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> Use existing YOLO Tensorflow implementation to try out YOLO, both in training and testing and on iOS. <a href="https://github.com/hizhangp/yolo_tensorflow">https://github.com/hizhangp/yolo_tensorflow</a> <a href="https://github.com/mystic123/tensorflow-yolo-v3">https://github.com/mystic123/tensorflow-yolo-v3</a> (complicated dataset, complicated training and testing and exporting)</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> Use Turicreate, create dataset for Turicreate and train a model. (figure out dataset and training and exporting is simple)
+<ul>
+<li>Buy a new Mac first.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<div style="position: relative; left: 0; width: 100%; margin: 0; padding-bottom: 50%; padding-top: 50%;">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(0deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(10deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(20deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(30deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(40deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(50deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(60deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(70deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(80deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(90deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(100deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(110deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(120deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(130deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(140deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(150deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(160deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(170deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(180deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(190deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(200deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(210deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(220deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(230deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(240deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(250deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(260deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(270deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(280deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(290deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(300deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(310deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(320deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(330deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(340deg);">
+<hr style="position: absolute; left: 0; width: 100%; margin: 0; transform: rotate(350deg);">
+</div>
+<h2 id="div-style%22font-size50px%22guides-coming-up-div"><div style="font-size:50px;">Guides Coming Up: </div></h2>
+<h1 id="install-tensorflow-object-detection-api">Install Tensorflow Object Detection API:</h1>
+<p>The procedure is simple. Follow the guide.</p>
+<p><a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md">https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md</a></p>
+<p>However, since I am installing on Windows, a few tweeks shall take place.</p>
+<ol>
+<li>Dependencies:
+<ul>
+<li>Anaconda should have all the dependencies installed. I only need to install pillow (through conda as well).</li>
+<li>Although Cython is installed, Visual C++ Build Tools from Microsoft is still needed.</li>
+<li>When installing Tensorflow through conda, conda will have its own CUDA and cuDnn. Its wierd but make sure you have installed CUDA and cuDnn through NVIDIA's instructions, and have versions up to date.</li>
+</ul>
+</li>
+<li>COCO API installation
+<ul>
+<li>It seems to be Linux only. But, all it does is a make command, which we can look into its Makefile to see that it only does a python setup.</li>
+<li>Make sure Visual C++ Build Tools is installed. Not the distribution, but the build tools. It can be installed as standalone, as well as through Visual Studio.</li>
+<li><a href="http://setup.py">setup.py</a> needs to be modified as it contains Linux gcc flags. See here: <a href="https://github.com/cocodataset/cocoapi/issues/51#issuecomment-379872704">https://github.com/cocodataset/cocoapi/issues/51#issuecomment-379872704</a>.</li>
+</ul>
+</li>
+<li>Protobuf Compilation
+<ul>
+<li>Just use a prebuilt binary for Windows.</li>
+</ul>
+</li>
+<li>Add Libraries to PYTHONPATH
+<ul>
+<li>Open up environment variable settings on Windows, add PYTHONPATH...</li>
+</ul>
+</li>
+</ol>
+<h1 id="download-data-and-prepare-data">Download Data and Prepare Data:</h1>
+<h2 id="in-general">In General:</h2>
+<h3 id="story">Story:</h3>
+<p>What I did was to edit the scripts from dataturks to pascal voc and from pascal voc to tensorflow record.</p>
+<p>I thought about combining both scripts into one. However, the script tensorflow provides uses tensorflow as intermediate between console and actual script. Therefore, using two scripts does not seems to be too much of a big deal.</p>
+<h3 id="scripts">Scripts:</h3>
+<ul>
+<li>mkdir_and_random_train_val.py: Randomly chooses train and val data.</li>
+<li>dataturks_to_pascal.py: Converts dataturks format into Pascal VOC format. It downloads images as well. Modified from original script from <a href="https://dataturks.com/help/ibbx_dataturks_to_pascal_voc_format.php">https://dataturks.com/help/ibbx_dataturks_to_pascal_voc_format.php</a>.</li>
+<li>pascal_to_tf.py: Converts Pascal VOC format to TFRecord. Modified from <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/dataset_tools/create_pascal_tf_record.py">https://github.com/tensorflow/models/blob/master/research/object_detection/dataset_tools/create_pascal_tf_record.py</a>.</li>
+</ul>
+<h3 id="data-preparation-general-pipeline">Data Preparation General Pipeline:</h3>
+<ol>
+<li>Upload data onto <a href="http://dataturks.com">dataturks.com</a> and label each image.</li>
+<li>Download the json file that has the url of each uploaded image and its annotation.</li>
+<li>Manually write label_map.pbtxt. It matches different labels to a number. This is simple.</li>
+<li>Use mkdir_and_random_train_val.py, to read in the json file for a list of all images and randomly choose train and validation data. The result will be stored in train.txt and val.txt, which will be needed for converting Pascal VOC to TFRecord. The train.txt and val.txt has one image name per line, with &quot; 1&quot; following the name. I have not yet discovered what that 1 or -1 is for in PASCAL VOC format, but this number is not used in pascal_to_tf.py. This script will also create folders for storing images and annotations.</li>
+<li>Use dataturks_to_pascal.py to download the data. The script is written for Linux, thus, it parses paths with &quot;/&quot;. However, I am using Windows. Therefore, there are a few places that needs to change &quot;/&quot; to &quot;&quot;. Otherwise, the image will download in a wierd file structure.</li>
+<li>Use pascal_to_tf.py to convert Pascal VOC format to TFRecord. What this script is different from original one is that there are fields that dataturks does not support. These fields are removed from conversion. The script is also altered to fit our file structure.</li>
+<li>Done. You should have train.record and val.record.</li>
+</ol>
+<p>The json file downloaded from dataturks will be called &quot;Obstacle Detection Dataset.json&quot;</p>
+<h2 id="step-1-create-label-map">Step 1: Create Label Map:</h2>
+<pre><code><div>item {
+  id: 1
+  name: 'Obstacle'
+}
+item {
+  id: 2
+  name: 'Pothole'
+}
+......etc......
+</div></code></pre>
+<p>There is no id 0. id of 0 is a placeholder. Therefore, id starts from 1.</p>
+<h2 id="step-2-make-data-folder-structure-for-conversions-and-randomly-select-train-and-val-data">Step 2: Make Data Folder Structure for Conversions and Randomly Select Train and Val Data:</h2>
+<pre><code class="language-bash"><div>python mkdir_and_random_train_val.py
+</div></code></pre>
+<p>Directories are defined in mkdir_and_random_train_val.py file.</p>
+<p>It will create a directory:</p>
+<pre><code><div>+formatted data
+  +annotated
+  +imgs
+</div></code></pre>
+<p>It will also create two files: train.txt and val.txt.</p>
+<ul>
+<li>train.txt: Image names for training set.</li>
+<li>val.txt: Image names for validation set.</li>
+</ul>
+<h2 id="step-3-convert-from-dataturks-to-pascal-voc-also-downloads-images">Step 3: Convert From Dataturks to Pascal VOC (Also Downloads Images):</h2>
+<pre><code class="language-bash"><div>python dataturks_to_pascal.py <span class="hljs-string">"Obstacle Detection Dataset.json"</span> <span class="hljs-string">"formatted data\imgs"</span> <span class="hljs-string">"formatted data\annotated"</span>
+</div></code></pre>
+<p>Modified from <a href="https://dataturks.com/help/ibbx_dataturks_to_pascal_voc_format.php">https://dataturks.com/help/ibbx_dataturks_to_pascal_voc_format.php</a>.</p>
+<p>Beaware of difference between Linux and Windows path representation. Linux uses '/' while Windows uses ''.</p>
+<h2 id="step-4-convert-from-pascal-voc-to-tfrecord">Step 4: Convert From Pascal VOC to TFRecord:</h2>
+<pre><code class="language-bash"><div>python pascal_to_tf.py --data_dir=<span class="hljs-string">"formatted data"</span> --annotations_dir=<span class="hljs-string">"formatted data\annotated"</span> --output_path=pascal.record --label_map_path=label_map.pbtxt --<span class="hljs-built_in">set</span>=train
+</div></code></pre>
+<p>set parameter can be &quot;train&quot; or &quot;val&quot;, which it will read train.txt or val.txt to create training set or val set.</p>
+<p>Modified from models-master\research\object_detection\dataset_tools\create_pascal_tf_record.py</p>
+<p>Beaware of difference between Linux and Windows path representation. Linux uses '/' while Windows uses ''.</p>
+<h1 id="fine-tune-ssd">Fine-tune SSD:</h1>
+<p>We have data processed. We need to train SSD to fit out data.</p>
+<p>Guide is here:
+<a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md">https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md</a>.</p>
+<h2 id="step-1-create-training-folder-structure">Step 1: Create Training Folder Structure:</h2>
+<p>The folder structure is like this:</p>
+<pre><code><div>+data
+  -label_map file
+  -train TFRecord file (train.record)
+  -eval TFRecord file (val.record)
++models
+  + model
+    -pipeline config file (pipeline.config from pretrained model)
+    -checkpoint files (model.ckpt.data-00000-of-00001 model.ckpt.index model.ckpt.meta)
+    +train
+    +eval
+</div></code></pre>
+<h2 id="step-2-modify-pipelineconfig">Step 2: Modify pipeline.config:</h2>
+<p>There is one line in SSD's pipeline.config (a line about batch_norm) that will not pass. Simply delete that line.</p>
+<p>Modify the paths to something like this:</p>
+<pre><code><div>model: 
+  fine_tune_checkpoint: &quot;C:/Users/zhuka/iCloudDrive/Desktop/Obstacle Detection/train/models/model/
+train: 
+    label_map_path: &quot;C:/Users/zhuka/iCloudDrive/Desktop/Obstacle Detection/train/data/label_map.pbtxt&quot;
+    input_path: &quot;C:/Users/zhuka/iCloudDrive/Desktop/Obstacle Detection/train/data/train.record&quot;
+val: 
+    label_map_path: &quot;C:/Users/zhuka/iCloudDrive/Desktop/Obstacle Detection/train/data/label_map.pbtxt&quot;
+    input_path: &quot;C:/Users/zhuka/iCloudDrive/Desktop/Obstacle Detection/train/data/val.record&quot;
+</div></code></pre>
+<p>Absolute path seems necessary. Change them accordingly.</p>
+<p>Beaware of difference between Linux and Windows path representation. Linux uses '/' while Windows uses ''.</p>
+<h2 id="step-3-training">Step 3: Training:</h2>
+<pre><code class="language-bash"><div>PIPELINE_CONFIG_PATH={path to pipeline config file}
+MODEL_DIR={path to model directory}
+NUM_TRAIN_STEPS=50000
+SAMPLE_1_OF_N_EVAL_EXAMPLES=1
+python model_main.py --pipeline_config_path=<span class="hljs-variable">${PIPELINE_CONFIG_PATH}</span> --model_dir=<span class="hljs-variable">${MODEL_DIR}</span> --num_train_steps=<span class="hljs-variable">${NUM_TRAIN_STEPS}</span> --sample_1_of_n_eval_examples=<span class="hljs-variable">$SAMPLE_1_OF_N_EVAL_EXAMPLES</span> --alsologtostderr
+</div></code></pre>
+<p>model_main.py located in tensorflow/models/research/object_detection directory</p>
+<p>Change these variables to suites your needs.</p>
+<h2 id="step-4-open-tensorboard">Step 4: Open TensorBoard:</h2>
+<pre><code class="language-bash"><div>tensorboard --logdir=<span class="hljs-variable">${MODEL_DIR}</span>
+</div></code></pre>
+<h1 id="export-model-to-tflite">Export Model to TFLite:</h1>
+<h2 id="step-1-convert-from-checkpoints-to-tflitepb">Step 1: Convert from checkpoints to tflite.pb:</h2>
+<pre><code class="language-bash"><div>python export_tflite_ssd_graph.py \
+--pipeline_config_path=pipeline.config \
+--trained_checkpoint_prefix=model.ckpt-16812\
+--output_directory=output_tflite \
+--add_postprocessing_op=<span class="hljs-literal">true</span>
+</div></code></pre>
+<p>trained_checkpoint_prefix should matches three files: .data-00000-of-00001 .index .meta.</p>
+<p>Using this script is to make sure that all operations from tflite.pb will be supported in Tensorflow Lite.</p>
+<h2 id="step-2a-convert-from-tflitepb-to-tflite-files-non-quantized-model">Step 2a: Convert from tflite.pb to .tflite files (Non Quantized Model):</h2>
+<pre><code class="language-bash"><div>tflite_convert --output_file=ssd.tflite --graph_def_file=output_tflite\tflite_graph.pb --input_arrays=normalized_input_image_tensor --output_arrays=TFLite_Detection_PostProcess,TFLite_Detection_PostProcess:1,TFLite_Detection_PostProcess:2,TFLite_Detection_PostProcess:3 --input_shapes=1,300,300,3 --allow_custom_op
+</div></code></pre>
+<p>input_shape, input_arrays, and output_arrays are described in export_tflite_ssd_graph.py file header.</p>
+<p>output_arrays is TFLite_Detection_PostProcess,TFLite_Detection_PostProcess:1,TFLite_Detection_PostProcess:2,TFLite_Detection_PostProcess:3 because TFLite_Detection_PostProcess tensor has 4 outputs. TFLite_Detection_PostProcess alone will only includes the first output. It is similar to pointer array (CSE 30~~~, thanks, Rick).</p>
+<p>TFLite_Detection_PostProcess is a custom operation, thus adding allow_custom_op is necessary because tflite_convert thought native TFLite will not support it. However, it is actually implemented. Therefore, we need to bypass this check. There is no other custom operation in the network.</p>
+<p>input_shape's width and height is defined in pipeline.config:</p>
+<pre><code><div>fixed_shape_resizer {
+    height: 300
+    width: 300
+}
+</div></code></pre>
+<p>Original Guide is here: <a href="https://www.tensorflow.org/lite/convert/cmdline_examples#convert_a_tensorflow_graphdef_">https://www.tensorflow.org/lite/convert/cmdline_examples#convert_a_tensorflow_graphdef_</a>.</p>
+<h2 id="step-2b-convert-from-tflitepb-to-tflite-files-quantized-model">Step 2b: Convert from tflite.pb to .tflite files (Quantized Model):</h2>
+<pre><code class="language-bash"><div>tflite_convert --output_file=model_quantized.tflite --graph_def_file=output_tflite\tflite_graph.pb --input_arrays=normalized_input_image_tensor --output_arrays=raw_outputs/box_encodings,raw_outputs/class_predictions --input_shapes=1,300,300,3 --inference_type=QUANTIZED_UINT8 --mean_values=128 --std_dev_values=127 --default_ranges_min=0 --default_ranges_max=6
+</div></code></pre>
+<p>We use dummy quantization because the trained model may have layers that does not have max and min values for quantization. For example, Relu6 does not have such information. Therefore, we are specifying plausible min and max.</p>
+<p>Original Guide is here: <a href="https://www.tensorflow.org/lite/convert/cmdline_examples#use_dummy-quantization_to_try_out_quantized_inference_on_a_float_graph_">https://www.tensorflow.org/lite/convert/cmdline_examples#use_dummy-quantization_to_try_out_quantized_inference_on_a_float_graph_</a>.</p>
+<h1 id="deploy">Deploy:</h1>
+<p>Guide is here: <a href="https://www.tensorflow.org/lite/guide/ios">https://www.tensorflow.org/lite/guide/ios</a>.</p>
+<p>This guide lets talks about how to run an example project and how to understand the code.</p>
+<h2 id="step-1-install-ios-tensorflow-lite-in-xcode-project">Step 1: Install iOS Tensorflow Lite in Xcode Project:</h2>
+<p>The Tensorflow Lite is installed through CocoaPods.</p>
+<p>Install cocoapods.</p>
+<p>In Podfile under the project folder:</p>
+<pre><code><div>target 'Obstacle-Detection' do
+    pod 'Zip', '~&gt; 1.1'
+    #pod 'TensorFlow-experimental', '~&gt; 1.1'
+    #pod 'TensorFlowLiteGpuExperimental', '0.0.1'
+end
+</div></code></pre>
+<p>Zip is another framework Obstacle-Detection used.</p>
+<p>Choose either TensorFlow-experimental or TensorFlowLiteGpuExperimental.
+If you want to use GPU to run the network, install TensorFlowLiteGpuExperimental.
+To be mindful, there are extra steps to configure the project if you want to use GPU. Read:
+<a href="https://www.tensorflow.org/lite/performance/gpu">https://www.tensorflow.org/lite/performance/gpu</a>. In this tutorial, TFLITE_USE_CONTRIB_LITE does not exist in sample code, simply ignore.</p>
+<p>Then, in bash under that project folder:</p>
+<pre><code class="language-bash"><div>pod install
+</div></code></pre>
+<p>Or have installed before, use:</p>
+<pre><code class="language-bash"><div>pod repo update
+</div></code></pre>
+<h2 id="step-2-develop-ios-app">Step 2: Develop iOS App:</h2>
+<p>Just use the camera example from tensorflow lite, and modify elemtents.</p>
+<p>Click into TFLite methods to see its description.</p>
+<ol>
+<li>Copy the converted model over.
+<ol>
+<li>Copy the model to the project.</li>
+<li>Add the model to Bundle Resources.</li>
+</ol>
+</li>
+<li>List the labels used.</li>
+<li>Change parameters of model and its input.</li>
+<li>Change some code in runModelOnFrame() to handle the output of the model.</li>
+</ol>
+<hr>
+<h2 id="div-style%22font-size50px%22results-and-a-conclusion-coming-up-div"><div style="font-size:50px;">Results and a Conclusion Coming Up: </div></h2>
+<p>The initial model that was trained on 45 images was having decent recognition on big boxes and poles. Even a slim coke bottle is recognized as an obstacle. Therefore, we can conclude that our architecture can converge.</p>
+<p>The complete dataset was then used. After early stopping technique was used, the model does not recognize well, worse than the initial model. With an overfitted model, the model does not recognize at all.</p>
+<p>It turns out, the data was poorly labeled such that some boxes are not tight, some obstacles are not drawn, some edges are labeled with multiple boxes, some boxes are not bounding the object, etc.</p>
+<p>After all of these problems were solved, We are able to achieve a decent detection. Our peak mAP is 0.15, peak mAP@.50IOU is 0.29, and mAP large is 0.18. Recall that we only have 315 images.</p>
+<p>There is an interesting observation: Fire hydrant is particularily accurate as a fire hydrant in pretrained model, and is also super accurate as an obstacle. However, when I remove the blue channel, the pretrained model categorized it as a bottle...</p>
+<p>From such observation, I believe we can reach this result with such limited images can be due to the fact that obstacles are a superset of lots of objects. The pretrained model has been trained on lots and lots of objects. Therefore, during the fine-tuning process, our model does not need to learn new features or new objects, but only need to categorize the ones that exists. This could be the reason why we are able to obtain such accuracy with a limited dataset.</p>
+<p>According to Apple, some model can be fine-tuned with as little as 60 images... But, as overachievers, we are looking to expand our dataset to at least 1000 images.</p>
+
+    </body>
+    </html>
