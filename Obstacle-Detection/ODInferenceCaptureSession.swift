@@ -20,18 +20,14 @@ class ODInferenceCaptureSession: AVCaptureSession {
     init(withDelegate deleg: AVCaptureVideoDataOutputSampleBufferDelegate) {
         self.deleg = deleg
         
-        let discoverSession = AVCaptureDevice.DiscoverySession(
-            deviceTypes: [.builtInDualCamera, .builtInTelephotoCamera, .builtInWideAngleCamera],
-            mediaType: .video,
-            position: .back
-        )
-        self.videoDevice = discoverSession.devices.first ?? AVCaptureDevice.default(for: .video)!
+        // Use a video device.
+        self.videoDevice = AVCaptureDevice.default(for: .video)!
         super.init()
         
         self.beginConfiguration()
         self.sessionPreset = .photo
         
-        // Confugure for dual cameras device.
+        // Confugure for camera device.
         try? self.videoDevice.lockForConfiguration()
         
         // Focus is automatic.
@@ -55,8 +51,8 @@ class ODInferenceCaptureSession: AVCaptureSession {
         
         // Set frame rate.
         // Discover maximum frame duration.
-        var maxFrameDuration = self.videoDevice.activeDepthDataMinFrameDuration
-        for range in (self.videoDevice.activeDepthDataFormat?.videoSupportedFrameRateRanges)! {
+        var maxFrameDuration = self.videoDevice.activeVideoMinFrameDuration
+        for range in (self.videoDevice.activeFormat.videoSupportedFrameRateRanges) {
             if range.maxFrameDuration > maxFrameDuration {
                 maxFrameDuration = range.maxFrameDuration
             }
@@ -69,7 +65,6 @@ class ODInferenceCaptureSession: AVCaptureSession {
         }
         self.videoDevice.activeVideoMinFrameDuration = maxFrameDuration
         self.videoDevice.activeVideoMaxFrameDuration = maxFrameDuration
-        self.videoDevice.activeDepthDataMinFrameDuration = maxFrameDuration
         
         self.videoDevice.unlockForConfiguration()
         
