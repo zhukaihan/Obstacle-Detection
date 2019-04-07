@@ -11,7 +11,7 @@ import UIKit
 
 protocol ObstacleDetectorDelegate {
     func obstacleReport(byDetector detector: ObstacleDetector, doesExistObstacle isObstacle: Bool)
-    func obstacleReport(byDetector detector: ObstacleDetector, message msg: String)
+    func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage)
     
 }
 
@@ -22,7 +22,10 @@ class ObstacleDetector {
     static let DEPTH_OFFSET: Int = 3
     static let PIXEL_BYTES: Int = 4
     
-    let eval = ModelEvaluator()
+    let LABEL_COLOR = [UIColor.green.cgColor, UIColor.darkGray.cgColor, UIColor.blue.cgColor, UIColor.red.cgColor]
+    let LABEL_NAME = ["Obstacle", "Pothole", "Edge", "Uplift"]
+    
+    let eval = ODModelEvaluator()
     
     init() {
         eval.loadModel()
@@ -41,25 +44,38 @@ class ObstacleDetector {
     func runModelOn(withBuffer buf: CMSampleBuffer) {
         guard let sortedLabels = eval.evaluate(on: buf) else { return }
         
+        guard let img = ODImage(withCMSampleBuffer: buf) else { return }
         
-        var labelCount = 0;
-        var displayText = "";
-        for entry in sortedLabels {
-            let dict = entry as! NSDictionary
-            let label = dict["label"] as! NSString?
-            let valueObject = dict["value"] as! NSNumber?
-            let value = valueObject?.floatValue
-            let valuePercentage = Int(roundf(value! * 100.0))
+        for label in (sortedLabels as NSArray as! [NSDictionary]) {
+            //print("\(label["obj_class"]) \(label["confidence"]) \(label["xmin"]) \(label["xmax"]) \(label["ymin"]) \(label["ymax"]) \n")
             
-            displayText += String(label!) + " " + String(valuePercentage) + "; "
+            let labelClass = Int(label["obj_class"] as! NSInteger)
+            let confidence = Float(label["confidence"] as! NSNumber)
+            let x = Double(label["xmin"] as! NSNumber) * Double(ODImage.WIDTH)
+            let y = Double(label["ymin"] as! NSNumber) * Double(ODImage.HEIGHT)
+            let width = Double(label["xmax"] as! NSNumber) * Double(ODImage.WIDTH) - x
+            let height = Double(label["ymax"] as! NSNumber) * Double(ODImage.HEIGHT) - y
             
-            labelCount += 1
-            if (labelCount > 4) {
-                break;
-            }
+            let rect = CGRect(x: x, y: y, width: width, height: height)
+            
+            img.context.setStrokeColor(LABEL_COLOR[labelClass])
+            img.context.stroke(rect, width: 4)
+            
+            img.context.textPosition = rect.origin
+            
+            let nsAttr: [NSAttributedString.Key : Any] = [
+                kCTBackgroundColorAttributeName as NSAttributedString.Key: UIColor.white.cgColor,
+                kCTForegroundColorAttributeName as NSAttributedString.Key: UIColor.black.cgColor,
+            ]
+            let attrStr = NSAttributedString(string: "\(LABEL_NAME[labelClass]): \(confidence)", attributes: nsAttr)
+            
+            let textLine = CTLineCreateWithAttributedString(attrStr)
+            CTLineDraw(textLine, img.context)
         }
         
-        self.delegate?.obstacleReport(byDetector: self, message: displayText)
+        if (delegate != nil) {
+            self.delegate?.obstacleReport(byDetector: self, img: img)
+        }
     }
     
     func detectObstacle(withImg img: ODImage) {

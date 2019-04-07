@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = TensorFlowLiteGpuExperimental;
+			productName = TensorFlowLiteGpuExperimental;
 		};
 /* End PBXAggregateTarget section */
 
@@ -61,11 +62,11 @@
 		21F3CF6929344C37AA86FBE29A5372FC /* unzip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = Zip/minizip/unzip.h; sourceTree = "<group>"; };
 		2A60A00A5A50B5EA475721C66F9CC153 /* Zip.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Zip.modulemap; sourceTree = "<group>"; };
 		39B4CB4B4A55B6E126BAEE5918E69DF3 /* Zip-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Zip-dummy.m"; sourceTree = "<group>"; };
-		40B2BB85B25152C01844200BBE8405B9 /* libZip.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libZip.a; path = libZip.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		40B2BB85B25152C01844200BBE8405B9 /* libZip.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZip.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		417870E7AD8E51BBE3F6BAB9B036E943 /* Pods-Obstacle-Detection-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Obstacle-Detection-dummy.m"; sourceTree = "<group>"; };
-		4B19AAAE1D1AB840B12B5B36DB53C3B3 /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = unzip.c; path = Zip/minizip/unzip.c; sourceTree = "<group>"; };
+		4B19AAAE1D1AB840B12B5B36DB53C3B3 /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = Zip/minizip/unzip.c; sourceTree = "<group>"; };
 		5043E1F9E54E0AF46C0516BE441A0015 /* ioapi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = Zip/minizip/ioapi.h; sourceTree = "<group>"; };
-		51485A39D508F7BF1AE2BCA552AEC798 /* libPods-Obstacle-Detection.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Obstacle-Detection.a"; path = "libPods-Obstacle-Detection.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51485A39D508F7BF1AE2BCA552AEC798 /* libPods-Obstacle-Detection.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Obstacle-Detection.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D1DB5112E6A7978D0093EECF009E611 /* Pods-Obstacle-Detection-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Obstacle-Detection-umbrella.h"; sourceTree = "<group>"; };
 		5EDA8A7CE830586D41222DC4376590D2 /* ZipUtilities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZipUtilities.swift; path = Zip/ZipUtilities.swift; sourceTree = "<group>"; };
 		6AC725080C027CECDB660571B71BF887 /* Pods-Obstacle-Detection-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Obstacle-Detection-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -73,10 +74,10 @@
 		702430ADE98EA1B0CB5A2077BC98CC63 /* Pods-Obstacle-Detection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Obstacle-Detection.release.xcconfig"; sourceTree = "<group>"; };
 		7A90218002988BC4CB1F32C4793C0E68 /* Zip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Zip.swift; path = Zip/Zip.swift; sourceTree = "<group>"; };
 		9BEE3D138FB3B858006486655B8C9DD6 /* QuickZip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickZip.swift; path = Zip/QuickZip.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9FBFB928EDC09092C00548088518301F /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = zip.c; path = Zip/minizip/zip.c; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9FBFB928EDC09092C00548088518301F /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = zip.c; path = Zip/minizip/zip.c; sourceTree = "<group>"; };
 		A144179952E7F971CEABEA74B5C591EE /* TensorFlowLiteGpuExperimental.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TensorFlowLiteGpuExperimental.xcconfig; sourceTree = "<group>"; };
-		CE83A52C7B9D39880DCADF052D3E4E64 /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi.c; path = Zip/minizip/ioapi.c; sourceTree = "<group>"; };
+		CE83A52C7B9D39880DCADF052D3E4E64 /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = Zip/minizip/ioapi.c; sourceTree = "<group>"; };
 		D5A2378C17179FDEC09F875927917C8B /* Zip-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Zip-prefix.pch"; sourceTree = "<group>"; };
 		DB7D2BB833590138F149162EFA0ABD3C /* Pods-Obstacle-Detection-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Obstacle-Detection-acknowledgements.plist"; sourceTree = "<group>"; };
 		E77BA1AA8D1EA6E79E312CCE4942E9F0 /* tensorflow_lite_gpu.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = tensorflow_lite_gpu.framework; path = Frameworks/tensorflow_lite_gpu.framework; sourceTree = "<group>"; };
@@ -118,7 +119,6 @@
 				5EDA8A7CE830586D41222DC4376590D2 /* ZipUtilities.swift */,
 				EC642890811BD409E3DF8151D12945B9 /* Support Files */,
 			);
-			name = Zip;
 			path = Zip;
 			sourceTree = "<group>";
 		};
@@ -217,7 +217,6 @@
 				E40315ED6895B1E926B6B10FD33CA1DA /* Frameworks */,
 				EEB2793D0DB51EC742DF01C42D5E9C74 /* Support Files */,
 			);
-			name = TensorFlowLiteGpuExperimental;
 			path = TensorFlowLiteGpuExperimental;
 			sourceTree = "<group>";
 		};
@@ -296,10 +295,11 @@
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = 38E4430426E04BD2DF65EAA3FB5E6A38 /* Products */;

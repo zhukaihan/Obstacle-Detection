@@ -20,7 +20,7 @@
 #define TFLITE_USE_GPU_DELEGATE 1
 #endif
 
-@interface ModelEvaluator : NSObject  {
+@interface ODModelEvaluator : NSObject  {
   BOOL isUsingFrontFacingCamera;
   NSMutableDictionary* oldPredictionValues;
   NSMutableArray* labelLayers;
@@ -29,7 +29,7 @@
   double total_latency;
   int total_count;
 }
-- (NSArray*)evaluateOnBuffer:(CMSampleBufferRef)sampleBuffer;
+- (NSMutableArray*)evaluateOnBuffer:(CMSampleBufferRef)sampleBuffer;
 - (void)loadModel;
 - (void)freeModel;
 @end

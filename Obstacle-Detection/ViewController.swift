@@ -27,13 +27,14 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     let ALERT_TEXT_ALERT_TEXT = "Obstacle Detected! "
     
     
-    let captureSession = AVCaptureSession()
+    let IS_INFERENCING = true
+    
+    
+    var isInference = false
+    var captureSession: AVCaptureSession?
+    
     @IBOutlet var depthView: UIImageView!
     @IBOutlet var previewView: UIImageView!
-    let dataOutputQueue = DispatchQueue(label: "DepthQueue", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
-    let depthOutput = AVCaptureDepthDataOutput()
-    let videoOutput = AVCaptureVideoDataOutput()
-    var captureSync: AVCaptureDataOutputSynchronizer?
     
     let obstacleDetector = ObstacleDetector()
     
@@ -51,12 +52,20 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         // Request access for cameras.
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized: // The user has previously granted access to the camera.
-            self.initVideoCapture()
+            if self.IS_INFERENCING {
+                self.captureSession = ODInferenceCaptureSession(withDelegate: self)
+            } else {
+                self.captureSession = ODImageCaptureSession(withDelegate: self)
+            }
             
         case .notDetermined: // The user has not yet been asked for camera access.
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
-                    self.initVideoCapture()
+                    if self.IS_INFERENCING {
+                        self.captureSession = ODInferenceCaptureSession(withDelegate: self)
+                    } else {
+                        self.captureSession = ODImageCaptureSession(withDelegate: self)
+                    }
                 }
             }
             
@@ -67,76 +76,12 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         }
         
         
-        self.view.addSubview(self.depthView)
+        if (self.captureSession != nil) {
+            self.captureSession?.startRunning()
+        }
         
-        self.view.addSubview(self.previewView)
         
         self.obstacleDetector.setDelegate(self)
-        
-    }
-    
-    
-    func initVideoCapture() {
-        
-        self.captureSession.beginConfiguration()
-        self.captureSession.sessionPreset = .photo
-        
-        // Confugure for dual cameras device.
-        guard let videoDevice = AVCaptureDevice.default(.builtInDualCamera,
-                                                        for: .video, position: .unspecified) else { return }
-        try? videoDevice.lockForConfiguration()
-        
-        // Focus is automatic.
-        videoDevice.focusMode = .continuousAutoFocus
-        
-        // Add dual camera input to session.
-        guard
-            let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice),
-            self.captureSession.canAddInput(videoDeviceInput)
-            else { return }
-        self.captureSession.addInput(videoDeviceInput)
-        
-        // Add depth data output to session.
-        guard self.captureSession.canAddOutput(self.depthOutput) else { return }
-        self.captureSession.addOutput(self.depthOutput)
-        guard let connection = self.depthOutput.connections.first else { return }
-        connection.videoOrientation = .landscapeRight
-        self.depthOutput.isFilteringEnabled = false
-        
-        //let setting = NSDictionary()
-        //setting.setValue(NSNumber(value: kCMPixelFormat_32ARGB), forKey: kCVPixelBufferPixelFormatTypeKey)
-        //self.videoOutput.setValue(kCMPixelFormat_32ARGB, forKey: kCVPixelBufferPixelFormatTypeKey as String)
-        guard self.captureSession.canAddOutput(self.videoOutput) else {return}
-        self.captureSession.addOutput(self.videoOutput)
-        guard let videoConn = self.videoOutput.connections.first else { return }
-        videoConn.videoOrientation = .landscapeRight
-        self.videoOutput.videoSettings![kCVPixelBufferPixelFormatTypeKey as String] = kCMPixelFormat_32BGRA
-        
-        self.captureSync = AVCaptureDataOutputSynchronizer(dataOutputs: [videoOutput, depthOutput])
-        self.captureSync?.setDelegate(self, queue: dataOutputQueue)
-        
-        // Set frame rate.
-        // Discover maximum frame duration.
-        var maxFrameDuration = videoDevice.activeDepthDataMinFrameDuration
-        for range in (videoDevice.activeDepthDataFormat?.videoSupportedFrameRateRanges)! {
-            if range.maxFrameDuration > maxFrameDuration {
-                maxFrameDuration = range.maxFrameDuration
-            }
-        }
-        
-        // Set frame rate.
-        let DESIRED_FRAME_DUR: CMTime = CMTime(value: 1, timescale: DESIRED_MIN_FPS)
-        if (maxFrameDuration > DESIRED_FRAME_DUR) {
-            maxFrameDuration = DESIRED_FRAME_DUR
-        }
-        videoDevice.activeVideoMinFrameDuration = maxFrameDuration
-        videoDevice.activeVideoMaxFrameDuration = maxFrameDuration
-        videoDevice.activeDepthDataMinFrameDuration = maxFrameDuration
-        
-        videoDevice.unlockForConfiguration()
-        
-        self.captureSession.commitConfiguration()
-        self.captureSession.startRunning()
         
     }
     
@@ -149,8 +94,11 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     
     
     func dataOutputSynchronizer(_ synchronizer: AVCaptureDataOutputSynchronizer, didOutput synchronizedDataCollection: AVCaptureSynchronizedDataCollection) {
-        guard let depthData = synchronizedDataCollection[self.depthOutput] as? AVCaptureSynchronizedDepthData else {return}
-        guard let imgData = synchronizedDataCollection[self.videoOutput] as? AVCaptureSynchronizedSampleBufferData else {return}
+        if (self.captureSession == nil) {
+            return
+        }
+        guard let depthData = synchronizedDataCollection[(self.captureSession! as! ODImageCaptureSession).depthOutput] as? AVCaptureSynchronizedDepthData else {return}
+        guard let imgData = synchronizedDataCollection[(self.captureSession! as! ODImageCaptureSession).imageVideoOutput] as? AVCaptureSynchronizedSampleBufferData else {return}
         
         // Convert depth data to an image to show.
         guard let candidateDepthImg = ODImage(withCVPixelBuffer: depthData.depthData.depthDataMap) else { return }
@@ -172,14 +120,28 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         
         guard let storeImgCandidate = ODImage(withODImage: scaledImg)!.addToAlpha(withImg: self.depthImg) else { return }
         self.storeImg = storeImgCandidate
+    }
+    
+    
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
-        //obstacleDetector.detectObstacle(withImg: self.storeImg!)
-        obstacleDetector.runModelOn(withBuffer: imgData.sampleBuffer)
+        // Convert image buffer data to image to show.
+        // And resize image to the same size as depth map.
+        guard let scaledImg = ODImage(withCMSampleBuffer: sampleBuffer) else { return }
+        self.realImg = scaledImg
+        
+        // Show imgs.
+        guard let scaledCGImg = self.realImg!.toCGImg() else { return }
+        DispatchQueue.main.async {
+            self.previewView.image = UIImage(cgImage: scaledCGImg)
+        }
+        
+        obstacleDetector.runModelOn(withBuffer: sampleBuffer)
     }
     
     
     @IBAction func toggleDepthMode(_ sender: UISwitch) {
-        self.depthOutput.isFilteringEnabled = sender.isOn
+        //self.depthOutput.isFilteringEnabled = sender.isOn
     }
     
     
@@ -227,7 +189,7 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     
     @IBAction func takePhoto(_ sender: UIButton) {
         if (self.storeImg == nil) {
-            return
+            self.storeImg = self.realImg
         }
         
         // Store img to file.
@@ -304,10 +266,12 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     }
     
     
-    func obstacleReport(byDetector detector: ObstacleDetector, message msg: String) {
+    func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage) {
         DispatchQueue.main.async {
-            self.detectionInfoLabel.text = msg
+            self.detectionInfoLabel.text = self.ALERT_TEXT_DEFAULT_TEXT
             self.detectionInfoLabel.textColor = self.ALERT_TEXT_DEFAULT_COLOR
+            self.depthImg = img
+            self.depthView.image = UIImage(cgImage: img.toCGImg()!)
         }
     }
 
