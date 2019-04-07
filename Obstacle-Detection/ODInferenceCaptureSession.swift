@@ -33,7 +33,7 @@ class ODInferenceCaptureSession: AVCaptureSession {
         // Focus is automatic.
         self.videoDevice.focusMode = .continuousAutoFocus
         
-        // Add dual camera input to session.
+        // Add the camera input to session.
         guard
             let videoDeviceInput = try? AVCaptureDeviceInput(device: self.videoDevice),
             self.canAddInput(videoDeviceInput)
