@@ -12,23 +12,17 @@ import AVFoundation
 import MobileCoreServices
 
 /**
- The size of an ODImage will always be 320px*240px.
+ The size of an ODImage will always be the original size.
  */
 class ODImage {
-    static let WIDTH: Int = 320
-    static let HEIGHT: Int = 240
+    var width: Int = 0
+    var height: Int = 0
     
     var context: CGContext
-    var width: Int {
-        return context.width
-    }
-    var height: Int {
-        return context.height
-    }
     
-    init?() {
-        let width = ODImage.WIDTH;
-        let height = ODImage.HEIGHT;
+    init?(width newWidth: Int, height newHeight: Int) {
+        self.width = newWidth
+        self.height = newHeight
         
         let bytesPerPixel = 4;
         let bytesPerRow = bytesPerPixel * width;
@@ -41,8 +35,8 @@ class ODImage {
     }
     
     convenience init?(withCGImage img: CGImage) {
-        self.init()
-        self.context.draw(img, in: CGRect(x: 0, y: 0, width: ODImage.WIDTH, height: ODImage.WIDTH))
+        self.init(width: img.width, height: img.height)
+        self.context.draw(img, in: CGRect(x: 0, y: 0, width: img.width, height: img.height))
     }
     
     convenience init?(withCGContext ctxt: CGContext) {
@@ -87,9 +81,6 @@ class ODImage {
         if (img == nil) {
             return nil
         }
-        // Settings for CGContext.
-        let width = ODImage.WIDTH
-        let height = ODImage.HEIGHT
         
         // Set up pointer for
         guard let realData = self.context.data?.bindMemory(to: UInt8.self, capacity: width * height) else { return nil }
@@ -97,8 +88,8 @@ class ODImage {
         
         // Traverse image data to set alpha for realData.
         var offset = 0
-        for _ in 0..<ODImage.HEIGHT {
-            for _ in 0..<ODImage.WIDTH {
+        for _ in 0..<self.height {
+            for _ in 0..<self.width {
                 realData[offset + 3] = UInt8((Int(depthData[offset]) + Int(depthData[offset + 1]) + Int(depthData[offset + 2])) / 3)
                 if (realData[offset + 3] == 0) {
                     // To avoid having alpha value of 0. If alpha value is 0, rgb value will be ignored by Core Graphics.
@@ -113,8 +104,6 @@ class ODImage {
     
     func filter() {
         // Settings for CGContext.
-        let width = ODImage.WIDTH
-        let height = ODImage.HEIGHT
         
         // Set up pointer for
         guard let data = self.context.data?.bindMemory(to: UInt8.self, capacity: width * height) else { return }
@@ -129,8 +118,8 @@ class ODImage {
         
         // Traverse image data to set alpha for realData.
         var offset = 0
-        for _ in 0..<ODImage.HEIGHT {
-            for widthI in 0..<ODImage.WIDTH {
+        for _ in 0..<self.height {
+            for widthI in 0..<self.width {
                 if (data[offset] < HOLE_THRESHOLD || data[offset + 1] < HOLE_THRESHOLD || data[offset + 2] < HOLE_THRESHOLD) {
                     // Sees a hole. Fill this hole.
                     // Find right side of the hole.
@@ -138,7 +127,7 @@ class ODImage {
                     let leftWidthI = widthI - 1
                     var rightOffset = offset
                     var rightWidthI = widthI
-                    while (rightWidthI < ODImage.WIDTH - 1) && (data[rightOffset] < HOLE_THRESHOLD) {
+                    while (rightWidthI < self.width - 1) && (data[rightOffset] < HOLE_THRESHOLD) {
                         rightOffset += 4
                         rightWidthI += 1
                     }
@@ -161,8 +150,8 @@ class ODImage {
                         
                         // Consider the upper pixel for the new value.
                         var upperVal = leftVal
-                        if (leftOffset - ODImage.WIDTH * 4 >= 0) {
-                            upperVal = Double(data[leftOffset - ODImage.WIDTH * 4])
+                        if (leftOffset - self.width * 4 >= 0) {
+                            upperVal = Double(data[leftOffset - self.width * 4])
                         }
                         let newVal = UInt8((leftVal + upperVal) / 2)
                         data[leftOffset] = newVal

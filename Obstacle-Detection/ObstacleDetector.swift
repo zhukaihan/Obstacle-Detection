@@ -24,6 +24,7 @@ class ObstacleDetector {
     
     let LABEL_COLOR = [UIColor.green.cgColor, UIColor.darkGray.cgColor, UIColor.blue.cgColor, UIColor.red.cgColor]
     let LABEL_NAME = ["Obstacle", "Pothole", "Edge", "Uplift"]
+    let EVAL_THRESHOLD = 0.5
     
     let eval = ODModelEvaluator()
     
@@ -50,22 +51,36 @@ class ObstacleDetector {
             //print("\(label["obj_class"]) \(label["confidence"]) \(label["xmin"]) \(label["xmax"]) \(label["ymin"]) \(label["ymax"]) \n")
             
             let labelClass = Int(label["obj_class"] as! NSInteger)
-            let confidence = Float(label["confidence"] as! NSNumber)
-            let x = Double(label["xmin"] as! NSNumber) * Double(ODImage.WIDTH)
-            let y = Double(label["ymin"] as! NSNumber) * Double(ODImage.HEIGHT)
-            let width = Double(label["xmax"] as! NSNumber) * Double(ODImage.WIDTH) - x
-            let height = Double(label["ymax"] as! NSNumber) * Double(ODImage.HEIGHT) - y
+            let confidence = round(Double(label["confidence"] as! NSNumber) * 100) / 100
+            
+            if (confidence < EVAL_THRESHOLD) {
+                continue
+            }
+            
+            let xmin_to_top_left = Double(label["xmin"] as! NSNumber) * Double(img.width)
+            let ymin_to_top_left = Double(label["ymin"] as! NSNumber) * Double(img.height)
+            let xmax_to_top_left = Double(label["xmax"] as! NSNumber) * Double(img.width)
+            let ymax_to_top_left = Double(label["ymax"] as! NSNumber) * Double(img.height)
+            
+            // Core Graphics has origin at lower left corner.
+            let x = xmin_to_top_left
+            let y = Double(img.height) - ymax_to_top_left
+            let width = xmax_to_top_left - xmin_to_top_left
+            let height = ymax_to_top_left - ymin_to_top_left
             
             let rect = CGRect(x: x, y: y, width: width, height: height)
             
+            let rectWidth = Int(Double(img.width / 80) * (confidence)) // Thicker box has more confidence.
             img.context.setStrokeColor(LABEL_COLOR[labelClass])
-            img.context.stroke(rect, width: 4)
+            
+            img.context.stroke(rect, width: CGFloat(rectWidth))
             
             img.context.textPosition = rect.origin
             
             let nsAttr: [NSAttributedString.Key : Any] = [
-                kCTBackgroundColorAttributeName as NSAttributedString.Key: UIColor.white.cgColor,
-                kCTForegroundColorAttributeName as NSAttributedString.Key: UIColor.black.cgColor,
+                NSAttributedString.Key.foregroundColor: UIColor.black.cgColor,
+                NSAttributedString.Key.backgroundColor: UIColor.white.cgColor,
+                NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: CGFloat(rectWidth * 4))
             ]
             let attrStr = NSAttributedString(string: "\(LABEL_NAME[labelClass]): \(confidence)", attributes: nsAttr)
             
@@ -80,8 +95,8 @@ class ObstacleDetector {
     
     func detectObstacle(withImg img: ODImage) {
         var isObstacle = false
-        let width = ODImage.WIDTH;
-        let height = ODImage.HEIGHT;
+        let width = img.width;
+        let height = img.height;
         let nextPixel = ObstacleDetector.NEXT_PIXEL_INTERVAL
         let pixelBytes = ObstacleDetector.PIXEL_BYTES
         let depthOffset = ObstacleDetector.DEPTH_OFFSET
@@ -91,8 +106,8 @@ class ObstacleDetector {
         
         // Traverse image data to set alpha for realData.
         var offset = 0
-        for _ in 0..<ODImage.HEIGHT {
-            for _ in 0..<ODImage.WIDTH - nextPixel {
+        for _ in 0..<img.height {
+            for _ in 0..<img.width - nextPixel {
                 let depth = Int(data[offset + depthOffset])
                 let nextDepth = Int(data[offset + nextPixel * pixelBytes + depthOffset])
                 

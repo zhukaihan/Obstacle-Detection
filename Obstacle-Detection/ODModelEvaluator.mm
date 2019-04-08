@@ -251,8 +251,8 @@ namespace {
         LOG(FATAL) << "Output of the model is in invalid format." << output_dims->size << "\n";
     }
     
-    const int kNumResults = 5;
-    const float kThreshold = 0.1f;
+    const int kNumResults = 10;
+    const float kThreshold = 0.0f;
     
     std::vector<std::pair<float, int> > top_results;
     

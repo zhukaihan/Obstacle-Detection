@@ -28,6 +28,7 @@
 
   double total_latency;
   int total_count;
+    
 }
 - (NSMutableArray*)evaluateOnBuffer:(CMSampleBufferRef)sampleBuffer;
 - (void)loadModel;

@@ -33,7 +33,7 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     var isInference = false
     var captureSession: AVCaptureSession?
     
-    @IBOutlet var depthView: UIImageView!
+    @IBOutlet var resultView: UIImageView!
     @IBOutlet var previewView: UIImageView!
     
     let obstacleDetector = ObstacleDetector()
@@ -41,7 +41,7 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     var storeImg: ODImage?
     @IBOutlet var detectionInfoLabel: UILabel!
     
-    var depthImg: ODImage?
+    var resultImg: ODImage?
     var realImg: ODImage?
     
     
@@ -103,7 +103,7 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         // Convert depth data to an image to show.
         guard let candidateDepthImg = ODImage(withCVPixelBuffer: depthData.depthData.depthDataMap) else { return }
         candidateDepthImg.filter()
-        self.depthImg = candidateDepthImg
+        self.resultImg = candidateDepthImg
         
         // Convert image buffer data to image to show.
         // And resize image to the same size as depth map.
@@ -112,13 +112,13 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         
         // Show imgs.
         guard let scaledCGImg = self.realImg!.toCGImg() else { return }
-        guard let depthCGImg = self.depthImg!.toCGImg() else { return }
+        guard let depthCGImg = self.resultImg!.toCGImg() else { return }
         DispatchQueue.main.async {
             self.previewView.image = UIImage(cgImage: scaledCGImg)
-            self.depthView.image = UIImage(cgImage: depthCGImg)
+            self.resultView.image = UIImage(cgImage: depthCGImg)
         }
         
-        guard let storeImgCandidate = ODImage(withODImage: scaledImg)!.addToAlpha(withImg: self.depthImg) else { return }
+        guard let storeImgCandidate = ODImage(withODImage: scaledImg)!.addToAlpha(withImg: self.resultImg) else { return }
         self.storeImg = storeImgCandidate
     }
     
@@ -194,15 +194,15 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
         
         // Store img to file.
         guard let photoFolder = createFolder(withName: PHOTO_FOLDER_NAME) else { return }
-        guard let photoWithDepthFolder = createFolder(withName: PHOTO_WITH_DEPTH_FOLDER_NAME) else { return }
+        //guard let photoWithDepthFolder = createFolder(withName: PHOTO_WITH_DEPTH_FOLDER_NAME) else { return }
         
         let imgName = curTimeStamp()
         let photoPath = photoFolder.appendingPathComponent(imgName + ".png")
-        let photoWithDepthPath = photoWithDepthFolder.appendingPathComponent(imgName + ".png")
+        //let photoWithDepthPath = photoWithDepthFolder.appendingPathComponent(imgName + ".png")
         
         if (
-            (self.realImg?.writeTo(url: photoPath, withName: imgName))! &&
-            (self.storeImg?.writeTo(url: photoWithDepthPath, withName: imgName))!
+            (self.realImg?.writeTo(url: photoPath, withName: imgName))!// &&
+            //(self.storeImg?.writeTo(url: photoWithDepthPath, withName: imgName))!
         ) {
             self.view.backgroundColor = self.PHOTO_CAPTURE_BG_COLOR
             self.restoreBgColor()
@@ -268,10 +268,8 @@ class ViewController: UIViewController, AVCaptureDepthDataOutputDelegate, AVCapt
     
     func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage) {
         DispatchQueue.main.async {
-            self.detectionInfoLabel.text = self.ALERT_TEXT_DEFAULT_TEXT
-            self.detectionInfoLabel.textColor = self.ALERT_TEXT_DEFAULT_COLOR
-            self.depthImg = img
-            self.depthView.image = UIImage(cgImage: img.toCGImg()!)
+            self.resultImg = img
+            self.resultView.image = UIImage(cgImage: img.toCGImg()!)
         }
     }
 
