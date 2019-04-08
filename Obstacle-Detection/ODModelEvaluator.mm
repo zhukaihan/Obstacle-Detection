@@ -147,6 +147,9 @@ namespace {
 
 - (NSMutableArray*)evaluateOnBuffer:(CMSampleBufferRef)sampleBuffer {
     CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    if (pixelBuffer == NULL) {
+        return NULL;
+    }
     CFRetain(pixelBuffer);
     NSMutableArray* labeledArr = [self runModelOnFrame:pixelBuffer];
     CFRelease(pixelBuffer);
