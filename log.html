@@ -427,6 +427,8 @@ To be mindful, there are extra steps to configure the project if you want to use
 <li>Change parameters of model and its input.</li>
 <li>Change some code in runModelOnFrame() to handle the output of the model.</li>
 </ol>
+<p>Bemindful that there is an input process error in the demo code, the x and y values are flipped. Code has to be modified for both quantized and non-quantized functions. Details are here:
+<a href="https://github.com/tensorflow/tensorflow/issues/25784">https://github.com/tensorflow/tensorflow/issues/25784</a></p>
 <hr>
 <h2 id="div-style%22font-size50px%22results-and-a-conclusion-coming-up-div"><div style="font-size:50px;">Results and a Conclusion Coming Up: </div></h2>
 <p>The initial model that was trained on 45 images was having decent recognition on big boxes and poles. Even a slim coke bottle is recognized as an obstacle. Therefore, we can conclude that our architecture can converge.</p>
