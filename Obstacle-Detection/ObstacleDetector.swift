@@ -51,16 +51,16 @@ class ObstacleDetector {
             //print("\(label["obj_class"]) \(label["confidence"]) \(label["xmin"]) \(label["xmax"]) \(label["ymin"]) \(label["ymax"]) \n")
             
             let labelClass = Int(label["obj_class"] as! NSInteger)
-            let confidence = round(Double(label["confidence"] as! NSNumber) * 100) / 100
+            let confidence = round((label["confidence"] as! NSNumber).doubleValue * 100) / 100
             
             if (confidence < EVAL_THRESHOLD) {
                 continue
             }
             
-            let xmin_to_top_left = Double(label["xmin"] as! NSNumber) * Double(img.width)
-            let ymin_to_top_left = Double(label["ymin"] as! NSNumber) * Double(img.height)
-            let xmax_to_top_left = Double(label["xmax"] as! NSNumber) * Double(img.width)
-            let ymax_to_top_left = Double(label["ymax"] as! NSNumber) * Double(img.height)
+            let xmin_to_top_left = (label["xmin"] as! NSNumber).doubleValue * Double(img.width)
+            let ymin_to_top_left = (label["ymin"] as! NSNumber).doubleValue * Double(img.height)
+            let xmax_to_top_left = (label["xmax"] as! NSNumber).doubleValue * Double(img.width)
+            let ymax_to_top_left = (label["ymax"] as! NSNumber).doubleValue * Double(img.height)
             
             // Core Graphics has origin at lower left corner.
             let x = xmin_to_top_left
@@ -69,23 +69,11 @@ class ObstacleDetector {
             let height = ymax_to_top_left - ymin_to_top_left
             
             let rect = CGRect(x: x, y: y, width: width, height: height)
+            let rectThickness = Int(Double(img.width / 80) * (confidence)) // Thicker box has more confidence.
+            img.drawBox(rect: rect, withThickness: rectThickness, withColor: LABEL_COLOR[labelClass])
             
-            let rectWidth = Int(Double(img.width / 80) * (confidence)) // Thicker box has more confidence.
-            img.context.setStrokeColor(LABEL_COLOR[labelClass])
-            
-            img.context.stroke(rect, width: CGFloat(rectWidth))
-            
-            img.context.textPosition = rect.origin
-            
-            let nsAttr: [NSAttributedString.Key : Any] = [
-                NSAttributedString.Key.foregroundColor: UIColor.black.cgColor,
-                NSAttributedString.Key.backgroundColor: UIColor.white.cgColor,
-                NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: CGFloat(rectWidth * 4))
-            ]
-            let attrStr = NSAttributedString(string: "\(LABEL_NAME[labelClass]): \(confidence)", attributes: nsAttr)
-            
-            let textLine = CTLineCreateWithAttributedString(attrStr)
-            CTLineDraw(textLine, img.context)
+            let text = "\(LABEL_NAME[labelClass]): \(confidence)"
+            img.drawText(text: text, atOrigin: rect.origin, withFontSize: CGFloat(rectThickness * 4))
         }
         
         if (delegate != nil) {

@@ -172,4 +172,24 @@ class ODImage {
         CGImageDestinationFinalize(dest)
         return true
     }
+    
+    func drawBox(rect: CGRect, withThickness width: Int, withColor color: CGColor) {
+        self.context.setStrokeColor(color)
+        self.context.stroke(rect, width: CGFloat(width))
+    }
+    
+    func drawText(text: String, atOrigin origin: CGPoint, withFontSize size: CGFloat) {
+        
+        self.context.textPosition = origin
+        
+        let nsAttr: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.black.cgColor,
+            NSAttributedString.Key.backgroundColor: UIColor.white.cgColor,
+            NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: size) as Any
+        ]
+        let attrStr = NSAttributedString(string: text, attributes: nsAttr)
+        
+        let textLine = CTLineCreateWithAttributedString(attrStr)
+        CTLineDraw(textLine, self.context)
+    }
 }

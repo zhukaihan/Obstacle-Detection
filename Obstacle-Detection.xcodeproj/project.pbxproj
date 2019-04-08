@@ -12,34 +12,14 @@
 		6040C2DB222B2327004CB29A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6040C2D9222B2327004CB29A /* Main.storyboard */; };
 		6040C2DD222B232A004CB29A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6040C2DC222B232A004CB29A /* Assets.xcassets */; };
 		6040C2E0222B232A004CB29A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6040C2DE222B232A004CB29A /* LaunchScreen.storyboard */; };
-		6040C2EB222B232B004CB29A /* Obstacle_DetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6040C2EA222B232B004CB29A /* Obstacle_DetectionTests.swift */; };
-		6040C2F6222B232B004CB29A /* Obstacle_DetectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6040C2F5222B232B004CB29A /* Obstacle_DetectionUITests.swift */; };
 		832BBB322246F95C00923473 /* ObstacleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB312246F95C00923473 /* ObstacleDetector.swift */; };
 		832BBB3622479B6300923473 /* ODImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB3522479B6300923473 /* ODImage.swift */; };
 		83B2ADBD2258BB9600298309 /* ODModelEvaluator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B2ADBC2258BB9600298309 /* ODModelEvaluator.mm */; };
 		83B2ADD62258D89B00298309 /* model_labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83B2ADD32258D89B00298309 /* model_labels.txt */; };
-		83B2ADD82258D89B00298309 /* ssd.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 83B2ADD52258D89B00298309 /* ssd.tflite */; };
-		83FCD3832259A86C00B3EE75 /* ODInferenceCaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FCD3822259A86B00B3EE75 /* ODInferenceCaptureSession.swift */; };
-		83FCD3852259ACAA00B3EE75 /* ODImageCaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FCD3842259ACAA00B3EE75 /* ODImageCaptureSession.swift */; };
+		83E6AE83225B3A4E00AD1466 /* ssd.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 83E6AE82225B3A3F00AD1466 /* ssd.tflite */; };
+		83FCD3832259A86C00B3EE75 /* ODCaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FCD3822259A86B00B3EE75 /* ODCaptureSession.swift */; };
 		C10E94D44B4F84070ED417A9 /* libPods-Obstacle-Detection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01750E3F6B734EAAD70FBF9E /* libPods-Obstacle-Detection.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		6040C2E7222B232B004CB29A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6040C2CA222B2327004CB29A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6040C2D1222B2327004CB29A;
-			remoteInfo = "Obstacle-Detection";
-		};
-		6040C2F2222B232B004CB29A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6040C2CA222B2327004CB29A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6040C2D1222B2327004CB29A;
-			remoteInfo = "Obstacle-Detection";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		01750E3F6B734EAAD70FBF9E /* libPods-Obstacle-Detection.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Obstacle-Detection.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,10 +30,8 @@
 		6040C2DC222B232A004CB29A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6040C2DF222B232A004CB29A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6040C2E1222B232A004CB29A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6040C2E6222B232B004CB29A /* Obstacle-DetectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Obstacle-DetectionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6040C2EA222B232B004CB29A /* Obstacle_DetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle_DetectionTests.swift; sourceTree = "<group>"; };
 		6040C2EC222B232B004CB29A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6040C2F1222B232B004CB29A /* Obstacle-DetectionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Obstacle-DetectionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6040C2F5222B232B004CB29A /* Obstacle_DetectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle_DetectionUITests.swift; sourceTree = "<group>"; };
 		6040C2F7222B232B004CB29A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61881F68976D3AE7778CE79E /* Pods-Obstacle-Detection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Obstacle-Detection.debug.xcconfig"; path = "Target Support Files/Pods-Obstacle-Detection/Pods-Obstacle-Detection.debug.xcconfig"; sourceTree = "<group>"; };
@@ -64,9 +42,8 @@
 		83B2ADBB2258BB9600298309 /* ODModelEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODModelEvaluator.h; sourceTree = "<group>"; };
 		83B2ADBC2258BB9600298309 /* ODModelEvaluator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ODModelEvaluator.mm; sourceTree = "<group>"; };
 		83B2ADD32258D89B00298309 /* model_labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_labels.txt; sourceTree = "<group>"; };
-		83B2ADD52258D89B00298309 /* ssd.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ssd.tflite; sourceTree = "<group>"; };
-		83FCD3822259A86B00B3EE75 /* ODInferenceCaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODInferenceCaptureSession.swift; sourceTree = "<group>"; };
-		83FCD3842259ACAA00B3EE75 /* ODImageCaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODImageCaptureSession.swift; sourceTree = "<group>"; };
+		83E6AE82225B3A3F00AD1466 /* ssd.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ssd.tflite; sourceTree = "<group>"; };
+		83FCD3822259A86B00B3EE75 /* ODCaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODCaptureSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,20 +52,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C10E94D44B4F84070ED417A9 /* libPods-Obstacle-Detection.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6040C2E3222B232B004CB29A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6040C2EE222B232B004CB29A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,8 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				6040C2D2222B2327004CB29A /* Obstacle-Detection.app */,
-				6040C2E6222B232B004CB29A /* Obstacle-DetectionTests.xctest */,
-				6040C2F1222B232B004CB29A /* Obstacle-DetectionUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,8 +86,7 @@
 				83B2ADBC2258BB9600298309 /* ODModelEvaluator.mm */,
 				6040C2D5222B2327004CB29A /* AppDelegate.swift */,
 				6040C2D7222B2327004CB29A /* ViewController.swift */,
-				83FCD3842259ACAA00B3EE75 /* ODImageCaptureSession.swift */,
-				83FCD3822259A86B00B3EE75 /* ODInferenceCaptureSession.swift */,
+				83FCD3822259A86B00B3EE75 /* ODCaptureSession.swift */,
 				832BBB3522479B6300923473 /* ODImage.swift */,
 				832BBB312246F95C00923473 /* ObstacleDetector.swift */,
 				6040C2D9222B2327004CB29A /* Main.storyboard */,
@@ -159,8 +119,8 @@
 		83B2ADD22258D86300298309 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				83E6AE82225B3A3F00AD1466 /* ssd.tflite */,
 				83B2ADD32258D89B00298309 /* model_labels.txt */,
-				83B2ADD52258D89B00298309 /* ssd.tflite */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -203,42 +163,6 @@
 			productReference = 6040C2D2222B2327004CB29A /* Obstacle-Detection.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6040C2E5222B232B004CB29A /* Obstacle-DetectionTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6040C2FD222B232B004CB29A /* Build configuration list for PBXNativeTarget "Obstacle-DetectionTests" */;
-			buildPhases = (
-				6040C2E2222B232B004CB29A /* Sources */,
-				6040C2E3222B232B004CB29A /* Frameworks */,
-				6040C2E4222B232B004CB29A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6040C2E8222B232B004CB29A /* PBXTargetDependency */,
-			);
-			name = "Obstacle-DetectionTests";
-			productName = "Obstacle-DetectionTests";
-			productReference = 6040C2E6222B232B004CB29A /* Obstacle-DetectionTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		6040C2F0222B232B004CB29A /* Obstacle-DetectionUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6040C300222B232B004CB29A /* Build configuration list for PBXNativeTarget "Obstacle-DetectionUITests" */;
-			buildPhases = (
-				6040C2ED222B232B004CB29A /* Sources */,
-				6040C2EE222B232B004CB29A /* Frameworks */,
-				6040C2EF222B232B004CB29A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6040C2F3222B232B004CB29A /* PBXTargetDependency */,
-			);
-			name = "Obstacle-DetectionUITests";
-			productName = "Obstacle-DetectionUITests";
-			productReference = 6040C2F1222B232B004CB29A /* Obstacle-DetectionUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -252,14 +176,6 @@
 					6040C2D1222B2327004CB29A = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
-					};
-					6040C2E5222B232B004CB29A = {
-						CreatedOnToolsVersion = 10.1;
-						TestTargetID = 6040C2D1222B2327004CB29A;
-					};
-					6040C2F0222B232B004CB29A = {
-						CreatedOnToolsVersion = 10.1;
-						TestTargetID = 6040C2D1222B2327004CB29A;
 					};
 				};
 			};
@@ -277,8 +193,6 @@
 			projectRoot = "";
 			targets = (
 				6040C2D1222B2327004CB29A /* Obstacle-Detection */,
-				6040C2E5222B232B004CB29A /* Obstacle-DetectionTests */,
-				6040C2F0222B232B004CB29A /* Obstacle-DetectionUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -289,24 +203,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6040C2E0222B232A004CB29A /* LaunchScreen.storyboard in Resources */,
-				83B2ADD82258D89B00298309 /* ssd.tflite in Resources */,
+				83E6AE83225B3A4E00AD1466 /* ssd.tflite in Resources */,
 				83B2ADD62258D89B00298309 /* model_labels.txt in Resources */,
 				6040C2DD222B232A004CB29A /* Assets.xcassets in Resources */,
 				6040C2DB222B2327004CB29A /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6040C2E4222B232B004CB29A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6040C2EF222B232B004CB29A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,8 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6040C2D8222B2327004CB29A /* ViewController.swift in Sources */,
-				83FCD3852259ACAA00B3EE75 /* ODImageCaptureSession.swift in Sources */,
-				83FCD3832259A86C00B3EE75 /* ODInferenceCaptureSession.swift in Sources */,
+				83FCD3832259A86C00B3EE75 /* ODCaptureSession.swift in Sources */,
 				832BBB3622479B6300923473 /* ODImage.swift in Sources */,
 				832BBB322246F95C00923473 /* ObstacleDetector.swift in Sources */,
 				83B2ADBD2258BB9600298309 /* ODModelEvaluator.mm in Sources */,
@@ -352,36 +251,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6040C2E2222B232B004CB29A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6040C2EB222B232B004CB29A /* Obstacle_DetectionTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6040C2ED222B232B004CB29A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6040C2F6222B232B004CB29A /* Obstacle_DetectionUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		6040C2E8222B232B004CB29A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6040C2D1222B2327004CB29A /* Obstacle-Detection */;
-			targetProxy = 6040C2E7222B232B004CB29A /* PBXContainerItemProxy */;
-		};
-		6040C2F3222B232B004CB29A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6040C2D1222B2327004CB29A /* Obstacle-Detection */;
-			targetProxy = 6040C2F2222B232B004CB29A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6040C2D9222B2327004CB29A /* Main.storyboard */ = {
@@ -611,88 +481,6 @@
 			};
 			name = Release;
 		};
-		6040C2FE222B232B004CB29A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MH6L73893P;
-				INFOPLIST_FILE = "Obstacle-DetectionTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zhukaihan.Obstacle-DetectionTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Obstacle-Detection.app/Obstacle-Detection";
-			};
-			name = Debug;
-		};
-		6040C2FF222B232B004CB29A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MH6L73893P;
-				INFOPLIST_FILE = "Obstacle-DetectionTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zhukaihan.Obstacle-DetectionTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Obstacle-Detection.app/Obstacle-Detection";
-			};
-			name = Release;
-		};
-		6040C301222B232B004CB29A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MH6L73893P;
-				INFOPLIST_FILE = "Obstacle-DetectionUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zhukaihan.Obstacle-DetectionUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Obstacle-Detection";
-			};
-			name = Debug;
-		};
-		6040C302222B232B004CB29A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MH6L73893P;
-				INFOPLIST_FILE = "Obstacle-DetectionUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zhukaihan.Obstacle-DetectionUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Obstacle-Detection";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -710,24 +498,6 @@
 			buildConfigurations = (
 				6040C2FB222B232B004CB29A /* Debug */,
 				6040C2FC222B232B004CB29A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6040C2FD222B232B004CB29A /* Build configuration list for PBXNativeTarget "Obstacle-DetectionTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6040C2FE222B232B004CB29A /* Debug */,
-				6040C2FF222B232B004CB29A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6040C300222B232B004CB29A /* Build configuration list for PBXNativeTarget "Obstacle-DetectionUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6040C301222B232B004CB29A /* Debug */,
-				6040C302222B232B004CB29A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

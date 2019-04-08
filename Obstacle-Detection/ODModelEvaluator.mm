@@ -29,9 +29,7 @@
 #include "tensorflow/lite/model.h"
 #include "tensorflow/lite/op_resolver.h"
 #include "tensorflow/lite/string_util.h"
-#if TFLITE_USE_GPU_DELEGATE
 #include "tensorflow/lite/delegates/gpu/metal_delegate.h"
-#endif
 
 #define LOG(x) std::cerr
 
@@ -39,12 +37,8 @@ namespace {
     
     // If you have your own model, modify this to the file name, and make sure
     // you've added the file to your app resources too.
-#if TFLITE_USE_GPU_DELEGATE
     // GPU Delegate only supports float model now.
     NSString* model_file_name = @"ssd";
-#else
-    NSString* model_file_name = @"model_quantized";
-#endif
     NSString* model_file_type = @"tflite";
     // If you have your own model, point this to the labels file.
     NSString* labels_file_name = @"model_labels";
@@ -125,30 +119,14 @@ namespace {
         for (int y = 0; y < wanted_input_height; ++y) {
             float* out_row = buffer + (y * wanted_input_width * wanted_input_channels);
             for (int x = 0; x < wanted_input_width; ++x) {
-                const int in_x = (y * image_width) / wanted_input_width;
-                const int in_y = (x * image_height) / wanted_input_height;
-                uint8_t* input_pixel =
-                input + (in_y * image_width * image_channels) + (in_x * image_channels);
+                const int in_x = (x * image_width) / wanted_input_width;
+                const int in_y = (y * image_height) / wanted_input_height;
+                
+                uint8_t* input_pixel = input + (in_y * image_width * image_channels) + (in_x * image_channels);
+                
                 float* out_pixel = out_row + (x * wanted_input_channels);
                 for (int c = 0; c < wanted_input_channels; ++c) {
                     out_pixel[c] = (input_pixel[c] - input_mean) / input_std;
-                }
-            }
-        }
-    }
-    
-    // Preprocess the input image and feed the TFLite interpreter buffer for a quantized model.
-    void ProcessInputWithQuantizedModel(
-                                        uint8_t* input, uint8_t* output, int image_width, int image_height, int image_channels) {
-        for (int y = 0; y < wanted_input_height; ++y) {
-            uint8_t* out_row = output + (y * wanted_input_width * wanted_input_channels);
-            for (int x = 0; x < wanted_input_width; ++x) {
-                const int in_x = (y * image_width) / wanted_input_width;
-                const int in_y = (x * image_height) / wanted_input_height;
-                uint8_t* in_pixel = input + (in_y * image_width * image_channels) + (in_x * image_channels);
-                uint8_t* out_pixel = out_row + (x * wanted_input_channels);
-                for (int c = 0; c < wanted_input_channels; ++c) {
-                    out_pixel[c] = in_pixel[c];
                 }
             }
         }
@@ -205,29 +183,12 @@ namespace {
     uint8_t* in = sourceStartAddr;
     
     int input = interpreter->inputs()[0];
-    TfLiteTensor *input_tensor = interpreter->tensor(input);
     
-    bool is_quantized;
-    switch (input_tensor->type) {
-        case kTfLiteFloat32:
-            is_quantized = false;
-            break;
-        case kTfLiteUInt8:
-            is_quantized = true;
-            break;
-        default:
-            NSLog(@"Input data type is not supported by this demo app.");
-            return nil;
-    }
+    // Process input.
+    float* out = interpreter->typed_tensor<float>(input);
+    ProcessInputWithFloatModel(in, out, image_width, image_height, image_channels);
     
-    if (is_quantized) {
-        uint8_t* out = interpreter->typed_tensor<uint8_t>(input);
-        ProcessInputWithQuantizedModel(in, out, image_width, image_height, image_channels);
-    } else {
-        float* out = interpreter->typed_tensor<float>(input);
-        ProcessInputWithFloatModel(in, out, image_width, image_height, image_channels);
-    }
-    
+    // Inference
     double start = [[NSDate new] timeIntervalSince1970];
     if (interpreter->Invoke() != kTfLiteOk) {
         LOG(FATAL) << "Failed to invoke!";
@@ -251,144 +212,53 @@ namespace {
         LOG(FATAL) << "Output of the model is in invalid format." << output_dims->size << "\n";
     }
     
+    // Process outputs. 
     const int kNumResults = 10;
     const float kThreshold = 0.0f;
     
     std::vector<std::pair<float, int> > top_results;
     
-    if (is_quantized) {
-        
-        uint8_t* output_boxes = interpreter->typed_output_tensor<uint8_t>(0);
-        uint8_t* output_classes = interpreter->typed_output_tensor<uint8_t>(1);
-        uint8_t* output_scores = interpreter->typed_output_tensor<uint8_t>(2);
-        uint8_t* num_boxes = interpreter->typed_output_tensor<uint8_t>(3);
-        int output_size = num_boxes[0];
-        
-        uint8_t* quantized_output_scores = output_scores;
-        int32_t zero_point = input_tensor->params.zero_point;
-        float scale = input_tensor->params.scale;
-        float output[output_size];
-        for (int i = 0; i < output_size; ++i) {
-            output[i] = (quantized_output_scores[i] - zero_point) * scale;
-        }
-        GetTopN(output, output_size, kNumResults, kThreshold, &top_results);
-    } else {
-        
-        float* output_boxes = interpreter->typed_output_tensor<float>(0);
-        float* output_classes = interpreter->typed_output_tensor<float>(1);
-        float* output_scores = interpreter->typed_output_tensor<float>(2);
-        float* num_boxes = interpreter->typed_output_tensor<float>(3);
-        
-        const int output_size = num_boxes[0];
-        
-        GetTopN(output_scores, output_size, kNumResults, kThreshold, &top_results);
-        
-        
-        NSLog(@"\nnum_boxes: %d \n", output_size);
-        
-        const int input_img_width = (int)CVPixelBufferGetWidth(pixelBuffer);
-        const int input_img_height = (int)CVPixelBufferGetHeight(pixelBuffer);
-        
-        NSMutableArray* output_values = [[NSMutableArray alloc] init];
-        for (const auto& result : top_results) {
-            const int index = result.second;
-            NSNumber* obj_class = [NSNumber numberWithInt:output_classes[index]];
-            NSNumber* confidence = [NSNumber numberWithFloat:result.first];//output_scores[index]
-            NSNumber* ymin = [NSNumber numberWithFloat:output_boxes[index * 4]];
-            NSNumber* xmin = [NSNumber numberWithFloat:output_boxes[index * 4 + 1]];
-            NSNumber* ymax = [NSNumber numberWithFloat:output_boxes[index * 4 + 2]];
-            NSNumber* xmax = [NSNumber numberWithFloat:output_boxes[index * 4 + 3]];
-            
-            id objects[] = { obj_class, confidence, ymin, xmin, ymax, xmax };
-            id keys[] = { @"obj_class", @"confidence", @"ymin", @"xmin", @"ymax", @"xmax" };
-            NSUInteger count = sizeof(objects) / sizeof(id);
-            NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:objects
-                                                                   forKeys:keys
-                                                                     count:count];
-            [output_values addObject:dictionary];
-            
-            //NSLog(@"\nbox%d is at: %f, %f, %f, %f", index, output_boxes[index * 4], output_boxes[index * 4 + 1], output_boxes[index * 4 + 2], output_boxes[index * 4 + 3]);
-            //NSLog(@"\nbox%d is at: %f, %f, %f, %f", index, obj_class, confidence, output_classes[index], result.first);
-        }
-        
-        return output_values;
-    }
-    
-    
-    
-    return NULL;
     float* output_boxes = interpreter->typed_output_tensor<float>(0);
     float* output_classes = interpreter->typed_output_tensor<float>(1);
     float* output_scores = interpreter->typed_output_tensor<float>(2);
     float* num_boxes = interpreter->typed_output_tensor<float>(3);
     
-    NSMutableDictionary* newValues = [NSMutableDictionary dictionary];
+    const int output_size = num_boxes[0];
+    
+    GetTopN(output_scores, output_size, kNumResults, kThreshold, &top_results);
+    
+    
+    NSLog(@"\nnum_boxes: %d \n", output_size);
+    
+    NSMutableArray* output_values = [[NSMutableArray alloc] init];
     for (const auto& result : top_results) {
-        const float confidence = result.first;
         const int index = result.second;
-        NSString* labelObject = [NSString stringWithUTF8String:labels[output_classes[index]].c_str()];
-        NSNumber* valueObject = [NSNumber numberWithFloat:confidence];
-        [newValues setObject:valueObject forKey:labelObject];
+        NSNumber* obj_class = [NSNumber numberWithInt:output_classes[index]];
+        NSNumber* confidence = [NSNumber numberWithFloat:result.first];//output_scores[index]
+        NSNumber* ymin = [NSNumber numberWithFloat:output_boxes[index * 4]];
+        NSNumber* xmin = [NSNumber numberWithFloat:output_boxes[index * 4 + 1]];
+        NSNumber* ymax = [NSNumber numberWithFloat:output_boxes[index * 4 + 2]];
+        NSNumber* xmax = [NSNumber numberWithFloat:output_boxes[index * 4 + 3]];
+        
+        id objects[] = { obj_class, confidence, ymin, xmin, ymax, xmax };
+        id keys[] = { @"obj_class", @"confidence", @"ymin", @"xmin", @"ymax", @"xmax" };
+        NSUInteger count = sizeof(objects) / sizeof(id);
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:objects
+                                                               forKeys:keys
+                                                                 count:count];
+        [output_values addObject:dictionary];
+        
+        //NSLog(@"\nbox%d is at: %f, %f, %f, %f", index, output_boxes[index * 4], output_boxes[index * 4 + 1], output_boxes[index * 4 + 2], output_boxes[index * 4 + 3]);
+        //NSLog(@"\nbox%d is at: %f, %f, %f, %f", index, obj_class, confidence, output_classes[index], result.first);
     }
-    NSArray* sortedLabels = [self setPredictionValues:newValues];
+    return output_values;
     
-    CVPixelBufferUnlockBaseAddress(pixelBuffer, unlockFlags);
-    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
-    
-    return sortedLabels;
-}
-
-- (NSArray*)setPredictionValues:(NSDictionary*)newValues {
-    const float decayValue = 0.75f;
-    const float updateValue = 0.25f;
-    const float minimumThreshold = 0.01f;
-    
-    NSMutableDictionary* decayedPredictionValues = [[NSMutableDictionary alloc] init];
-    for (NSString* label in oldPredictionValues) {
-        NSNumber* oldPredictionValueObject = [oldPredictionValues objectForKey:label];
-        const float oldPredictionValue = [oldPredictionValueObject floatValue];
-        const float decayedPredictionValue = (oldPredictionValue * decayValue);
-        if (decayedPredictionValue > minimumThreshold) {
-            NSNumber* decayedPredictionValueObject = [NSNumber numberWithFloat:decayedPredictionValue];
-            [decayedPredictionValues setObject:decayedPredictionValueObject forKey:label];
-        }
-    }
-    oldPredictionValues = decayedPredictionValues;
-    
-    for (NSString* label in newValues) {
-        NSNumber* newPredictionValueObject = [newValues objectForKey:label];
-        NSNumber* oldPredictionValueObject = [oldPredictionValues objectForKey:label];
-        if (!oldPredictionValueObject) {
-            oldPredictionValueObject = [NSNumber numberWithFloat:0.0f];
-        }
-        const float newPredictionValue = [newPredictionValueObject floatValue];
-        const float oldPredictionValue = [oldPredictionValueObject floatValue];
-        const float updatedPredictionValue = (oldPredictionValue + (newPredictionValue * updateValue));
-        NSNumber* updatedPredictionValueObject = [NSNumber numberWithFloat:updatedPredictionValue];
-        [oldPredictionValues setObject:updatedPredictionValueObject forKey:label];
-    }
-    NSArray* candidateLabels = [NSMutableArray array];
-    for (NSString* label in oldPredictionValues) {
-        NSNumber* oldPredictionValueObject = [oldPredictionValues objectForKey:label];
-        const float oldPredictionValue = [oldPredictionValueObject floatValue];
-        if (oldPredictionValue > 0.05f) {
-            NSDictionary* entry = @{@"label" : label, @"value" : oldPredictionValueObject};
-            candidateLabels = [candidateLabels arrayByAddingObject:entry];
-        }
-    }
-    NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"value" ascending:NO];
-    NSArray* sortedLabels =
-    [candidateLabels sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-    
-    return sortedLabels;
 }
 
 - (void)freeModel {
-#if TFLITE_USE_GPU_DELEGATE
     if (delegate) {
         DeleteGpuDelegate(delegate);
     }
-#endif
 }
 
 - (void)loadModel {
@@ -408,18 +278,16 @@ namespace {
     
     tflite::InterpreterBuilder(*model, resolver)(&interpreter);
     
-#if TFLITE_USE_GPU_DELEGATE
     GpuDelegateOptions options;
     options.allow_precision_loss = true;
     options.wait_type = GpuDelegateOptions::WaitType::kActive;
     delegate = NewGpuDelegate(&options);
     interpreter->ModifyGraphWithDelegate(delegate);
-#endif
     
     // Explicitly resize the input tensor.
     {
         int input = interpreter->inputs()[0];
-        std::vector<int> sizes = {1, 224, 224, 3};
+        std::vector<int> sizes = {1, wanted_input_width, wanted_input_height, wanted_input_channels};
         interpreter->ResizeInputTensor(input, sizes);
     }
     if (!interpreter) {

@@ -35,13 +35,13 @@
                                     <action selector="clearAllPhotos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rRY-pi-E7b"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nGf-ZO-EpB">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nGf-ZO-EpB" userLabel="Depth Preview View">
                                 <rect key="frame" x="516" y="111" width="176" height="132"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="nGf-ZO-EpB" secondAttribute="height" multiplier="4:3" id="Oik-lp-1Rc"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ilh-rD-d9o" userLabel="Result View">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ilh-rD-d9o" userLabel="Model Output View">
                                 <rect key="frame" x="44" y="0.0" width="472" height="354"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ilh-rD-d9o" secondAttribute="height" multiplier="4:3" id="zcm-vd-1QF"/>
@@ -72,8 +72,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="previewView" destination="nGf-ZO-EpB" id="aV4-gF-8xk"/>
-                        <outlet property="resultView" destination="ilh-rD-d9o" id="4mf-cb-zZp"/>
+                        <outlet property="depthView" destination="nGf-ZO-EpB" id="XO0-hT-DJ2"/>
+                        <outlet property="modelOutputView" destination="ilh-rD-d9o" id="GRr-UB-qJn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
