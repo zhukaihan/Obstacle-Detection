@@ -59,10 +59,9 @@ class ODImage {
         self.init(withCGImage: cgimg)
     }
     
-    convenience init?(withCMSampleBuffer buf: CMSampleBuffer) {
+    convenience init?(withCVImageBuffer buf: CVImageBuffer) {
         // Convert CMSampleBuffer to CGImage.
-        guard let imageBuffer = CMSampleBufferGetImageBuffer(buf) else { return nil }
-        let ciimg = CIImage(cvPixelBuffer: imageBuffer)
+        let ciimg = CIImage(cvPixelBuffer: buf)
         guard let cgimg = CIContext().createCGImage(ciimg, from: ciimg.extent) else { return nil }
         
         self.init(withCGImage: cgimg)
@@ -169,6 +168,16 @@ class ODImage {
         guard let imgToStore = self.toCGImg() else { return false }
         guard let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypePNG, 1, nil) else { return false }
         CGImageDestinationAddImage(dest, imgToStore, nil)
+        CGImageDestinationFinalize(dest)
+        return true
+    }
+    
+    static func writeTo(url: URL, withName name: String, forImg imgToStore: CGImage?) -> Bool {
+        if (imgToStore == nil) {
+            return false
+        }
+        guard let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypePNG, 1, nil) else { return false }
+        CGImageDestinationAddImage(dest, imgToStore!, nil)
         CGImageDestinationFinalize(dest)
         return true
     }

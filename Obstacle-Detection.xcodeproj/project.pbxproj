@@ -14,9 +14,9 @@
 		6040C2E0222B232A004CB29A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6040C2DE222B232A004CB29A /* LaunchScreen.storyboard */; };
 		832BBB322246F95C00923473 /* ObstacleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB312246F95C00923473 /* ObstacleDetector.swift */; };
 		832BBB3622479B6300923473 /* ODImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB3522479B6300923473 /* ODImage.swift */; };
+		835D72B5226347EA0084AB03 /* ssd_13384.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 835D72B4226347A70084AB03 /* ssd_13384.tflite */; };
 		83B2ADBD2258BB9600298309 /* ODModelEvaluator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B2ADBC2258BB9600298309 /* ODModelEvaluator.mm */; };
 		83B2ADD62258D89B00298309 /* model_labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83B2ADD32258D89B00298309 /* model_labels.txt */; };
-		83E6AE83225B3A4E00AD1466 /* ssd.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 83E6AE82225B3A3F00AD1466 /* ssd.tflite */; };
 		83FCD3832259A86C00B3EE75 /* ODCaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FCD3822259A86B00B3EE75 /* ODCaptureSession.swift */; };
 		C10E94D44B4F84070ED417A9 /* libPods-Obstacle-Detection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01750E3F6B734EAAD70FBF9E /* libPods-Obstacle-Detection.a */; };
 /* End PBXBuildFile section */
@@ -38,11 +38,12 @@
 		6D0555DE44F37BBC15D12B76 /* Pods-Obstacle-Detection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Obstacle-Detection.release.xcconfig"; path = "Target Support Files/Pods-Obstacle-Detection/Pods-Obstacle-Detection.release.xcconfig"; sourceTree = "<group>"; };
 		832BBB312246F95C00923473 /* ObstacleDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleDetector.swift; sourceTree = "<group>"; };
 		832BBB3522479B6300923473 /* ODImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODImage.swift; sourceTree = "<group>"; };
+		8332B03222634921006DD0C2 /* ssd_around 8000.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ssd_around 8000.tflite"; sourceTree = "<group>"; };
+		835D72B4226347A70084AB03 /* ssd_13384.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ssd_13384.tflite; sourceTree = "<group>"; };
 		83B2ADBA2258BB9500298309 /* Obstacle-Detection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Obstacle-Detection-Bridging-Header.h"; sourceTree = "<group>"; };
 		83B2ADBB2258BB9600298309 /* ODModelEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODModelEvaluator.h; sourceTree = "<group>"; };
 		83B2ADBC2258BB9600298309 /* ODModelEvaluator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ODModelEvaluator.mm; sourceTree = "<group>"; };
 		83B2ADD32258D89B00298309 /* model_labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_labels.txt; sourceTree = "<group>"; };
-		83E6AE82225B3A3F00AD1466 /* ssd.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ssd.tflite; sourceTree = "<group>"; };
 		83FCD3822259A86B00B3EE75 /* ODCaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODCaptureSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,7 +120,8 @@
 		83B2ADD22258D86300298309 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				83E6AE82225B3A3F00AD1466 /* ssd.tflite */,
+				835D72B4226347A70084AB03 /* ssd_13384.tflite */,
+				8332B03222634921006DD0C2 /* ssd_around 8000.tflite */,
 				83B2ADD32258D89B00298309 /* model_labels.txt */,
 			);
 			path = Model;
@@ -203,7 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6040C2E0222B232A004CB29A /* LaunchScreen.storyboard in Resources */,
-				83E6AE83225B3A4E00AD1466 /* ssd.tflite in Resources */,
+				835D72B5226347EA0084AB03 /* ssd_13384.tflite in Resources */,
 				83B2ADD62258D89B00298309 /* model_labels.txt in Resources */,
 				6040C2DD222B232A004CB29A /* Assets.xcassets in Resources */,
 				6040C2DB222B2327004CB29A /* Main.storyboard in Resources */,

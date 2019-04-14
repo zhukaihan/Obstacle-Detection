@@ -38,7 +38,7 @@ namespace {
     // If you have your own model, modify this to the file name, and make sure
     // you've added the file to your app resources too.
     // GPU Delegate only supports float model now.
-    NSString* model_file_name = @"ssd";
+    NSString* model_file_name = @"ssd_13384";
     NSString* model_file_type = @"tflite";
     // If you have your own model, point this to the labels file.
     NSString* labels_file_name = @"model_labels";
@@ -145,8 +145,7 @@ namespace {
     TfLiteDelegate* delegate;
 }
 
-- (NSMutableArray*)evaluateOnBuffer:(CMSampleBufferRef)sampleBuffer {
-    CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+- (NSMutableArray*)evaluateOnBuffer:(CVImageBufferRef)pixelBuffer {
     if (pixelBuffer == NULL) {
         return NULL;
     }
@@ -254,6 +253,8 @@ namespace {
         //NSLog(@"\nbox%d is at: %f, %f, %f, %f", index, output_boxes[index * 4], output_boxes[index * 4 + 1], output_boxes[index * 4 + 2], output_boxes[index * 4 + 3]);
         //NSLog(@"\nbox%d is at: %f, %f, %f, %f", index, obj_class, confidence, output_classes[index], result.first);
     }
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, unlockFlags);
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
     return output_values;
     
 }

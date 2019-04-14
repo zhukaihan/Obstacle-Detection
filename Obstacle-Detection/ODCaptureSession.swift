@@ -82,9 +82,10 @@ class ODCaptureSession: AVCaptureSession, AVCaptureVideoDataOutputSampleBufferDe
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { action in
                 self.depthDeliveryEnabled = false
             }))
-            
-            superViewController.present(alert, animated: true)
-            
+        
+            DispatchQueue.main.async {
+                superViewController.present(alert, animated: true)
+            }
         }
         self.captureSync = AVCaptureDataOutputSynchronizer(dataOutputs: [self.videoOutput])
         self.captureSync?.setDelegate(self, queue: self.modelProcessingQueue)

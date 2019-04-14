@@ -30,7 +30,7 @@
   int total_count;
     
 }
-- (NSMutableArray*)evaluateOnBuffer:(CMSampleBufferRef)sampleBuffer;
+- (NSMutableArray*)evaluateOnBuffer:(CVImageBufferRef)pixelBuffer;
 - (void)loadModel;
 - (void)freeModel;
 @end

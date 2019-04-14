@@ -11,7 +11,7 @@ import UIKit
 
 protocol ObstacleDetectorDelegate {
     func obstacleReport(byDetector detector: ObstacleDetector, doesExistObstacle isObstacle: Bool)
-    func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage)
+    func obstacleReport(byDetector detector: ObstacleDetector, img: CGImage, realImg: CGImage)
     
 }
 
@@ -43,9 +43,11 @@ class ObstacleDetector {
     }
     
     func runModelOn(withBuffer buf: CMSampleBuffer) {
-        guard let sortedLabels = eval.evaluate(on: buf) else { return }
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(buf) else { return }
+        guard let img = ODImage(withCVImageBuffer: imageBuffer) else { return }
+        guard let realImg = img.toCGImg() else { return }
         
-        guard let img = ODImage(withCMSampleBuffer: buf) else { return }
+        guard let sortedLabels = eval.evaluate(on: imageBuffer) else { return }
         
         for label in (sortedLabels as NSArray as! [NSDictionary]) {
             //print("\(label["obj_class"]) \(label["confidence"]) \(label["xmin"]) \(label["xmax"]) \(label["ymin"]) \(label["ymax"]) \n")
@@ -77,7 +79,8 @@ class ObstacleDetector {
         }
         
         if (delegate != nil) {
-            self.delegate?.obstacleReport(byDetector: self, img: img)
+            guard let modelResultImg = img.toCGImg() else { return }
+            self.delegate?.obstacleReport(byDetector: self, img: modelResultImg, realImg: realImg)
         }
     }
     

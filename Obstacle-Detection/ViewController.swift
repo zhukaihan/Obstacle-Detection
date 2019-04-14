@@ -15,6 +15,7 @@ import Zip
 class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetectorDelegate {
     
     
+    
     let PHOTO_FOLDER_NAME = "original"
     let BG_DEFAULT_COLOR = UIColor.black
     let PHOTO_CAPTURE_BG_COLOR = UIColor.white
@@ -28,21 +29,14 @@ class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetect
     
     let obstacleDetector = ObstacleDetector()
     
-    var modelOutputImg: ODImage?
     var depthImg: ODImage?
-    var realImg: ODImage?
+    var realImg: CGImage?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.obstacleDetector.setDelegate(self)
-        
-    }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
         // Request access for cameras.
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized: // The user has previously granted access to the camera.
@@ -64,6 +58,9 @@ class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetect
         case .restricted: // The user can't grant access due to restrictions.
             return
         }
+        
+        self.obstacleDetector.setDelegate(self)
+        
     }
     
     
@@ -88,7 +85,6 @@ class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetect
     
     
     func imageDataOutput(withODCaptureSession odCaptureSession: ODCaptureSession, withImageData sampleBuffer: CMSampleBuffer) {
-        self.realImg = ODImage(withCMSampleBuffer: sampleBuffer)
         obstacleDetector.runModelOn(withBuffer: sampleBuffer)
     }
     
@@ -144,7 +140,7 @@ class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetect
         let photoPath = photoFolder.appendingPathComponent(imgName + ".png")
         
         if (
-            (self.realImg?.writeTo(url: photoPath, withName: imgName))!
+            (ODImage.writeTo(url: photoPath, withName: imgName, forImg: self.realImg))
         ) {
             self.view.backgroundColor = self.PHOTO_CAPTURE_BG_COLOR
             self.restoreBgColor()
@@ -181,10 +177,10 @@ class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetect
     }
     
     
-    func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage) {
+    func obstacleReport(byDetector detector: ObstacleDetector, img: CGImage, realImg: CGImage) {
+        self.realImg = realImg
         DispatchQueue.main.async {
-            self.modelOutputImg = img
-            self.modelOutputView.image = UIImage(cgImage: img.toCGImg()!)
+            self.modelOutputView.image = UIImage(cgImage: img)
         }
     }
 
