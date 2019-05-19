@@ -14,7 +14,13 @@
 		6040C2E0222B232A004CB29A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6040C2DE222B232A004CB29A /* LaunchScreen.storyboard */; };
 		832BBB322246F95C00923473 /* ObstacleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB312246F95C00923473 /* ObstacleDetector.swift */; };
 		832BBB3622479B6300923473 /* ODImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB3522479B6300923473 /* ODImage.swift */; };
+		835B3C242264807C00A23F8E /* ssd_around 8000.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 8332B03222634921006DD0C2 /* ssd_around 8000.tflite */; };
 		835D72B5226347EA0084AB03 /* ssd_13384.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 835D72B4226347A70084AB03 /* ssd_13384.tflite */; };
+		83A2396C2290FA860020579F /* ODAlertAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A2396B2290FA860020579F /* ODAlertAudioPlayer.swift */; };
+		83A2397F229139F40020579F /* beep_1x.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 83A2397E229139AC0020579F /* beep_1x.m4a */; };
+		83A23980229139F70020579F /* beep_2x.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 83A2397D229139AC0020579F /* beep_2x.m4a */; };
+		83A23981229139F90020579F /* beep_3x.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 83A2397B229139AB0020579F /* beep_3x.m4a */; };
+		83A23982229139FB0020579F /* beep_4x.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 83A2397C229139AB0020579F /* beep_4x.m4a */; };
 		83B2ADBD2258BB9600298309 /* ODModelEvaluator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B2ADBC2258BB9600298309 /* ODModelEvaluator.mm */; };
 		83B2ADD62258D89B00298309 /* model_labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83B2ADD32258D89B00298309 /* model_labels.txt */; };
 		83FCD3832259A86C00B3EE75 /* ODCaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FCD3822259A86B00B3EE75 /* ODCaptureSession.swift */; };
@@ -40,6 +46,11 @@
 		832BBB3522479B6300923473 /* ODImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODImage.swift; sourceTree = "<group>"; };
 		8332B03222634921006DD0C2 /* ssd_around 8000.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ssd_around 8000.tflite"; sourceTree = "<group>"; };
 		835D72B4226347A70084AB03 /* ssd_13384.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ssd_13384.tflite; sourceTree = "<group>"; };
+		83A2396B2290FA860020579F /* ODAlertAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODAlertAudioPlayer.swift; sourceTree = "<group>"; };
+		83A2397B229139AB0020579F /* beep_3x.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = beep_3x.m4a; sourceTree = "<group>"; };
+		83A2397C229139AB0020579F /* beep_4x.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = beep_4x.m4a; sourceTree = "<group>"; };
+		83A2397D229139AC0020579F /* beep_2x.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = beep_2x.m4a; sourceTree = "<group>"; };
+		83A2397E229139AC0020579F /* beep_1x.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = beep_1x.m4a; sourceTree = "<group>"; };
 		83B2ADBA2258BB9500298309 /* Obstacle-Detection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Obstacle-Detection-Bridging-Header.h"; sourceTree = "<group>"; };
 		83B2ADBB2258BB9600298309 /* ODModelEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODModelEvaluator.h; sourceTree = "<group>"; };
 		83B2ADBC2258BB9600298309 /* ODModelEvaluator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ODModelEvaluator.mm; sourceTree = "<group>"; };
@@ -82,6 +93,10 @@
 		6040C2D4222B2327004CB29A /* Obstacle-Detection */ = {
 			isa = PBXGroup;
 			children = (
+				83A2397E229139AC0020579F /* beep_1x.m4a */,
+				83A2397D229139AC0020579F /* beep_2x.m4a */,
+				83A2397B229139AB0020579F /* beep_3x.m4a */,
+				83A2397C229139AB0020579F /* beep_4x.m4a */,
 				83B2ADD22258D86300298309 /* Model */,
 				83B2ADBB2258BB9600298309 /* ODModelEvaluator.h */,
 				83B2ADBC2258BB9600298309 /* ODModelEvaluator.mm */,
@@ -89,6 +104,7 @@
 				6040C2D7222B2327004CB29A /* ViewController.swift */,
 				83FCD3822259A86B00B3EE75 /* ODCaptureSession.swift */,
 				832BBB3522479B6300923473 /* ODImage.swift */,
+				83A2396B2290FA860020579F /* ODAlertAudioPlayer.swift */,
 				832BBB312246F95C00923473 /* ObstacleDetector.swift */,
 				6040C2D9222B2327004CB29A /* Main.storyboard */,
 				6040C2DC222B232A004CB29A /* Assets.xcassets */,
@@ -205,7 +221,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6040C2E0222B232A004CB29A /* LaunchScreen.storyboard in Resources */,
+				83A2397F229139F40020579F /* beep_1x.m4a in Resources */,
+				83A23980229139F70020579F /* beep_2x.m4a in Resources */,
+				83A23981229139F90020579F /* beep_3x.m4a in Resources */,
+				83A23982229139FB0020579F /* beep_4x.m4a in Resources */,
 				835D72B5226347EA0084AB03 /* ssd_13384.tflite in Resources */,
+				835B3C242264807C00A23F8E /* ssd_around 8000.tflite in Resources */,
 				83B2ADD62258D89B00298309 /* model_labels.txt in Resources */,
 				6040C2DD222B232A004CB29A /* Assets.xcassets in Resources */,
 				6040C2DB222B2327004CB29A /* Main.storyboard in Resources */,
@@ -250,6 +271,7 @@
 				832BBB322246F95C00923473 /* ObstacleDetector.swift in Sources */,
 				83B2ADBD2258BB9600298309 /* ODModelEvaluator.mm in Sources */,
 				6040C2D6222B2327004CB29A /* AppDelegate.swift in Sources */,
+				83A2396C2290FA860020579F /* ODAlertAudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

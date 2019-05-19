@@ -32,6 +32,8 @@ class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetect
     var depthImg: ODImage?
     var realImg: CGImage?
     
+    var alertPlayer: ODAlertAudioPlayer?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +63,8 @@ class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetect
         
         self.obstacleDetector.setDelegate(self)
         
+        self.alertPlayer = ODAlertAudioPlayer()
+        self.alertPlayer?.start()
     }
     
     
@@ -172,15 +176,28 @@ class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetect
     }
     
     
+    @IBAction func toggleDetectionEnabled(_ sender: UISwitch) {
+        if sender.isOn {
+            self.alertPlayer?.start()
+            self.obstacleDetector.start()
+        } else {
+            self.alertPlayer?.stop()
+            self.obstacleDetector.stop()
+        }
+    }
+    
+    
     func obstacleReport(byDetector detector: ObstacleDetector, doesExistObstacle isObstacle: Bool) {
         
     }
     
     
-    func obstacleReport(byDetector detector: ObstacleDetector, img: CGImage, realImg: CGImage) {
-        self.realImg = realImg
+    func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage, alertY: Double) {
+        
         DispatchQueue.main.async {
-            self.modelOutputView.image = UIImage(cgImage: img)
+            guard let cgImg = img.toCGImg() else { return }
+            self.modelOutputView.image = UIImage(cgImage: cgImg)
+            self.alertPlayer?.setAlertY(alertY: alertY)
         }
     }
 

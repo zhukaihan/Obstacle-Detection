@@ -114,8 +114,7 @@ namespace {
     }
     
     // Preprocess the input image and feed the TFLite interpreter buffer for a float model.
-    void ProcessInputWithFloatModel(
-                                    uint8_t* input, float* buffer, int image_width, int image_height, int image_channels) {
+    void ProcessInputWithFloatModel(uint8_t* input, float* buffer, int image_width, int image_height, int image_channels) {
         for (int y = 0; y < wanted_input_height; ++y) {
             float* out_row = buffer + (y * wanted_input_width * wanted_input_channels);
             for (int x = 0; x < wanted_input_width; ++x) {

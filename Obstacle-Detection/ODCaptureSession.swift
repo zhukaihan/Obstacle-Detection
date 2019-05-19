@@ -57,7 +57,7 @@ class ODCaptureSession: AVCaptureSession, AVCaptureVideoDataOutputSampleBufferDe
         guard let videoConn = self.videoOutput.connections.first else { return }
         videoConn.videoOrientation = .landscapeRight
         self.videoOutput.videoSettings![kCVPixelBufferPixelFormatTypeKey as String] = kCMPixelFormat_32BGRA
-        //self.videoOutput.alwaysDiscardsLateVideoFrames = true
+        self.videoOutput.alwaysDiscardsLateVideoFrames = true
         
         if (self.videoDevice.deviceType == .builtInDualCamera) {
             let alert = UIAlertController(
@@ -74,7 +74,7 @@ class ODCaptureSession: AVCaptureSession, AVCaptureVideoDataOutputSampleBufferDe
                 guard let connection = self.depthOutput.connections.first else { return }
                 connection.videoOrientation = .landscapeRight
                 self.depthOutput.isFilteringEnabled = true
-                //self.depthOutput.alwaysDiscardsLateDepthData = true
+                self.depthOutput.alwaysDiscardsLateDepthData = true
                 
                 self.captureSync = AVCaptureDataOutputSynchronizer(dataOutputs: [self.videoOutput, self.depthOutput])
                 self.captureSync?.setDelegate(self, queue: self.modelProcessingQueue)

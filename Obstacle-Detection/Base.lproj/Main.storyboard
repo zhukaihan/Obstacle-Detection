@@ -48,22 +48,30 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIk-lS-TyZ">
-                                <rect key="frame" x="614" y="324" width="154" height="30"/>
-                                <state key="normal" title="Export Original Photos"/>
+                                <rect key="frame" x="671" y="324" width="97" height="30"/>
+                                <state key="normal" title="Export Photos"/>
                                 <connections>
                                     <action selector="exportOriginalPhotos:" destination="BYZ-38-t0r" eventType="touchUpInside" id="39W-Ue-tNo"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oDU-mb-iwb">
+                                <rect key="frame" x="516" y="323" width="51" height="31"/>
+                                <connections>
+                                    <action selector="toggleDetectionEnabled:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="wv3-WS-GW8"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <constraints>
                             <constraint firstItem="vmr-Za-v4k" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="6qn-mX-cGD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ilh-rD-d9o" secondAttribute="bottom" id="757-7r-6df"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MIk-lS-TyZ" secondAttribute="trailing" id="Fh4-85-qxa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oDU-mb-iwb" secondAttribute="bottom" id="ID1-4m-6Bt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vmr-Za-v4k" secondAttribute="trailing" id="LK8-Fi-5FY"/>
                             <constraint firstItem="ilh-rD-d9o" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="MDD-g1-UIO"/>
                             <constraint firstItem="2ZQ-wr-SZo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="N8h-8J-4LR"/>
                             <constraint firstItem="vmr-Za-v4k" firstAttribute="leading" secondItem="nGf-ZO-EpB" secondAttribute="trailing" id="XWp-ZT-dTH"/>
                             <constraint firstItem="ilh-rD-d9o" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZB7-iV-pTd"/>
+                            <constraint firstItem="oDU-mb-iwb" firstAttribute="leading" secondItem="ilh-rD-d9o" secondAttribute="trailing" id="cH0-Ta-vmP"/>
                             <constraint firstItem="nGf-ZO-EpB" firstAttribute="centerY" secondItem="ilh-rD-d9o" secondAttribute="centerY" id="ekt-Tv-Smj"/>
                             <constraint firstItem="nGf-ZO-EpB" firstAttribute="leading" secondItem="ilh-rD-d9o" secondAttribute="trailing" id="rao-6X-tF7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2ZQ-wr-SZo" secondAttribute="trailing" id="tnP-y6-SPn"/>
