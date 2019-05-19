@@ -12,6 +12,10 @@
 		6040C2DB222B2327004CB29A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6040C2D9222B2327004CB29A /* Main.storyboard */; };
 		6040C2DD222B232A004CB29A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6040C2DC222B232A004CB29A /* Assets.xcassets */; };
 		6040C2E0222B232A004CB29A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6040C2DE222B232A004CB29A /* LaunchScreen.storyboard */; };
+		8300770A229151D300639E27 /* _beep_0.5x.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 83007706229151BD00639E27 /* _beep_0.5x.m4a */; };
+		8300770B229151D500639E27 /* _beep_0.75x.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 83007708229151BD00639E27 /* _beep_0.75x.m4a */; };
+		8300770C229151D700639E27 /* _beep_1x.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 83007707229151BD00639E27 /* _beep_1x.m4a */; };
+		8300770D229151D900639E27 /* _beep_2x.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 83007709229151BD00639E27 /* _beep_2x.m4a */; };
 		832BBB322246F95C00923473 /* ObstacleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB312246F95C00923473 /* ObstacleDetector.swift */; };
 		832BBB3622479B6300923473 /* ODImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832BBB3522479B6300923473 /* ODImage.swift */; };
 		835B3C242264807C00A23F8E /* ssd_around 8000.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 8332B03222634921006DD0C2 /* ssd_around 8000.tflite */; };
@@ -42,6 +46,10 @@
 		6040C2F7222B232B004CB29A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61881F68976D3AE7778CE79E /* Pods-Obstacle-Detection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Obstacle-Detection.debug.xcconfig"; path = "Target Support Files/Pods-Obstacle-Detection/Pods-Obstacle-Detection.debug.xcconfig"; sourceTree = "<group>"; };
 		6D0555DE44F37BBC15D12B76 /* Pods-Obstacle-Detection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Obstacle-Detection.release.xcconfig"; path = "Target Support Files/Pods-Obstacle-Detection/Pods-Obstacle-Detection.release.xcconfig"; sourceTree = "<group>"; };
+		83007706229151BD00639E27 /* _beep_0.5x.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = _beep_0.5x.m4a; sourceTree = "<group>"; };
+		83007707229151BD00639E27 /* _beep_1x.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = _beep_1x.m4a; sourceTree = "<group>"; };
+		83007708229151BD00639E27 /* _beep_0.75x.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = _beep_0.75x.m4a; sourceTree = "<group>"; };
+		83007709229151BD00639E27 /* _beep_2x.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = _beep_2x.m4a; sourceTree = "<group>"; };
 		832BBB312246F95C00923473 /* ObstacleDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleDetector.swift; sourceTree = "<group>"; };
 		832BBB3522479B6300923473 /* ODImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODImage.swift; sourceTree = "<group>"; };
 		8332B03222634921006DD0C2 /* ssd_around 8000.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ssd_around 8000.tflite"; sourceTree = "<group>"; };
@@ -93,6 +101,10 @@
 		6040C2D4222B2327004CB29A /* Obstacle-Detection */ = {
 			isa = PBXGroup;
 			children = (
+				83007706229151BD00639E27 /* _beep_0.5x.m4a */,
+				83007708229151BD00639E27 /* _beep_0.75x.m4a */,
+				83007707229151BD00639E27 /* _beep_1x.m4a */,
+				83007709229151BD00639E27 /* _beep_2x.m4a */,
 				83A2397E229139AC0020579F /* beep_1x.m4a */,
 				83A2397D229139AC0020579F /* beep_2x.m4a */,
 				83A2397B229139AB0020579F /* beep_3x.m4a */,
@@ -221,6 +233,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6040C2E0222B232A004CB29A /* LaunchScreen.storyboard in Resources */,
+				8300770A229151D300639E27 /* _beep_0.5x.m4a in Resources */,
+				8300770B229151D500639E27 /* _beep_0.75x.m4a in Resources */,
+				8300770C229151D700639E27 /* _beep_1x.m4a in Resources */,
+				8300770D229151D900639E27 /* _beep_2x.m4a in Resources */,
 				83A2397F229139F40020579F /* beep_1x.m4a in Resources */,
 				83A23980229139F70020579F /* beep_2x.m4a in Resources */,
 				83A23981229139F90020579F /* beep_3x.m4a in Resources */,
