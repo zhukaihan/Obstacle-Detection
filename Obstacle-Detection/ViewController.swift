@@ -192,12 +192,13 @@ class ViewController: UIViewController, ODCaptureSessionDelegate, ObstacleDetect
     }
     
     
-    func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage, alertY: Double) {
+    func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage, alertYObstacle: Double, alertYEdge: Double) {
         
         DispatchQueue.main.async {
             guard let cgImg = img.toCGImg() else { return }
             self.modelOutputView.image = UIImage(cgImage: cgImg)
-            self.alertPlayer?.setAlertY(alertY: alertY)
+            self.alertPlayer?.setAlertYObstacle(alertY: alertYObstacle)
+            self.alertPlayer?.setAlertYEdge(alertY: alertYEdge)
         }
     }
 

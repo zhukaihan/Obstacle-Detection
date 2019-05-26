@@ -12,68 +12,48 @@ import AVFoundation
 class ODAlertAudioPlayer {
     let ALERT_Y_THRESHOLD = 0.3
     
-    var player1x: AVAudioPlayer?
-    var player2x: AVAudioPlayer?
-    var player3x: AVAudioPlayer?
-    var player4x: AVAudioPlayer?
+    let CYCLE_TIME: Double = 0.5 * 1000000
+    let EDGE_ALERT_EVERY: Double = 60 * 1000000
+    
+    var playerObstacle: AVAudioPlayer?
+    var playerEdge: AVAudioPlayer?
     
     let thread = DispatchQueue(label: "alertAudioPlayer")
-    var alertY: Double = 0
+    
+    var alertYObstacle: Double = 0
+    var alertYEdge: Double = 0
+    
     var curAlertY: Double = 0
     var prevAlertY: Double = 0
+    
     var isPlaying: Bool = false
     
     init() {
         do {
-//            try player1x = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "beep_1x.m4a", ofType:nil)!))
-//            try player2x = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "beep_2x.m4a", ofType:nil)!))
-            try player3x = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "beep_3x.m4a", ofType:nil)!))
-//            try player4x = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "beep_4x.m4a", ofType:nil)!))
-//            player1x?.numberOfLoops = -1
-//            player2x?.numberOfLoops = -1
-            player3x?.numberOfLoops = -1
-//            player4x?.numberOfLoops = -1
+            try playerObstacle = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "beep_3x.m4a", ofType:nil)!))
+            try playerEdge = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "beep_3x.m4a", ofType:nil)!))
             
             thread.async {
+                var edgeAlertCyclesTime: Double = 0;
                 while (true) {
-                    let alertY = self.alertY
-                    if (!self.isPlaying || alertY < self.ALERT_Y_THRESHOLD) {
-//                        self.player1x?.stop()
-//                        self.player2x?.stop()
-                        self.player3x?.stop()
-//                        self.player4x?.stop()
-                        usleep(useconds_t(0.16 * 2 * 1000000))
+                    let alertYObstacle = self.alertYObstacle
+                    let alertYEdge = self.alertYEdge
+                    if (!self.isPlaying) {
+                        edgeAlertCyclesTime += self.CYCLE_TIME
+                        usleep(useconds_t(self.CYCLE_TIME))
                         continue;
                     }
-//                    if (alertY < 0.25) {
-//                        self.player2x?.stop()
-//                        self.player3x?.stop()
-//                        self.player4x?.stop()
-//                        self.player1x?.play()
-//                        usleep(useconds_t(0.27 * 00000))
-//                        self.player1x?.stop()
-//                    } else if (alertY < 0.5) {
-//                        self.player1x?.stop()
-//                        self.player3x?.stop()
-//                        self.player4x?.stop()
-//                        self.player2x?.play()
-//                        usleep(useconds_t(0.19 * 1000000))
-////                        self.player2x?.stop()
-//                    } else if (alertY < 75) {
-//                        self.player1x?.stop()
-//                        self.player2x?.stop()
-//                        self.player4x?.stop()
-                        self.player3x?.play()
-                        usleep(useconds_t(0.16 * 2 * 1000000))
-////                        self.player3x?.stop()
-//                    } else {
-//                        self.player1x?.stop()
-//                        self.player2x?.stop()
-//                        self.player3x?.stop()
-//                        self.player4x?.play()
-//                        usleep(useconds_t(0.13 * 2 * 1000000))
-////                        self.player4x?.stop()
-//                    }
+                    if (alertYObstacle < self.ALERT_Y_THRESHOLD) {
+                        self.playerObstacle?.play()
+                    }
+                    if (edgeAlertCyclesTime > self.EDGE_ALERT_EVERY) {
+                        edgeAlertCyclesTime = 0
+                    }
+                    if (edgeAlertCyclesTime == 0 && alertYEdge < self.ALERT_Y_THRESHOLD) {
+                        self.playerEdge?.play()
+                    }
+                    edgeAlertCyclesTime += self.CYCLE_TIME
+                    usleep(useconds_t(self.CYCLE_TIME))
                 }
             }
         } catch {
@@ -89,7 +69,7 @@ class ODAlertAudioPlayer {
         isPlaying = false
     }
     
-    func setAlertY(alertY: Double) {
+    func setAlertYObstacle(alertY: Double) {
         // Median filter with size of 3.
 //        if (self.prevFreq > self.curFreq && self.prevFreq < freq) ||
 //            (self.prevFreq < self.curFreq && self.prevFreq > freq){
@@ -107,6 +87,12 @@ class ODAlertAudioPlayer {
 //        }
 //        self.prevFreq = self.curFreq
 //        self.curFreq = freq
-        self.alertY = alertY
+        
+        // 33% decay function.
+        self.alertYObstacle = (self.alertYObstacle + self.alertYObstacle + alertY) / 3
+    }
+    
+    func setAlertYEdge(alertY: Double) {
+        self.alertYEdge = (self.alertYEdge + self.alertYEdge + alertY) / 3
     }
 }

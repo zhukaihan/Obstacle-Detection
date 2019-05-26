@@ -11,7 +11,7 @@ import UIKit
 
 protocol ObstacleDetectorDelegate {
     func obstacleReport(byDetector detector: ObstacleDetector, doesExistObstacle isObstacle: Bool)
-    func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage, alertY: Double)
+    func obstacleReport(byDetector detector: ObstacleDetector, img: ODImage, alertYObstacle: Double, alertYEdge: Double)
     
 }
 
@@ -63,7 +63,8 @@ class ObstacleDetector {
         // minY is in form of percentage of the image height.
         // Y coordinate is treated as the closeness of obstacle, due to the position of the phone.
         // minY is the closest obstacle.
-        var minY: Double = 1
+        var minYObstacle: Double = 1
+        var minYEdge: Double = 1
         
         if self.isDetecting {
             // Loop through existing boxes.
@@ -113,18 +114,32 @@ class ObstacleDetector {
                     // Check if the object is eligible for alert, the object is in the path of the user (intersects with the horizontal center of the image).
                     x < Double(img.width) / 2) && (x + width > Double(img.width) / 2) &&
                     // If yes, compare with the existing closest obstacle.
-                    ((y / Double(img.height)) < minY)
+                    ((y / Double(img.height)) < minYObstacle) &&
+                    // If all conditions passes, check category.
+                    label == 0
                 {
-                    minY = y / Double(img.height)
+                    minYObstacle = y / Double(img.height)
+                }
+                
+                if (
+                    // Check if the object is eligible for alert, the object is in the path of the user (intersects with the horizontal center of the image).
+                    x < Double(img.width) / 2) && (x + width > Double(img.width) / 2) &&
+                    // If yes, compare with the existing closest edge.
+                    ((y / Double(img.height)) < minYEdge) &&
+                    // If all conditions passes, check category.
+                    label == 2
+                {
+                    minYEdge = y / Double(img.height)
                 }
                 
             }
         }
         
-        let alertY = 1 - minY // Convert minY from lower left coor to upper left coor.
+        let alertYObstacle = 1 - minYObstacle // Convert minY from lower left coor to upper left coor.
+        let alertYEdge = 1 - minYEdge // Convert minY from lower left coor to upper left coor.
         if (delegate != nil) {
             // Check if the closest obstacle is close enough for alert.
-            self.delegate?.obstacleReport(byDetector: self, img: img, alertY: alertY)
+            self.delegate?.obstacleReport(byDetector: self, img: img, alertYObstacle: alertYObstacle, alertYEdge: alertYEdge)
         }
     }
     
