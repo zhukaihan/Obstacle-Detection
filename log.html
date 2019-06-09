@@ -358,6 +358,22 @@ python model_main.py --pipeline_config_path=<span class="hljs-variable">${PIPELI
 </div></code></pre>
 <p>model_main.py located in tensorflow/models/research/object_detection directory</p>
 <p>Change these variables to suites your needs.</p>
+<h2 id="step-35-saving">Step 3.5: Saving:</h2>
+<p>By default, the model saves at most 5 checkpoints. To find the optimal checkpoint, we need to save the new checkpoint somewhere else. This process is not user-friendly since it is manual.</p>
+<p>Therefore, I changed saving checkpoints to 100 by modifying following code:</p>
+<p>In object detection/model_lib.py, we modify line ~490, which creates a saver.</p>
+<pre><code class="language-python"><div>saver = tf.train.Saver(
+    sharded=<span class="hljs-literal">True</span>,
+    keep_checkpoint_every_n_hours=keep_checkpoint_every_n_hours,
+    save_relative_paths=<span class="hljs-literal">True</span>,
+    max_to_keep=<span class="hljs-number">10000</span>)
+</div></code></pre>
+<p>This change suffice our needs, but to keep everything consistent, we shall change line ~470 in the same file.</p>
+<p>We hardcode this value because it is simple to do. If we want to not to hardcode it in our code, we need to put it in pipeline.config, edit pipeline.proto, recompile proto, and then it may work.</p>
+<p>I have also modified line 62 in model_main.py to:</p>
+<pre><code class="language-python"><div>config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir, keep_checkpoint_max=<span class="hljs-number">10000</span>)
+</div></code></pre>
+<p>Setting this only would not work. I am not sure if not setting it and only sets the saver would work or not.</p>
 <h2 id="step-4-open-tensorboard">Step 4: Open TensorBoard:</h2>
 <pre><code class="language-bash"><div>tensorboard --logdir=<span class="hljs-variable">${MODEL_DIR}</span>
 </div></code></pre>
@@ -429,6 +445,7 @@ To be mindful, there are extra steps to configure the project if you want to use
 </ol>
 <p>Bemindful that there is an input process error in the demo code, the x and y values are flipped. Code has to be modified for both quantized and non-quantized functions. Details are here:
 <a href="https://github.com/tensorflow/tensorflow/issues/25784">https://github.com/tensorflow/tensorflow/issues/25784</a></p>
+<p>Bemindful that the demo code is missing an input check. In <a href="http://ODModelEvaluator.mm">ODModelEvaluator.mm</a>, function evaluateOnBuffer, it calls CFRetain on pixelBuffer directly without checking whether pixelBuffer is NULL or not. The pixelBuffer returned by CMSampleBufferGetImageBuffer can be NULL. CFRetain(NULL) will crash the app. Thus, add a condition to check whether pixelBuffer is NULL or not is necessary before calling CFRetain(pixelBuffer).</p>
 <hr>
 <h2 id="div-style%22font-size50px%22results-and-a-conclusion-coming-up-div"><div style="font-size:50px;">Results and a Conclusion Coming Up: </div></h2>
 <p>The initial model that was trained on 45 images was having decent recognition on big boxes and poles. Even a slim coke bottle is recognized as an obstacle. Therefore, we can conclude that our architecture can converge.</p>
@@ -438,6 +455,10 @@ To be mindful, there are extra steps to configure the project if you want to use
 <p>There is an interesting observation: Fire hydrant is particularily accurate as a fire hydrant in pretrained model, and is also super accurate as an obstacle. However, when I remove the blue channel, the pretrained model categorized it as a bottle...</p>
 <p>From such observation, I believe we can reach this result with such limited images can be due to the fact that obstacles are a superset of lots of objects. The pretrained model has been trained on lots and lots of objects. Therefore, during the fine-tuning process, our model does not need to learn new features or new objects, but only need to categorize the ones that exists. This could be the reason why we are able to obtain such accuracy with a limited dataset.</p>
 <p>According to Apple, some model can be fine-tuned with as little as 60 images... But, as overachievers, we are looking to expand our dataset to at least 1000 images.</p>
+<p><img src="http://od.zhukaihan.com/tensorboard1.png" alt="Tensorboard Results 1" title="Tensorboard Results 1">
+<img src="http://od.zhukaihan.com/tensorboard2.png" alt="Tensorboard Results 2" title="Tensorboard Results 2">
+<img src="http://od.zhukaihan.com/tensorboard3.png" alt="Tensorboard Results 3" title="Tensorboard Results 3">
+<img src="http://od.zhukaihan.com/tensorboard4.png" alt="Tensorboard Results 4" title="Tensorboard Results 4"></p>
 
     </body>
     </html>
